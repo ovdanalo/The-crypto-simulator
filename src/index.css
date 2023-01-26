@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Roboto&display=swap');
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 0 6px #06d1af;
+  }
+  .h-def {
+    min-height: 42rem;
+  }
+}
+@font-face {
+  font-family: "netron";
+  src: url("../public/fonts/netron.ttf");
+}
