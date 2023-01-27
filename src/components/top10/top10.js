@@ -84,7 +84,7 @@ const cryptoList = {
 }
 const top10 = () => {
     return (
-        <div className='flex flex-col mx-auto bg-black-200 lg:max-w-4xl xl:max-w-5xl my-6 rounded-2xl'>
+        <div className={'flex flex-col mx-auto bg-black-200 lg:max-w-4xl xl:max-w-5xl my-6 rounded-2xl'}>
             <div className='bg-black-100 w-11/12 mx-auto rounded-lg my-4 p-2'>
                 <table className='w-10/12 mx-auto my-6'>
                     <thead className='text-teal-100'>
@@ -183,25 +183,6 @@ const top10 = () => {
                     </tbody>
                 </table>
             </div>
-            
-       
-                    
-                    
-
-
-
-            {/* <Label />
-            <Asset name={cryptoList.num1.name} price={cryptoList.num1.price}
-            marketcap= {cryptoList.num1.marketcap} volume24={cryptoList.num1.volume24}/>
-            <Asset name='num2'/>
-            <Asset name='num3'/>
-            <Asset name='num4'/>
-            <Asset name='num5'/>
-            <Asset name='num6'/>
-            <Asset name='num7'/>
-            <Asset name='num8'/>
-            <Asset name='num9'/>
-            <Asset name='num10'/> */}
         </div>
     )
 }
