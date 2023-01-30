@@ -1,4 +1,8 @@
 import React from 'react';
+import Links from './links/links';
+import linkedin from '../../../assets/imgs/linkedin.png'
+import github from '../../../assets/imgs/githubLogo.png'
+
 
 const DevInfo = (props) => {
     return (
@@ -10,14 +14,9 @@ const DevInfo = (props) => {
                 <p className='flex text-teal-100 my-2 '>{props.devName}</p>
                 <div className='flex h-0.5 w-8/12 bg-teal-100 my-1'></div>
                 <div className='flex space-x-2 w-8/12 h-4'>
-                    <div className='flex w-1/2 h-4'>
-                        <div className='w-6 h-6 bg-teal-200'></div>
-                        <div className='w-3/4 h-6 bg-red-100'></div>
-                    </div>
-                    <div className='flex w-1/2 h-4'>
-                        <div className='w-6 h-6 bg-teal-200'></div>
-                        <div className='w-3/4 h-6 bg-red-100'></div>
-                    </div>
+                    <Links logo={linkedin} type='linkedin' linkedin={props.linkedin} />
+                    <Links logo={github} type='github'git={props.git} />
+                    
                 </div>
             </div>
         </div>
