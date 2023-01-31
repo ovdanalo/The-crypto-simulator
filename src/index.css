@@ -11,7 +11,10 @@
     min-height: 42rem;
   }
   .min-h-dev{
-    min-height: 6rem;
+    min-height: 10rem;
+  }
+  .min-h-info{
+    min-height: 34rem;
   }
  
 }
