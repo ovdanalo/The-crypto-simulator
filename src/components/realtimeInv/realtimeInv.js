@@ -6,7 +6,7 @@ const home = () => {
             <div className='flex flex-col bg-black-100 w-1/3 m-6 mr-0 rounded-lg py-12'>
                 <form>
                     <div>
-                        <label for='amount' className='flex text-white py-6 justify-center'>How much do you want to invest?</label>
+                        <label htmlFor='amount' className='flex text-white py-6 justify-center'>How much do you want to invest?</label>
                         <input name='amount' type='number' value='100' className='rounded-tl-lg rounded-bl-lg text-center p-1'></input>
                         <select className='rounded-tr-lg rounded-br-lg p-1'>
                             <option>EUR</option>
@@ -14,12 +14,12 @@ const home = () => {
                         </select>
                     </div>
                     <div>
-                        <label for='crypto' className='flex text-white pt-12 pb-6 justify-center '>In which cryptocurrency?</label>
+                        <label htmlFor='crypto' className='flex text-white pt-12 pb-6 justify-center '>In which cryptocurrency?</label>
 
                         <input list="cryptoList" id="selectCrypto" name="crypto" size="27" autocomplete="off" className='rounded-lg p-1' />
                     </div>
 
-                    <button class="bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-full">
+                    <button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-full">
                         BUY
                     </button>
                 </form>

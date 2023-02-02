@@ -20,6 +20,7 @@ function App() {
             );
             const data = await response.json();
             setCryptocurrencies(data);
+            console.log(data)
         };
 
         fetchData();
@@ -35,7 +36,7 @@ function App() {
         <Route path='/top-10' exact element={<Top10 data={cryptocurrencies} />} />
         <Route path='/realtime-investment' exact element={<Realtime />} />
         <Route path='/historic-investment' exact element={<Historic data={cryptocurrencies}/>} />
-        <Route path='/cryptocurrencies-info' exact element={<CryptoInfo />} />
+        <Route path='/cryptocurrencies-info' exact element={<CryptoInfo data={cryptocurrencies}/>} />
         <Route path='/about' exact element={<About />} />
       </Routes>
 

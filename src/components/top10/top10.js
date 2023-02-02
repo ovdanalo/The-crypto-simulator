@@ -37,7 +37,7 @@ const nFormatter = (num) => {
                         {props.data.map((crypto, index) => (
                             <tr className='h-20 border-b border-b-white' key={crypto.id}>
                                 <td>{index + 1}</td>
-                                <td>{crypto.name} ({crypto.symbol.toUpperCase()})</td>
+                                <td className="flex items-center mt-5"><img src={crypto.image} alt={crypto.name + 'logo'} className='w-8 mr-3'/> {crypto.name} ({crypto.symbol.toUpperCase()})</td>
                                 <td>{crypto.current_price.toFixed(2)}€</td>
                                 <td>{nFormatter(crypto.market_cap)} €</td>
                                 <td>{nFormatter(crypto.total_volume)} €</td>
@@ -45,6 +45,7 @@ const nFormatter = (num) => {
                                 <td>{crypto.price_change_percentage_7d_in_currency.toFixed(2)} %</td>
                             </tr>
                         ))}
+                        {console.log(props.data)}
                     </tbody>
                 </table>
             </div>
