@@ -9,10 +9,11 @@ const Home = () => {
         if (!selectedCryptoValue) {
             return;
         }
+        const inputAmount = parseInt(document.getElementById('inputAmount').value, 10);
         const newInvestment = {
             id: investmentData.length + 1,
             name: selectedCryptoValue.split(" ")[0],
-            price: (Math.random() * (1000 - 100) + 100).toFixed(2),
+            price: (inputAmount).toFixed(2),
             volume: (Math.random() * (1000000 - 100000) + 100000).toFixed(2),
             last7Days: (Math.random() * (100 - 1) + 1).toFixed(2),
         };
@@ -34,7 +35,7 @@ const Home = () => {
                 <form>
                     <div>
                         <label for='amount' className='flex text-white py-6 justify-center'>How much do you want to invest?</label>
-                        <input name='amount' type='number' value='100' className='rounded-tl-lg rounded-bl-lg text-center p-1'></input>
+                        <input name='amount' id="inputAmount" type='number' className='rounded-tl-lg rounded-bl-lg text-center p-1'></input>
                         <select className='rounded-tr-lg rounded-br-lg p-1'>
                             <option>EUR</option>
                             <option>USD</option>
