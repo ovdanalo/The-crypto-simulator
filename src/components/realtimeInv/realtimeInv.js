@@ -1,32 +1,34 @@
 import React, { useState } from 'react';
 
 const Home = () => {
-    const [investmentData, setInvestmentData] = useState([]);
-    const handleBuy = (e) => {
-        e.preventDefault();
-        const selectCrypto = document.getElementById('selectCrypto');
-        const selectedCryptoValue = selectCrypto.value;
-        if (!selectedCryptoValue) {
-            return;
+    const [investmentData, setInvestmentData] = useState([]); // Stato per mantenere i dati degli investimenti
+
+    const handleBuy = (e) => { // Gestisce l'acquisto di una criptovaluta
+        e.preventDefault(); // Prevenire il comportamento predefinito del form
+        const selectCrypto = document.getElementById('selectCrypto'); // Selezionare l'elemento con id "selectCrypto"
+        const selectedCryptoValue = selectCrypto.value; // Ottenere il valore selezionato del cripto
+        if (!selectedCryptoValue) { // Se non è stato selezionato alcun valore
+            return; // Interrompere l'esecuzione della funzione
         }
-        const inputAmount = parseInt(document.getElementById('inputAmount').value, 10);
-        const newInvestment = {
-            id: investmentData.length + 1,
-            name: selectedCryptoValue.split(" ")[0],
-            price: (inputAmount).toFixed(2),
-            volume: (Math.random() * (1000000 - 100000) + 100000).toFixed(2),
-            last7Days: (Math.random() * (100 - 1) + 1).toFixed(2),
+        const inputAmount = parseInt(document.getElementById('inputAmount').value, 10); // Convertire l'importo in ingresso in intero
+        const cryptoPrice = Math.random() * (100000 - 10000) + 10000; // Valore casuale per il prezzo della criptovaluta
+        const newInvestment = { // Creare un nuovo oggetto di investimento
+            id: investmentData.length + 1, // ID univoco
+            name: selectedCryptoValue.split(" ")[0], // Nome della criptovaluta
+            price: (inputAmount / cryptoPrice).toFixed(2), // Prezzo del nuovo investimento
+            volume: (Math.random() * (1000000 - 100000) + 100000).toFixed(2), // Volume casuale
+            last7Days: (Math.random() * (100 - 1) + 1).toFixed(2), // Ultimi 7 giorni di variazione del prezzo
         };
-        const existingInvestment = investmentData.find(
+        const existingInvestment = investmentData.find( // Verificare se esiste già un investimento con lo stesso nome
             (investment) => investment.name === newInvestment.name
         );
-        if (existingInvestment) {
-            existingInvestment.price = (
+        if (existingInvestment) { // Se esiste già un investimento
+            existingInvestment.price = ( // Aggiornare il prezzo dell'investimento esistente
                 parseFloat(existingInvestment.price) + parseFloat(newInvestment.price)
             ).toFixed(2);
-            setInvestmentData([...investmentData]);
-        } else {
-            setInvestmentData([...investmentData, newInvestment]);
+            setInvestmentData([...investmentData]); // Aggiornare lo stato con i dati degli investimenti
+        } else { // Se non esiste un investimento con lo stesso nome
+            setInvestmentData([...investmentData, newInvestment]); // Aggiungere il nuovo investimento allo stato
         }
     };
     return (
