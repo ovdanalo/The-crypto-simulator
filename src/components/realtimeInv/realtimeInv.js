@@ -11,12 +11,12 @@ const Home = () => {
             return; // Interrompere l'esecuzione della funzione
         }
         const inputAmount = parseInt(document.getElementById('inputAmount').value, 10); // Convertire l'importo in ingresso in intero
-        const cryptoPrice = Math.random() * (100000 - 10000) + 10000; // Valore casuale per il prezzo della criptovaluta
+        const cryptoPrice = (Math.random() * (100000 - 10000) + 10000).toFixed(2); // Valore casuale per il prezzo della criptovaluta
         const newInvestment = { // Creare un nuovo oggetto di investimento
             id: investmentData.length + 1, // ID univoco
             name: selectedCryptoValue.split(" ")[0], // Nome della criptovaluta
             price: (inputAmount / cryptoPrice).toFixed(2), // Prezzo del nuovo investimento
-            volume: (Math.random() * (1000000 - 100000) + 100000).toFixed(2), // Volume casuale
+            volume: cryptoPrice, // Volume casuale
             last7Days: (Math.random() * (100 - 1) + 1).toFixed(2), // Ultimi 7 giorni di variazione del prezzo
         };
         const existingInvestment = investmentData.find( // Verificare se esiste già un investimento con lo stesso nome
@@ -61,7 +61,7 @@ const Home = () => {
                             <th>#</th>
                             <th>Name</th>
                             <th>Amount</th>
-                            <th>Value (24h)</th>
+                            <th>Price</th>
                             <th>Last 7 Days</th>
                         </tr>
                     </thead>
