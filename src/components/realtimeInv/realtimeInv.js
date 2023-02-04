@@ -11,6 +11,9 @@ const Home = () => {
             return; // Interrompere l'esecuzione della funzione
         }
         const inputAmount = parseInt(document.getElementById('inputAmount').value, 10); // Convertire l'importo in ingresso in intero
+        if (!inputAmount || inputAmount < 0) { 
+            return; 
+        } 
         const cryptoPrice = (Math.random() * (100000 - 10000) + 10000).toFixed(2); // Valore casuale per il prezzo della criptovaluta
         const newInvestment = { // Creare un nuovo oggetto di investimento
             id: investmentData.length + 1, // ID univoco
