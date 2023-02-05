@@ -14,12 +14,12 @@ const Home = () => {
         if (!inputAmount || inputAmount < 0) { 
             return; 
         } 
-        const cryptoPrice = (Math.random() * (100000 - 10000) + 10000).toFixed(2); // Valore casuale per il prezzo della criptovaluta
+        const cryptoPrice = 22000; // Valore casuale per il prezzo della criptovaluta
         const newInvestment = { // Creare un nuovo oggetto di investimento
             id: investmentData.length + 1, // ID univoco
             name: selectedCryptoValue.split(" ")[0], // Nome della criptovaluta
-            price: (inputAmount / cryptoPrice).toFixed(2), // Prezzo del nuovo investimento
-            volume: cryptoPrice, // Volume casuale
+            volume: inputAmount / cryptoPrice,
+            price: inputAmount, // Prezzo del nuovo investimento
             last7Days: (Math.random() * (100 - 1) + 1).toFixed(2), // Ultimi 7 giorni di variazione del prezzo
         };
         const existingInvestment = investmentData.find( // Verificare se esiste già un investimento con lo stesso nome
@@ -29,6 +29,9 @@ const Home = () => {
             existingInvestment.price = ( // Aggiornare il prezzo dell'investimento esistente
                 parseFloat(existingInvestment.price) + parseFloat(newInvestment.price)
             ).toFixed(2);
+            existingInvestment.volume = ( // Aggiornare il prezzo dell'investimento esistente
+            parseFloat(existingInvestment.volume) + parseFloat(newInvestment.volume)
+        ).toFixed(2);
             setInvestmentData([...investmentData]); // Aggiornare lo stato con i dati degli investimenti
         } else { // Se non esiste un investimento con lo stesso nome
             setInvestmentData([...investmentData, newInvestment]); // Aggiungere il nuovo investimento allo stato
@@ -73,8 +76,8 @@ const Home = () => {
                             <tr key={investment.id}>
                                 <td className='text-white'>{investment.id}</td>
                                 <td className='text-white'>{investment.name}</td>
-                                <td className='text-white'>{investment.price}</td>
                                 <td className='text-white'>{investment.volume}</td>
+                                <td className='text-white'>{investment.price}</td>
                                 <td className='text-white'>{investment.last7Days}</td>
                             </tr>
                         ))}

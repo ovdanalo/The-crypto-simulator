@@ -40,7 +40,6 @@ function App() {
         <Route path='/historic-investment' exact element={<Historic data={cryptocurrencies}/>} />
         <Route path='/cryptocurrencies-info' exact element={<CryptoInfo data={cryptocurrencies}/>} />
         <Route path='/about' exact element={<About />} />
-        <Route path='/contactus' exact element={<ContactUs />} />
       </Routes>
       <Footer />
 
