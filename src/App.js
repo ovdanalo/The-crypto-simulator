@@ -10,6 +10,7 @@ import CryptoInfo from './components/cryptoinfo/cryptoinfo';
 import About from './components/about/about';
 import Footer from './components/footer/footer';
 
+
 function App() {
   
   const [cryptocurrencies, setCryptocurrencies] = useState([]);
@@ -39,6 +40,7 @@ function App() {
         <Route path='/historic-investment' exact element={<Historic data={cryptocurrencies}/>} />
         <Route path='/cryptocurrencies-info' exact element={<CryptoInfo data={cryptocurrencies}/>} />
         <Route path='/about' exact element={<About />} />
+        <Route path='/contactus' exact element={<ContactUs />} />
       </Routes>
       <Footer />
 
