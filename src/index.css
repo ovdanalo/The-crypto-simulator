@@ -16,6 +16,9 @@
   .min-h-info{
     min-height: 34rem;
   }
+  .min-h-foot{
+    min-height: 5rem;
+  }
  
 }
 @font-face {

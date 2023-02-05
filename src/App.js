@@ -8,6 +8,7 @@ import Realtime from './components/realtimeInv/realtimeInv';
 import Historic from './components/historicInv/historicInv';
 import CryptoInfo from './components/cryptoinfo/cryptoinfo';
 import About from './components/about/about';
+import Footer from './components/footer/footer';
 
 function App() {
   
@@ -39,6 +40,7 @@ function App() {
         <Route path='/cryptocurrencies-info' exact element={<CryptoInfo data={cryptocurrencies}/>} />
         <Route path='/about' exact element={<About />} />
       </Routes>
+      <Footer />
 
     </div>
   );
