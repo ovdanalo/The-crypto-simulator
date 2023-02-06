@@ -19,6 +19,9 @@
   .min-h-foot{
     min-height: 5rem;
   }
+  .min-w-td-top10{
+    min-width: 6rem;
+  }
  
 }
 @font-face {
