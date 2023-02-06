@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+
 function ContactUs() {
   const [formData, setFormData] = useState({
     name: '',
@@ -22,7 +23,9 @@ function ContactUs() {
       
     
   };
-
+ 
+  
+  
     return (
         <div className='flex flex-col bg-black-200 lg:w-10/12 xl:w-8/12 h-def mx-auto my-6 j  justify-center rounded-lg'>
             <form className='flex flex-col items-center gap-10' onSubmit={handleSubmit}>
