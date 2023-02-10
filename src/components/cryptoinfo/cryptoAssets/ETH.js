@@ -49,8 +49,6 @@ const ETH = (props) => {
                                 <h3 className="text-teal-100 text-xl m-6">What is Ethereum Name Service?</h3>
                                 <p class="text-white px-1 md:px-15">Ethereum Name Service, aka ENS, is a distributed and extensible naming system based on the Ethereum blockchain. It is essentially the Web3 version of DNS, short for domain name service.
 
-                                    In its original state, a cryptocurrency address consists of a long string of numbers and letters designed to be read by computers. It may look like this — “0xDC25EF3F5B8A186998338A2ADA83795FBA2D695E” — making it confusing at times to read, and in some cases even leading to loss of funds.
-
                                     ENS provides a solution to this problem of long and confusing crypto addresses by assigning human-readable names to machine-readable identifiers such as Ethereum addresses, metadata, other cryptocurrency addresses and content hashes. With ENS, the long address above could become something as simple as “Alice.eth,” and you can receive any type of cryptocurrency or NFT via your ENS domain.
 
                                     ENS is based on two Ethereum smart contracts. The first is the ENS registry, which records three critical pieces of information: the owner of the domain, the resolver for the domain and the caching time for all records under the domain. The second smart contract is the Resolver, which translates the domain name to a machine-readable address and vice-versa.
