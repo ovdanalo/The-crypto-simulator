@@ -6,31 +6,31 @@ const Navbar = () => {
 
     return (
         <div className="flex flex-col md:flex-row justify-center items-center h-16 bg-black-200 sticky top-0 pt-3">
-            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden md:block">
+            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block">
                 <Link to="/top-10">Top 10</Link>
             </div>
-            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden md:block">
+            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block">
                 <Link to="/realtime-investment">Realtime Investment</Link>
             </div>
-            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden md:block">
+            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block">
                 <Link to="/historic-investment">Historic Investment</Link>
             </div>
-            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden md:block">
+            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block">
                 <Link to="/cryptocurrencies-info">Cryptocurrencies Info</Link>
             </div>
-            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden md:block">
+            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block">
                 <Link to="/about">About</Link>
             </div>
-            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden md:block">
+            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block">
                 <Link to="/contactUs">Contact Us</Link>
             </div>
-            <div className="block md:hidden">
+            <div className="flex lg:hidden right-0 justify-start">
                 <button
                     onClick={() => setIsOpen(!isOpen)}
-                    className="flex items-center p-2"
+                    className="flex p-2 border border-white rounded-full"
                 >
                     <svg
-                        className="w-6 h-6 fill-current"
+                        className="w-7 h-7 fill-teal-100"
                         viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg"
                     >
@@ -42,31 +42,35 @@ const Navbar = () => {
                     </svg>
                 </button>
                 <div
-                    className={`bg-black-200 text-gray-100 font-lato py-2 mt-2 ${isOpen ? "block" : "hidden"
-                        }`}
+                    className={`bg-black-200 text-gray-100 font-lato py-2 mt-1  ${isOpen ? "flex flex-col justify-start absolute w-full right-0" : "hidden"}`}
+                    style={{
+                        top: '90%',
+                        minWidth: '200px',
+                        boxShadow: '0px 4px 8px 0px rgba(0, 0, 0, 0.2)',
+                    }}
                 >
-                    <Link to="/top-10" className="block px-4 py-2">
+                    <Link to="/top-10" className="px-4 py-2">
                         Top 10
+
                     </Link>
-                    <Link to="/realtime-investment" className="block px-4 py-2">
+                    <Link to="/realtime-investment" className="px-4 py-2">
                         Realtime Investment
                     </Link>
-                    <Link to="/historic-investment" className="block px-4 py-2">
+                    <Link to="/historic-investment" className="px-4 py-2">
                         Historic Investment
                     </Link>
-                    <Link to="/cryptocurrencies-info" className="block px-4 py-2">
+                    <Link to="/cryptocurrencies-info" className="px-4 py-2">
                         Cryptocurrencies Info
                     </Link>
-                    <Link to="/about" className="block px-4 py-2">
+                    <Link to="/about" className="px-4 py-2">
                         About
                     </Link>
-                    <Link to="/contactUs" className="block px-4 py-2">
+                    <Link to="/contactUs" className="px-4 py-2">
                         Contact Us
                     </Link>
                 </div>
             </div>
         </div>
     );
-};
-
+}
 export default Navbar;
