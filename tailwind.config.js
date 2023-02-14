@@ -14,7 +14,8 @@ module.exports = {
       'white': '#E6E6E6',
       'black': {
         100: '#2E2E2E',
-        200: '#272727'},
+        200: '#272727',
+        300: '#5F5F5F'},
       'gray': {
         100: '#D6D6D6',
         200: '#C2C2C2',
@@ -41,7 +42,7 @@ module.exports = {
     fontFamily: {
       netron: ["netron"],
       lato: ['Lato', 'sans-serif'],
-      serif: ['Merriweather', 'serif'] 
+      serif: ['Merriweather', 'serif']
     },
     extend: {
       spacing: {
