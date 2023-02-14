@@ -8,24 +8,26 @@ const MATIC = (props) => {
                 if (item.name === "Polygon") {
                     return (
                         <div>
-                            <div className="bg-black-200 rounded-lg m-4" key={index}>
+                            <div className="flex flex-col justify-center items-center">
+                            <div className="bg-black-200 rounded-lg m-4 w-full lg:w-1/2" key={index}>
                                 <p className="text-teal-100 text-2xl">
                                     The price of {item.symbol.toUpperCase()} is {item.current_price}€
                                 </p>
                             </div>
-                            <div className="bg-black-200 rounded-lg m-4">
+                            <div className="bg-black-200 rounded-lg m-4 w-full lg:w-1/2">
                                 <p className="text-teal-100 text-2xl">
                                     There now are {item.circulating_supply.toFixed(2)} {item.symbol.toUpperCase()} circulating
                                 </p>
                             </div>
-                            <div className="bg-black-200 rounded-lg m-4">
+                            <div className="bg-black-200 rounded-lg m-4 w-full lg:w-1/2">
                                 <p className="text-teal-100 text-2xl">
                                     The maximum supply is {item.max_supply === null ? 'indefinite' : item.max_supply + ' ' + item.symbol.toUpperCase()}
                                 </p>
                             </div>
+                            </div>
                             <div>
                                 <h3 className="text-teal-100 text-xl m-6">What's {item.name}?</h3>
-                                <p className="text-white px-20">Polygon (previously Matic Network) is the first well-structured, easy-to-use platform for Ethereum scaling and infrastructure development. Its core component is Polygon SDK, a modular, flexible framework that supports building multiple types of applications.
+                                <p class="text-white px-1 md:px-15">Polygon (previously Matic Network) is the first well-structured, easy-to-use platform for Ethereum scaling and infrastructure development. Its core component is Polygon SDK, a modular, flexible framework that supports building multiple types of applications.
 
                                     To learn more about this project, check out our deep dive of Polygon Matic.
 
@@ -47,7 +49,7 @@ const MATIC = (props) => {
 
                                     MATIC, the native tokens of Polygon, is an ERC-20 token running on the Ethereum blockchain. The tokens are used for payment services on Polygon and as a settlement currency between users who operate within the Polygon ecosystem. The transaction fees on Polygon sidechains are also paid in MATIC tokens.</p>
                                 <h3 className="text-teal-100 text-xl m-6">Who Are the Founders of Polygon?</h3>
-                                <p className="text-white px-20">Polygon (formerly Matic Network) was launched in October 2017. Polygon was co-founded by Jaynti Kanani, Sandeep Nailwal and Anurag Arjun, two experienced blockchain developers and a business consultant.
+                                <p class="text-white px-1 md:px-15">Polygon (formerly Matic Network) was launched in October 2017. Polygon was co-founded by Jaynti Kanani, Sandeep Nailwal and Anurag Arjun, two experienced blockchain developers and a business consultant.
 
                                     Before moving to its network in 2019, the Polygon team was a huge contributor in the Ethereum ecosystem. The team worked on implementing the Plasma MVP, the WalletConnect protocol and the widely-used Dagger event notification engine on Ethereum.
 
@@ -59,7 +61,7 @@ const MATIC = (props) => {
 
                                     Anurag Arjun is the only non-programming co-founder of Polygon. As a product manager, he has had stints with IRIS Business, SNL Financial, Dexter Consultancy and Cognizant Technologies.</p>
                                 <h3 className="text-teal-100 text-xl m-6">What Makes Polygon Unique?</h3>
-                                <p className="text-white px-20">Polygon is self-described as a Layer 2 scaling solution, which means that the project doesn’t seek to upgrade its current basic blockchain layer any time soon. The project focuses on reducing the complexity of scalability and instant blockchain transactions.
+                                <p class="text-white px-1 md:px-15">Polygon is self-described as a Layer 2 scaling solution, which means that the project doesn’t seek to upgrade its current basic blockchain layer any time soon. The project focuses on reducing the complexity of scalability and instant blockchain transactions.
 
                                     Polygon uses a customized version of the Plasma framework which is built on proof-of-stake checkpoints that run through the Ethereum main-chain. This unique technology allows each sidechain on Polygon to achieve up to 65,536 transactions per block.
 
@@ -67,11 +69,11 @@ const MATIC = (props) => {
 
                                     While Polygon currently supports only Ethereum basechain, the network intends to extend support for additional basechains, based on community suggestions and consensus. This would make Polygon an interoperable decentralized Layer 2 blockchain platform</p>
                                 <h3 className="text-teal-100 text-xl m-6">Polygon (MATIC) London Hard Fork and EIP-1559 Upgrade</h3>
-                                <p className="text-white px-20">Polygon announced the much-anticipated London Hard Fork and Ethereum Improvement Proposal (EIP) 1559 upgrade will go live on the mainnet on Jan. 18, 2022. The upgrade will completely change the way the fee mechanism works on the Ethereum network — it eliminates first-price auction as the main fee calculation mechanism and instead uses a base fee that is burned, instead of sent to miners. Although it does not lower transaction fees, it makes it more stable, allowing users to estimate costs better and reduce overpayment.
+                                <p class="text-white px-1 md:px-15">Polygon announced the much-anticipated London Hard Fork and Ethereum Improvement Proposal (EIP) 1559 upgrade will go live on the mainnet on Jan. 18, 2022. The upgrade will completely change the way the fee mechanism works on the Ethereum network — it eliminates first-price auction as the main fee calculation mechanism and instead uses a base fee that is burned, instead of sent to miners. Although it does not lower transaction fees, it makes it more stable, allowing users to estimate costs better and reduce overpayment.
 
                                     However, as MATIC tokens are burned as base fees — and MATIC has a fixed supply of 10 billion tokens — it will have a deflationary effect on the digital asset. Polygon’s core team projected an annual burn of MATIC amounting to 0.27% of the token’s total supply — around 27 million tokens. This deflationary pressure will most likely benefit validators and delegators the most, as rewards for processing transactions on Polygon are denominated in MATIC. Furthermore, base fee will increase automatically once the block is filled up, resulting in fewer spam transactions and less network congestion. Ethereum mainnet’s London Hard Fork went live on Aug. 5, 2021.</p>
                                 <h3 className="text-teal-100 text-xl m-6">Polygon Network Carbon Neutrality</h3>
-                                <p className="text-white px-20">Polygon is one of the multiple blockchains achieving carbon neutrality. That initiative is part of Polygon's Green Manifesto, which aims to focus on sustainable development for blockchain. Polygon committed $20 million for various community initiatives to utilize Web3 technology to build a sustainable future for all. That includes focusing on new solutions for on-chain carbon credit retirement.
+                                <p class="text-white px-1 md:px-15">Polygon is one of the multiple blockchains achieving carbon neutrality. That initiative is part of Polygon's Green Manifesto, which aims to focus on sustainable development for blockchain. Polygon committed $20 million for various community initiatives to utilize Web3 technology to build a sustainable future for all. That includes focusing on new solutions for on-chain carbon credit retirement.
 
                                     Through a partnership with KlimaDAO, Polygon bought $400,000 worth of carbon credits. Those credits represent nearly 90,000 tonnes of CO2 emissions. The tokens were retired through KlimaDAO's offset aggregator tool, with BCT and MCO2 carbon credits created from offsets certified under the Verified Carbon Standard.
 
@@ -83,7 +85,7 @@ const MATIC = (props) => {
 
                                     Polygon and KlimaDAO have also retired carbon credits from various network-native projects, including Bull Run Forest Conservation Project, the Ghani Solar Power Project, Moss.Earth and the wind power project at Jaibhim, India.</p>
                                 <h3 className="text-teal-100 text-xl m-6">How Many Polygon (MATIC) Tokens Are There in Circulation?</h3>
-                                <p className="text-white px-20">MATIC tokens are released on a monthly basis. MATIC currently has a circulating supply of 4,877,830,774 MATIC tokens and a max supply of 10,000,000,000 MATIC tokens.
+                                <p class="text-white px-1 md:px-15">MATIC tokens are released on a monthly basis. MATIC currently has a circulating supply of 4,877,830,774 MATIC tokens and a max supply of 10,000,000,000 MATIC tokens.
 
                                     At its initial private sale in 2017, 3.8 percent of MATIC’s max supply was issued. In the April 2019 launchpad sale, another 19 percent of the total supply was sold. The MATIC price was $0.00263 per token, and $5 million was generated.
 
@@ -96,7 +98,7 @@ const MATIC = (props) => {
                                     Ecosystem tokens: 23.33 percent of the total supply.
                                     According to the release schedule, all the tokens will be released by December 2022.</p>
                                 <h3 className="text-teal-100 text-xl m-6">How Is the Polygon Secured?</h3>
-                                <p className="text-white px-20">As a Layer 2 solution utilizing a network of proof-of-stake validators for asset security, staking is an integral part of the Polygon ecosystem. Validators on the network will stake their MATIC tokens as collateral to become part of the network’s PoS consensus mechanism and will receive MATIC tokens in return.
+                                <p class="text-white px-1 md:px-15">As a Layer 2 solution utilizing a network of proof-of-stake validators for asset security, staking is an integral part of the Polygon ecosystem. Validators on the network will stake their MATIC tokens as collateral to become part of the network’s PoS consensus mechanism and will receive MATIC tokens in return.
 
                                     Members of the network who do not wish to become validators can delegate their MATIC tokens to another validator, but will still take part in their staking process and earn staking rewards.
 
