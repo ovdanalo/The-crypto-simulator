@@ -3,44 +3,30 @@ import React, { useEffect, useState } from "react";
 const Home = (props) => {
   const [investmentData, setInvestmentData] = useState([]);
   const [selectedCrypto, setSelectedCrypto] = useState("");
-  const [cryptoIndex, setCryptoIndex] = useState(0);
-  console.log(cryptoIndex);
-  useEffect(() => {
-    switch (selectedCrypto) {
-      case "Bitcoin BTC":
-        setCryptoIndex(0);
-        break;
-      case "Ethereum ETH":
-        setCryptoIndex(1);
-        break;
-      case "BNB BNB":
-        setCryptoIndex(3);
-        break;
-      case "XRP XRP":
-        setCryptoIndex(5);
-        break;
-      case "Cardano ADA":
-        setCryptoIndex(6);
-        break;
-      case "Dogecoin DOGE":
-        setCryptoIndex(9);
-        break;
-      case "Polygon MATIC":
-        setCryptoIndex(8);
-        break;
-      default:
-        console.log("select a crypto");
-    }
-  }, [selectedCrypto]);
+  const [cryptoInfo, setCryptoInfo] = useState({});
+  console.log(cryptoInfo);
+  console.log(selectedCrypto);
+
   const handleChange = () => {
-    const selectCrypto = document.getElementById("selectCrypto"); // Selezionare l'elemento con id "selectCrypto"
-    const selectedCryptoValue = selectCrypto.value; // Ottenere il valore selezionato del cripto
+    const selectCrypto = document.getElementById("selectCrypto");
+    const selectedCryptoValue = selectCrypto.value;
     setSelectedCrypto(selectedCryptoValue);
     if (!selectedCryptoValue) {
       // Se non è stato selezionato alcun valore
       return; // Interrompere l'esecuzione della funzione
     }
   };
+  async function apiRequest(selectedCrypto) {
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/coins/${selectedCrypto}`
+    );
+    const data = await response.json();
+    setCryptoInfo(data);
+  }
+  useEffect(() => {
+    apiRequest(selectedCrypto);
+  }, [selectedCrypto]);
+
   const handleBuy = (e) => {
     e.preventDefault();
 
@@ -51,7 +37,11 @@ const Home = (props) => {
     if (!inputAmount || inputAmount < 0) {
       return;
     }
-    const cryptoPrice = props.data[cryptoIndex].current_price;
+    const money = document.getElementById("money").value;
+    const cryptoPrice =
+      money === "EUR"
+        ? cryptoInfo.market_data.current_price.eur
+        : cryptoInfo.market_data.current_price.usd;
     console.log(cryptoPrice);
 
     const newInvestment = {
@@ -99,7 +89,7 @@ const Home = (props) => {
               type="number"
               className="rounded-tl-lg rounded-bl-lg text-center p-1"
             ></input>
-            <select className="rounded-tr-lg rounded-br-lg p-1">
+            <select id="money" className="rounded-tr-lg rounded-br-lg p-1">
               <option>EUR</option>
               <option>USD</option>
             </select>
@@ -155,15 +145,10 @@ const Home = (props) => {
           </tbody>
         </table>
       </div>
-
       <datalist id="cryptoList">
-        <option>Bitcoin BTC</option>
-        <option>Ethereum ETH</option>
-        <option>BNB BNB</option>
-        <option>XRP XRP</option>
-        <option>Cardano ADA</option>
-        <option>Dogecoin DOGE</option>
-        <option>Polygon MATIC</option>
+        {props.data.map((crypto) => (
+          <option>{crypto.id}</option>
+        ))}
       </datalist>
     </div>
   );
