@@ -19,7 +19,36 @@
   .min-h-foot{
     min-height: 5rem;
   }
- 
+  .navbar-menu {
+    animation-name: slide-down;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in-out;
+}
+
+.navbar-menu-closed {
+    animation-name: slide-up;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes slide-down {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slide-up {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        display:none;
+    }
+}
 }
 @font-face {
   font-family: "netron";

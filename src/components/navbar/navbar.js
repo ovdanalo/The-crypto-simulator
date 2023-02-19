@@ -1,36 +1,37 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "../../index.css";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
         <div className="flex flex-col md:flex-row justify-center items-center h-16 bg-black-200 sticky top-0 pt-3">
-            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-400 ease-in-out">
+            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-200 duration-200 ease-in-out">
                 <Link to="/top-10">Top 10</Link>
             </div>
-            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-400 ease-in-out">
+            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-200 duration-200 ease-in-out">
                 <Link to="/realtime-investment">Realtime Investment</Link>
             </div>
-            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-400 ease-in-out">
+            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-200 duration-200 ease-in-out">
                 <Link to="/historic-investment">Historic Investment</Link>
             </div>
-            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-400 ease-in-out">
+            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-200 duration-200 ease-in-out">
                 <Link to="/cryptocurrencies-info">Cryptocurrencies Info</Link>
             </div>
-            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-400 ease-in-out">
+            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-200 duration-200 ease-in-out">
                 <Link to="/about">About</Link>
             </div>
-            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-400 ease-in-out">
+            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-200 duration-200 ease-in-out">
                 <Link to="/contactUs">Contact Us</Link>
             </div>
             <div className="flex lg:hidden right-0 justify-start">
                 <button
                     onClick={() => setIsOpen(!isOpen)}
-                    className="flex p-2 border border-white rounded-full"
+                    className="flex p-2 border border-white rounded-full hover:bg-black-100 duration-200 ease-in-out hover:shadow-lg"
                 >
                     <svg
-                        className="w-7 h-7 fill-teal-100"
+                        className="w-8 h-8 fill-teal-100 duration-200 ease-in-out"
                         viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg"
                     >
@@ -42,30 +43,32 @@ const Navbar = () => {
                     </svg>
                 </button>
                 <div
-                    className={`bg-black-200 text-gray-100 font-lato py-2 mt-1"> ${isOpen ? "flex flex-col justify-start absolute w-full right-0" : "hidden"}`}
+                
+                    className={`${isOpen ? 'bg-black-200 rounded-xl  text-gray-100 font-lato py-2 mt-1 navbar-menu flex flex-col absolute justify-start w-1/2 ' : 'hidden'
+                        }`}
                     style={{
-                        top: '90%',
-                        minWidth: '200px',
-                        boxShadow: '0px 4px 8px 0px rgba(0, 0, 0, 0.2)',
+                        top: '92%',
+                        right: '25%',
+                        left: '25%',
+                        boxShadow: '0px 4px 8px 2px rgba(0, 0, 0, 0.5)',
                     }}
                 >
-                    <Link to="/top-10" className="px-4 py-2  hover:text-teal-100 duration-400 ease-in-out">
+                    <Link to="/top-10" className="px-4 py-2  hover:text-teal-200 duration-200 ease-in-out">
                         Top 10
-
                     </Link>
-                    <Link to="/realtime-investment" className="px-4 py-2  hover:text-teal-100 duration-400 ease-in-out">
+                    <Link to="/realtime-investment" className="px-4 py-2  hover:text-teal-200 duration-200 ease-in-out">
                         Realtime Investment
                     </Link>
-                    <Link to="/historic-investment" className="px-4 py-2  hover:text-teal-100 duration-400 ease-in-out">
+                    <Link to="/historic-investment" className="px-4 py-2  hover:text-teal-200 duration-200 ease-in-out">
                         Historic Investment
                     </Link>
-                    <Link to="/cryptocurrencies-info" className="px-4 py-2  hover:text-teal-100 duration-400 ease-in-out">
+                    <Link to="/cryptocurrencies-info" className="px-4 py-2  hover:text-teal-200 duration-200 ease-in-out">
                         Cryptocurrencies Info
                     </Link>
-                    <Link to="/about" className="px-4 py-2  hover:text-teal-100 duration-400 ease-in-out">
+                    <Link to="/about" className="px-4 py-2  hover:text-teal-200 duration-200 ease-in-out">
                         About
                     </Link>
-                    <Link to="/contactUs" className="px-4 py-2  hover:text-teal-100 duration-400 ease-in-out">
+                    <Link to="/contactUs" className="px-4 py-2  hover:text-teal-200 duration-200 ease-in-out">
                         Contact Us
                     </Link>
                 </div>
