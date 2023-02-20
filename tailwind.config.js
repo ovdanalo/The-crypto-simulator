@@ -13,8 +13,8 @@ module.exports = {
     colors: {
       'white': '#E6E6E6',
       'black': {
-        100: '#2E2E2E',
-        200: '#272727',
+        100: '#1D1D1D',
+        200: '#131313',
         300: '#5F5F5F'},
       'gray': {
         100: '#D6D6D6',
@@ -22,6 +22,7 @@ module.exports = {
         300: 'ADADAD'
       },
       'teal': {
+        50: '#F1FFFD',
         100: '#D8FDF7',
         200: '#06d1af',
         300: '#059E85',

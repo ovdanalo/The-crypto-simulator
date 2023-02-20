@@ -6,7 +6,7 @@ import github from '../../../assets/imgs/githubLogo.png'
 const DevInfo = (props) => {
     return (
         <div className={"flex items-center justify-center md:w-8/12 min-h-dev bg-black-200 rounded-lg my-4 overflow-hidden "+ props.position}>
-            <div className={'flex bg-teal-200 w-40 xl:h-48 sm:h-40 '+ props.roundedImg} >
+            <div className={'flex gradient-info w-40 xl:h-48 sm:h-40 p-4 '+ props.roundedImg} >
                 <img src={props.img} alt='' className='object-contain'></img>
             </div>
             <div className={'flex flex-col bg-black-100 w-3/4 xl:h-48 sm:h-40 '+ props.roundedDiv + ' ' + props.align}>

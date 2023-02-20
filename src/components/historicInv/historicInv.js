@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Graph from './graph/graph'
 
 const Historic = (props) => {
@@ -50,13 +50,13 @@ const Historic = (props) => {
     }
 
     return (
-        <div className='flex flex-row bg-black-200 lg:w-10/12 xl:w-8/12 h-def mx-auto my-6 justify-center rounded-lg'>
-            <div className='flex flex-col bg-black-100 w-1/3 m-6 mr-0 rounded-lg py-12'>
+        <div className='flex flex-col xl:flex-row bg-black-200 lg:w-10/12 xl:w-8/12 h-def mx-auto my-6 justify-center rounded-lg'>
+            <div className='flex flex-col bg-black-100 mx-auto w-11/12 xl:w-1/3 xl:m-6 xl:mr-0 rounded-lg mt-12 py-12'>
                 <form>
                     <div>
                         <label htmlFor='amount' className='flex text-white p-6 justify-center'>How much did you invest?</label>
-                        <input name='amount' type='number' value={amount} onChange={(evt) => setAmount(evt.target.value)} className='rounded-tl-lg rounded-bl-lg text-center p-1'></input>
-                        <select className='rounded-tr-lg rounded-br-lg p-1' value={startCurrency} onChange={evt => setStartCurrency(evt.target.value)}>
+                        <input name='amount' type='number' value={amount} onChange={(evt) => setAmount(evt.target.value)} className='shadow rounded-tl-lg rounded-bl-lg text-center p-1 bg-teal-50'></input>
+                        <select className='shadow rounded-tr-lg rounded-br-lg p-1 bg-teal-50' value={startCurrency} onChange={evt => setStartCurrency(evt.target.value)}>
                             <option value='EUR'>EUR</option>
                             <option value='USD'>USD</option>
                         </select>
@@ -64,32 +64,42 @@ const Historic = (props) => {
                     <div>
                         <label htmlFor='crypto' className='flex text-white pt-6 pb-6 justify-center '>In which cryptocurrency?</label>
 
-                        <input list="cryptoList" id="selectCrypto" name="crypto" value={endCurrency} onChange={evt => setEndCurrency(evt.target.value)} className='rounded-lg p-1' />
+                        <input list="cryptoList" id="selectCrypto" name="crypto" value={endCurrency} onChange={evt => setEndCurrency(evt.target.value)} className='shadow rounded-lg p-1 text-center bg-teal-50' />
                     </div>
-                    <div className='flex flex-row pt-6'>
+                    <div className='flex flex-row justify-center pt-6'>
                         <div className='flex flex-col'>
                             <label htmlFor='startDate' className='text-white'>in:</label>
-                            <input name='startDate' type='date' value={startDate} onChange={evt => setStartDate(evt.target.value)} className='p-1 rounded-lg m-5 my-2'></input>
+                            <input name='startDate' type='date' value={startDate} onChange={evt => setStartDate(evt.target.value)} className='shadow p-1 rounded-lg m-2 my-2 bg-teal-50'></input>
                         </div>
                         <div className='flex flex-col'>
                             <label htmlFor='endDate' className='text-white'>at:</label>
-                            <input name='endDate' type='date' value={endDate} onChange={evt => setEndDate(evt.target.value)} className='p-1 rounded-lg my-2 '></input>
+                            <input name='endDate' type='date' value={endDate} onChange={evt => setEndDate(evt.target.value)} className='shadow p-1 rounded-lg m-2 my-2 bg-teal-50 '></input>
                         </div>
                     </div>
-                    <button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-full" onClick={(evt) => handleClick(evt)}>
+                    <button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-lg shadow" onClick={(evt) => handleClick(evt)}>
                         CALCULATE
                     </button>
                 </form>
             </div>
-            <div className='flex flex-col bg-black-100 w-2/3 m-6 rounded-lg'>
+            <div className='flex flex-col bg-black-100 w-11/12 xl:w-2/3 m-6 xl:mx-6 mx-auto rounded-lg'>
                 {hasData ? <div>
-                    <h3 className='text-teal-100 text-3xl text mt-10'>Result:</h3>
-                    <div id='graph-container' className='bg-black-200 h-3/6 w-4/5 mx-auto my-6'><Graph priceData={priceData} yearData={yearData} color={color} /></div>
+                    <h3 className='text-teal-100 text-3xl text mt-10'>RESULT</h3>
+                    <div id='graph-container' className='bg-black-200 h-3/6 w-4/5 mx-auto my-6 shadow'><Graph priceData={priceData} yearData={yearData} color={color} /></div>
                     <div className='mt-6'>
-                        <h3 className='text-white text-2xl mb-4'>Initial amount in euro: <span className='text-teal-100'>{amount} €</span></h3>
-                        <h3 className='text-white text-2xl mb-4'>Amount in crypto: {returnData.cryptoAmount} {endCurrency}</h3>
-                        <h3 className='text-white text-2xl mb-4'>End amount: {returnData.endAmount} {startCurrency}</h3>
-                        <h3 className='text-white text-2xl mb-4'>Percentage difference: {returnData.percentage}%</h3>
+                        <div className='border-2 border-black-300 bg-black-200 pt-2 mx-24 rounded-lg mt-4 shadow'>
+                            <h3 className='text-white text-2xl mb-4'>Initial amount : <span className='text-teal-100'>{amount} €</span></h3>
+                        </div>
+                        <div className='border-2 border-black-300 bg-black-200 pt-2 mx-24 rounded-lg mt-4 shadow'>
+                            <h3 className='text-white text-2xl mb-4'>Crypto amount : {returnData.cryptoAmount} {endCurrency}</h3>
+                        </div>
+                        <div className='flex flex-row justify-center items-center mx-24 pt-2 my-4'>
+                            <div className='mx-2 border-black-300 bg-black-200 pt-2 px-6 border-2 rounded-lg mb-10 shadow'>
+                                <h3 className='text-white text-2xl mb-4'>End amount: {returnData.endAmount} {startCurrency}</h3>
+                            </div>
+                            <div className='mx-2 border-black-300 bg-black-200 pt-2 px-6 border-2 rounded-lg mb-10 shadow'>
+                                <h3 className='text-white text-2xl mb-4'>Percentage difference: {returnData.percentage}%</h3>
+                            </div>
+                        </div>
                     </div>
                 </div>
                     : ''}

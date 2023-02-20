@@ -43,8 +43,8 @@ const Home = () => {
                 <form>
                     <div>
                         <label for='amount' className='flex text-white py-6 justify-center'>How much do you want to invest?</label>
-                        <input name='amount' id="inputAmount" type='number' className='rounded-tl-lg rounded-bl-lg text-center p-1'></input>
-                        <select className='rounded-tr-lg rounded-br-lg p-1'>
+                        <input name='amount' id="inputAmount" type='number' className='shadow rounded-tl-lg rounded-bl-lg text-center p-1 bg-teal-50'></input>
+                        <select className='shadow rounded-tr-lg rounded-br-lg p-1 bg-teal-50'>
                             <option>EUR</option>
                             <option>USD</option>
                         </select>
@@ -52,10 +52,10 @@ const Home = () => {
                     <div>
                         <label for='crypto' className='flex text-white pt-12 pb-6 justify-center '>In which cryptocurrency?</label>
 
-                        <input list="cryptoList" id="selectCrypto" name="crypto" size="27" autocomplete="off" className='rounded-lg p-1' />
+                        <input list="cryptoList" id="selectCrypto" name="crypto" size="27" autocomplete="off" className='shadow rounded-lg p-1 bg-teal-50' />
                     </div>
 
-                    <button onClick={handleBuy} class="bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-full">
+                    <button onClick={handleBuy} class="bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-lg shadow">
                         BUY
                     </button>
                 </form>
