@@ -10,9 +10,9 @@ const DevInfo = (props) => {
                 <img src={props.img} alt='' className='object-contain'></img>
             </div>
             <div className={'flex flex-col bg-black-100 w-3/4 xl:h-48 sm:h-40 '+ props.roundedDiv + ' ' + props.align}>
-                <p className='flex text-teal-100 xl:m-8 sm:m-6 text-xl '>{props.devName}</p>
-                <div className='flex h-0.5 w-8/12 bg-teal-100 my-1'></div>
-                <div className={'flex space-x-2 w-8/12 h-10 m-4 ' + props.linkPos}>
+                <p className='flex text-teal-100 xl:m-8 sm:m-6 sm:text-xl xl:text-2xl '>{props.devName}</p>
+                <div className='flex h-0.5 w-8/12 bg-teal-100 sm:my-0 xl:my-0'></div>
+                <div className={'flex space-x-2 w-8/12 h-10 sm:m-4 md:mt-4 ' + props.linkPos}>
                     <Links logo={linkedin} type='linkedin' linkedin={props.linkedin} />
                     <Links logo={github} type='github'git={props.git}  />              
                 </div>
