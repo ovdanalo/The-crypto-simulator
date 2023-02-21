@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { internalMemory } from "../../utilities/memory";
 
 const Home = (props) => {
   const [investmentData, setInvestmentData] = useState([]);
@@ -6,6 +7,7 @@ const Home = (props) => {
   const [cryptoInfo, setCryptoInfo] = useState({});
   console.log(cryptoInfo);
   console.log(selectedCrypto);
+  console.log(investmentData);
 
   const handleChange = () => {
     const selectCrypto = document.getElementById("selectCrypto");
@@ -74,57 +76,74 @@ const Home = (props) => {
       // Se non esiste un investimento con lo stesso nome
       setInvestmentData([...investmentData, newInvestment]); // Aggiungere il nuovo investimento allo stato
     }
+    const saveIt = () => {
+      const myInvestment = {
+        amount: inputAmount,
+        currentAmount: newInvestment.volume,
+      };
+
+      if (existingInvestment) {
+        const newMyInvestment = {
+          amount: existingInvestment.price + newInvestment.price,
+          currentAmount: existingInvestment.volume + newInvestment.volume,
+        };
+
+        internalMemory.save(`my${selectedCrypto}`, newMyInvestment);
+      } else internalMemory.save(`my${selectedCrypto}`, myInvestment);
+    };
+    saveIt();
   };
+
   return (
-    <div className="flex flex-row bg-black-200 w-8/12 xl:h-def mx-auto my-6 justify-center rounded-lg">
-      <div className="flex flex-col bg-black-100 w-1/3 m-6 mr-0 rounded-lg py-12">
+    <div className='flex flex-row bg-black-200 w-8/12 xl:h-def mx-auto my-6 justify-center rounded-lg'>
+      <div className='flex flex-col bg-black-100 w-1/3 m-6 mr-0 rounded-lg py-12'>
         <form>
           <div>
-            <label for="amount" className="flex text-white py-6 justify-center">
+            <label for='amount' className='flex text-white py-6 justify-center'>
               How much do you want to invest?
             </label>
             <input
-              name="amount"
-              id="inputAmount"
-              type="number"
-              className="rounded-tl-lg rounded-bl-lg text-center p-1"
+              name='amount'
+              id='inputAmount'
+              type='number'
+              className='rounded-tl-lg rounded-bl-lg text-center p-1'
             ></input>
-            <select id="money" className="rounded-tr-lg rounded-br-lg p-1">
+            <select id='money' className='rounded-tr-lg rounded-br-lg p-1'>
               <option>EUR</option>
               <option>USD</option>
             </select>
           </div>
           <div>
             <label
-              for="crypto"
-              className="flex text-white pt-12 pb-6 justify-center "
+              for='crypto'
+              className='flex text-white pt-12 pb-6 justify-center '
             >
               In which cryptocurrency?
             </label>
 
             <input
-              list="cryptoList"
-              id="selectCrypto"
-              name="crypto"
-              size="27"
-              autocomplete="off"
-              className="rounded-lg p-1"
+              list='cryptoList'
+              id='selectCrypto'
+              name='crypto'
+              size='27'
+              autocomplete='off'
+              className='rounded-lg p-1'
               onChange={handleChange}
             />
           </div>
 
           <button
             onClick={handleBuy}
-            class="bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-full"
+            class='bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-full'
           >
             BUY
           </button>
         </form>
       </div>
-      <div className="flex flex-col bg-black-100 w-2/3 m-6 rounded-lg">
-        <table className="w-10/12 mx-auto">
-          <thead className="text-white">
-            <tr className="h-20 border-b border-b-teal-100">
+      <div className='flex flex-col bg-black-100 w-2/3 m-6 rounded-lg'>
+        <table className='w-10/12 mx-auto'>
+          <thead className='text-white'>
+            <tr className='h-20 border-b border-b-teal-100'>
               <th>#</th>
               <th>Name</th>
               <th>Amount</th>
@@ -135,17 +154,17 @@ const Home = (props) => {
           <tbody>
             {investmentData.map((investment, index) => (
               <tr key={investment.id}>
-                <td className="text-white">{investment.id}</td>
-                <td className="text-white">{investment.name}</td>
-                <td className="text-white">{investment.volume}</td>
-                <td className="text-white">{investment.price}</td>
-                <td className="text-white">{investment.last7Days}</td>
+                <td className='text-white'>{investment.id}</td>
+                <td className='text-white'>{investment.name}</td>
+                <td className='text-white'>{investment.volume}</td>
+                <td className='text-white'>{investment.price}</td>
+                <td className='text-white'>{investment.last7Days}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <datalist id="cryptoList">
+      <datalist id='cryptoList'>
         {props.data.map((crypto) => (
           <option>{crypto.id}</option>
         ))}
