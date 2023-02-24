@@ -1,81 +1,64 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { internalMemory } from "../../utilities/memory";
 
 const Home = (props) => {
   const [investmentData, setInvestmentData] = useState([]);
   const [selectedCrypto, setSelectedCrypto] = useState("");
-  const [money, setMoney] = useState([]);
-
+  const [cryptoInfo, setCryptoInfo] = useState({});
+  console.log(cryptoInfo);
   console.log(selectedCrypto);
   console.log(investmentData);
-  console.log(money);
-  const historicInvestment = internalMemory.find(selectedCrypto);
-  console.log(historicInvestment);
 
   const handleChange = () => {
     const selectCrypto = document.getElementById("selectCrypto");
     const selectedCryptoValue = selectCrypto.value;
     setSelectedCrypto(selectedCryptoValue);
-
     if (!selectedCryptoValue) {
       // Se non è stato selezionato alcun valore
       return; // Interrompere l'esecuzione della funzione
     }
   };
+  async function apiRequest(selectedCrypto) {
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/coins/${selectedCrypto}`
+    );
+    const data = await response.json();
+    setCryptoInfo(data);
+  }
+  useEffect(() => {
+    apiRequest(selectedCrypto);
+  }, [selectedCrypto]);
 
   const handleBuy = (e) => {
     e.preventDefault();
 
-    let inputAmount = parseInt(
+    const inputAmount = parseInt(
       document.getElementById("inputAmount").value,
       10
     ); // Convertire l'importo in ingresso in intero
     if (!inputAmount || inputAmount < 0) {
       return;
     }
-    const index = props.data.findIndex((x) => x.id === selectedCrypto);
-    //const money = document.getElementById("money").value;
-    const cryptoPrice = props.data[index].current_price;
-
+    const money = document.getElementById("money").value;
+    const cryptoPrice =
+      money === "EUR"
+        ? cryptoInfo.market_data.current_price.eur
+        : cryptoInfo.market_data.current_price.usd;
     console.log(cryptoPrice);
-
-    const inputMoney = {
-      name: selectedCrypto,
-      amount: inputAmount,
-    };
-    console.log(inputMoney);
-
-    const totalMoney = money.find((input) => input.name === inputMoney.name);
-    if (totalMoney) {
-      totalMoney.amount = (
-        parseFloat(totalMoney.amount) + parseFloat(inputMoney.amount)
-      ).toFixed(2);
-
-      setMoney([...money]);
-    } else {
-      setMoney([...money, inputMoney]);
-    }
-    const volume = parseFloat(inputAmount) / parseFloat(cryptoPrice);
 
     const newInvestment = {
       // Creare un nuovo oggetto di investimento
       id: investmentData.length + 1, // ID univoco
       name: selectedCrypto.split(" ")[0], // Nome della criptovaluta
-      volume: (parseFloat(inputAmount) / parseFloat(cryptoPrice)).toFixed(2),
-      price: (parseFloat(volume) / parseFloat(cryptoPrice)).toFixed(2), // Prezzo del nuovo investimento
-      last7Days: 0,
+      volume: inputAmount / cryptoPrice,
+      price: inputAmount, // Prezzo del nuovo investimento
+      last7Days: (Math.random() * (100 - 1) + 1).toFixed(2), // Ultimi 7 giorni di variazione del prezzo
     };
     const existingInvestment = investmentData.find(
       // Verificare se esiste già un investimento con lo stesso nome
       (investment) => investment.name === newInvestment.name
     );
     if (existingInvestment) {
-      existingInvestment.last7Days =
-        (
-          ((volume - parseFloat(historicInvestment.cryptoAmount)) /
-            parseFloat(historicInvestment.cryptoAmount)) *
-          100
-        ).toFixed(2) + "%";
       // Se esiste già un investimento
       existingInvestment.price =
         // Aggiornare il prezzo dell'investimento esistente
@@ -93,17 +76,16 @@ const Home = (props) => {
       // Se non esiste un investimento con lo stesso nome
       setInvestmentData([...investmentData, newInvestment]); // Aggiungere il nuovo investimento allo stato
     }
-    const currentMoney = money.find((input) => input.name === selectedCrypto);
     const saveIt = () => {
       const myInvestment = {
-        moneyInvestment: inputAmount,
-        cryptoAmount: newInvestment.volume,
+        amount: inputAmount,
+        currentAmount: newInvestment.volume,
       };
 
-      if (totalMoney) {
+      if (existingInvestment) {
         const newMyInvestment = {
-          moneyInvestment: currentMoney.amount,
-          cryptoAmount: existingInvestment.volume,
+          amount: existingInvestment.price + newInvestment.price,
+          currentAmount: existingInvestment.volume + newInvestment.volume,
         };
 
         internalMemory.save(`${selectedCrypto}`, newMyInvestment);
