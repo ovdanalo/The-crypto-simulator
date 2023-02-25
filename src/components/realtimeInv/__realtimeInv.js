@@ -27,22 +27,19 @@ const RealTime = (props) => {
     } else {
       console.log("ciao");
     }
-    const asyncroned = async () => {
-      const historicInvestment = internalMemory.find(selectedCrypto);
-      let index = props.data.findIndex((x) => x.id === selectedCrypto);
+    const historicInvestment = internalMemory.find(selectedCrypto);
+    let index = props.data.findIndex((x) => x.id === selectedCrypto);
 
-      const currentCryptoPrice = props.data[index].current_price;
-      setCryptoPrice(currentCryptoPrice);
-      const percentageValue =
-        ((parseFloat(historicInvestment.cryptoAmount) * cryptoPrice) /
-          parseFloat(historicInvestment.moneyInvestment)) *
-          100 -
-        100;
-      const setter = await setPercentage(percentageValue);
-      console.log(percentageValue);
-      console.log(currentCryptoPrice);
-    };
-    asyncroned();
+    const currentCryptoPrice = props.data[index].current_price;
+    setCryptoPrice(currentCryptoPrice);
+    const percentageValue =
+      ((parseFloat(historicInvestment.cryptoAmount) * cryptoPrice) /
+        parseFloat(historicInvestment.moneyInvestment)) *
+        100 -
+      100;
+    setPercentage(percentageValue);
+    console.log(percentageValue);
+    console.log(currentCryptoPrice);
   }, [cryptoPrice, props.data, selectedCrypto]);
 
   const handleChange = () => {

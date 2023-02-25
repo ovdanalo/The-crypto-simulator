@@ -4,7 +4,7 @@ import "./App.css";
 import Header from "./components/header/header";
 import Navbar from "./components/navbar/navbar";
 import Top10 from "./components/top10/top10";
-import Realtime from "./components/realtimeInv/realtimeInv";
+import RealTime from "./components/realtimeInv/realtimeInv";
 import Historic from "./components/historicInv/historicInv";
 import CryptoInfo from "./components/cryptoinfo/cryptoinfo";
 import About from "./components/about/about";
@@ -29,32 +29,32 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className='App'>
       <Header />
       <Navbar />
       <Routes>
         <Route
-          path="/top-10"
+          path='/top-10'
           exact
           element={<Top10 data={cryptocurrencies} />}
         />
         <Route
-          path="/realtime-investment"
+          path='/realtime-investment'
           exact
-          element={<Realtime data={cryptocurrencies} />}
+          element={<RealTime data={cryptocurrencies} />}
         />
         <Route
-          path="/historic-investment"
+          path='/historic-investment'
           exact
           element={<Historic data={cryptocurrencies} />}
         />
         <Route
-          path="/cryptocurrencies-info"
+          path='/cryptocurrencies-info'
           exact
           element={<CryptoInfo data={cryptocurrencies} />}
         />
-        <Route path="/about" exact element={<About />} />
-        <Route path="/contactus" exact element={<ContactUs />} />
+        <Route path='/about' exact element={<About />} />
+        <Route path='/contactus' exact element={<ContactUs />} />
       </Routes>
       <Footer />
     </div>
