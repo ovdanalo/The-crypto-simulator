@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
-const Realtime = (props) => {
+const Realtime = ({ data }) => {
   const [cryptoData, setCryptoData] = useState(null);
   const [inputData, setInputData] = useState({
     euroValue: "",
@@ -12,10 +12,27 @@ const Realtime = (props) => {
     if (storedData) {
       setCryptoData(JSON.parse(storedData));
     } else {
-      setCryptoData({
-      });
+      setCryptoData({});
     }
   }, []);
+
+  useEffect(() => {
+    if (cryptoData) {
+      const updatedData = { ...cryptoData };
+      Object.keys(updatedData).forEach((crypto) => {
+        const cryptoDataItem = data.find((item) => item.id === crypto);
+        if (cryptoDataItem) {
+          const crAm = updatedData[crypto].crAm;
+          const moAm = crAm * cryptoDataItem.current_price;
+          const priceChange =
+            cryptoDataItem.price_change_percentage_7d_in_currency;
+          updatedData[crypto] = { moAm, crAm, priceChange };
+        }
+      });
+      localStorage.setItem("cryptoData", JSON.stringify(updatedData));
+      setCryptoData(updatedData);
+    }
+  }, [data]);
 
   const handleSave = () => {
     const storedData = localStorage.getItem("cryptoData");
@@ -24,9 +41,11 @@ const Realtime = (props) => {
       updatedData = JSON.parse(storedData);
     }
     const { selectedCrypto, euroValue } = inputData;
-    const selectedCryptoData = props.data.find((item) => item.id === selectedCrypto);
-    const moAm = (updatedData[selectedCrypto]?.moAm || 0) + parseFloat(euroValue);
-    const crAm = moAm / selectedCryptoData.current_price;
+    const selectedCryptoData = data.find((item) => item.id === selectedCrypto);
+    const crAm =
+      (updatedData[selectedCrypto]?.crAm || 0) +
+      parseFloat(euroValue) / selectedCryptoData.current_price;
+    const moAm = crAm * selectedCryptoData.current_price;
     const priceChange = selectedCryptoData.price_change_percentage_7d_in_currency;
 
     updatedData[selectedCrypto] = { moAm, crAm, priceChange };
@@ -159,7 +178,7 @@ const Realtime = (props) => {
                         <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
                       </>
                     )}
-                    {key === "polygon" && (
+                    {key === "matic-network" && (
                       <>
                         <td>{cryptoData[key].crAm.toFixed(8)}</td>
                         <td>{cryptoData[key].moAm.toFixed(2)}</td>
@@ -182,7 +201,7 @@ const Realtime = (props) => {
         )}
       </div>
       <datalist id='cryptoList'>
-        {props.data.map((crypto) => (
+        {data.map((crypto) => (
           <option>{crypto.id}</option>
         ))}
       </datalist>
