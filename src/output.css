@@ -767,6 +767,10 @@ video {
   height: 5rem;
 }
 
+.h-3 {
+  height: 0.75rem;
+}
+
 .h-10 {
   height: 2.5rem;
 }
@@ -944,6 +948,10 @@ video {
 
 .border-b {
   border-bottom-width: 1px;
+}
+
+.border-b-2 {
+  border-bottom-width: 2px;
 }
 
 .border-black-300 {
