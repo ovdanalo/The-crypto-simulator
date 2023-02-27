@@ -7,19 +7,19 @@ const Navbar = () => {
 
     return (
         <div className="flex flex-col md:flex-row justify-center items-center h-16 bg-black-200 sticky top-0 pt-3">
-            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-200 duration-200 ease-in-out">
+            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out">
                 <Link to="/top-10">Top 10</Link>
             </div>
-            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-200 duration-200 ease-in-out">
+            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out">
                 <Link to="/realtime-investment">Realtime Investment</Link>
             </div>
-            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-200 duration-200 ease-in-out">
+            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out">
                 <Link to="/historic-investment">Historic Investment</Link>
             </div>
-            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-200 duration-200 ease-in-out">
+            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out">
                 <Link to="/cryptocurrencies-info">Cryptocurrencies Info</Link>
             </div>
-            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-200 duration-200 ease-in-out">
+            <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out">
                 <Link to="/about">About</Link>
             </div>
             <div className="flex lg:hidden right-0 justify-start">
@@ -50,19 +50,19 @@ const Navbar = () => {
                         boxShadow: '0px 4px 8px 2px rgba(0, 0, 0, 0.5)',
                     }}
                 >
-                    <Link to="/top-10" className="px-4 py-2  hover:text-teal-200 duration-200 ease-in-out">
+                    <Link to="/top-10" className="px-4 py-2  hover:text-teal-100 duration-200 ease-in-out">
                         Top 10
                     </Link>
-                    <Link to="/realtime-investment" className="px-4 py-2  hover:text-teal-200 duration-200 ease-in-out">
+                    <Link to="/realtime-investment" className="px-4 py-2  hover:text-teal-100 duration-200 ease-in-out">
                         Realtime Investment
                     </Link>
-                    <Link to="/historic-investment" className="px-4 py-2  hover:text-teal-200 duration-200 ease-in-out">
+                    <Link to="/historic-investment" className="px-4 py-2  hover:text-teal-100 duration-200 ease-in-out">
                         Historic Investment
                     </Link>
-                    <Link to="/cryptocurrencies-info" className="px-4 py-2  hover:text-teal-200 duration-200 ease-in-out">
+                    <Link to="/cryptocurrencies-info" className="px-4 py-2  hover:text-teal-100 duration-200 ease-in-out">
                         Cryptocurrencies Info
                     </Link>
-                    <Link to="/about" className="px-4 py-2  hover:text-teal-200 duration-200 ease-in-out">
+                    <Link to="/about" className="px-4 py-2  hover:text-teal-100 duration-200 ease-in-out">
                         About
                     </Link>
                 </div>

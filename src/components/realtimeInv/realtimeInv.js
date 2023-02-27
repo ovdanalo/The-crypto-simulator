@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 const Realtime = ({ data }) => {
   const [cryptoData, setCryptoData] = useState(null);
+  const [currency, setCurrency] = useState('EUR');
   const [inputData, setInputData] = useState({
     euroValue: "",
     selectedCrypto: "bitcoin",
@@ -23,18 +24,22 @@ const Realtime = ({ data }) => {
         const cryptoDataItem = data.find((item) => item.id === crypto);
         if (cryptoDataItem) {
           const crAm = updatedData[crypto].crAm;
-          const moAm = crAm * cryptoDataItem.current_price;
+          const moAmEur = crAm * cryptoDataItem.current_price;
           const priceChange =
             cryptoDataItem.price_change_percentage_7d_in_currency;
-          updatedData[crypto] = { moAm, crAm, priceChange };
+          const tetherData = data.find((item) => item.id === "tether");
+          const moAmUsd = moAmEur * 1 / tetherData.current_price;
+          updatedData[crypto] = { moAmEur, moAmUsd, crAm, priceChange };
         }
       });
       localStorage.setItem("cryptoData", JSON.stringify(updatedData));
       setCryptoData(updatedData);
     }
+    // eslint-disable-next-line
   }, [data]);
 
-  const handleSave = () => {
+  const handleSave = (e) => {
+    e.preventDefault()
     const storedData = localStorage.getItem("cryptoData");
     let updatedData = {};
     if (storedData) {
@@ -42,13 +47,20 @@ const Realtime = ({ data }) => {
     }
     const { selectedCrypto, euroValue } = inputData;
     const selectedCryptoData = data.find((item) => item.id === selectedCrypto);
-    const crAm =
-      (updatedData[selectedCrypto]?.crAm || 0) +
-      parseFloat(euroValue) / selectedCryptoData.current_price;
-    const moAm = crAm * selectedCryptoData.current_price;
+    let crAm =
+    (updatedData[selectedCrypto]?.crAm || 0) +
+    parseFloat(euroValue) / selectedCryptoData.current_price;
+    const moAmEur = crAm * selectedCryptoData.current_price;
+    const tetherData = data.find((item) => item.id === "tether");
+    let moAmUsd = moAmEur * 1 / tetherData.current_price;
     const priceChange = selectedCryptoData.price_change_percentage_7d_in_currency;
-
-    updatedData[selectedCrypto] = { moAm, crAm, priceChange };
+    if (currency === 'USD') {
+      crAm = (updatedData[selectedCrypto]?.crAm || 0) +
+      parseFloat(euroValue) * tetherData.current_price / selectedCryptoData.current_price;
+      moAmUsd = crAm * selectedCryptoData.current_price * (1 / tetherData.current_price);
+    }
+    
+    updatedData[selectedCrypto] = { moAmEur, moAmUsd, crAm, priceChange };
     localStorage.setItem("cryptoData", JSON.stringify(updatedData));
     setCryptoData(updatedData);
   };
@@ -70,7 +82,7 @@ const Realtime = ({ data }) => {
                 setInputData({ ...inputData, euroValue: e.target.value })
               }
             ></input>
-            <select id='money' className='rounded-tr-lg rounded-br-lg p-1'>
+            <select id='money' onChange={(event) => setCurrency(event.target.value)} className='rounded-tr-lg rounded-br-lg p-1'>
               <option>EUR</option>
               <option>USD</option>
             </select>
@@ -113,82 +125,93 @@ const Realtime = ({ data }) => {
                 <th className='p-2 py-6'>Cryptocurrency</th>
                 <th className="p-2">Amount</th>
                 <th className="p-2">Value (€)</th>
+                <th className="p-2">Value ($)</th>
                 <th className="p-2">Last 7 Days (%)</th>
               </tr>
             </thead>
             <tbody>
               {Object.keys(cryptoData).map((key) => (
                 <>
-                <div className="h-3"></div>
+                  <div className="h-3"></div>
                   <tr className='text-white' key={key}>
                     <td>{key}</td>
                     {key === "bitcoin" && (
                       <>
                         <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                        <td>{cryptoData[key].moAm.toFixed(2)}</td>
+                        <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                        <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                         <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
                       </>
                     )}
                     {key === "ethereum" && (
                       <>
                         <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                        <td>{cryptoData[key].moAm.toFixed(2)}</td>
+                        <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                        <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                         <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
                       </>
                     )}
                     {key === "tether" && (
                       <>
                         <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                        <td>{cryptoData[key].moAm.toFixed(2)}</td>
+                        <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                        <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                         <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
                       </>
                     )}
                     {key === "binancecoin" && (
                       <>
                         <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                        <td>{cryptoData[key].moAm.toFixed(2)}</td>
+                        <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                        <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                         <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
                       </>
                     )}
                     {key === "usd-coin" && (
                       <>
                         <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                        <td>{cryptoData[key].moAm.toFixed(2)}</td>
+                        <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                        <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                         <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
                       </>
                     )}
                     {key === "ripple" && (
                       <>
                         <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                        <td>{cryptoData[key].moAm.toFixed(2)}</td>
+                        <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                        <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                         <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
                       </>
                     )}
                     {key === "okb" && (
                       <>
                         <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                        <td>{cryptoData[key].moAm.toFixed(2)}</td>
+                        <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                        <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                         <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
                       </>
                     )}
                     {key === "cardano" && (
                       <>
                         <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                        <td>{cryptoData[key].moAm.toFixed(2)}</td>
+                        <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                        <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                         <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
                       </>
                     )}
                     {key === "matic-network" && (
                       <>
                         <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                        <td>{cryptoData[key].moAm.toFixed(2)}</td>
+                        <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                        <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                         <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
                       </>
                     )}
                     {key === "dogecoin" && (
                       <>
                         <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                        <td>{cryptoData[key].moAm.toFixed(2)}</td>
+                        <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                        <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                         <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
                       </>
                     )}
