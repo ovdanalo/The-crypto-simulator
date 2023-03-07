@@ -120,7 +120,7 @@ const Realtime = ({ data }) => {
 
           <button
             onClick={handleSave}
-            class='bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-lg shadow'
+            class='bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-lg shadow-md shadow-teal-400'
           >
             BUY
           </button>
@@ -128,7 +128,19 @@ const Realtime = ({ data }) => {
       </div>
       <div className='flex flex-col bg-black-100 w-full xl:w-2/3 m-6 rounded-lg'>
         {cryptoData && Object.keys(cryptoData).length > 0 && (
-          <table>
+          <div>
+            <div className='flex justify-end'>
+          <button
+            onClick={() => {
+              setCryptoData(null);
+
+              localStorage.clear();
+            }}
+            className='bg-red-300 hover:bg-red-200 text-white font-bold py-3 px-4  rounded-lg shadow-md shadow-red-400 mt-4 mr-4'>
+            RESET
+          </button>
+        </div>
+          <table className='mx-auto w-full'>
             <thead>
               <div className="h-3"></div>
               <tr className='text-white border-b-2'>
@@ -231,6 +243,7 @@ const Realtime = ({ data }) => {
               ))}
             </tbody>
           </table>
+          </div>
         )}
         {showAdd && <div className='mt-10 p-10 self-center flex-col bg-black-200 w-65 rounded-lg xl:hidden z-10 border-solid border-2 border-teal-200 absolute'>
 
@@ -276,17 +289,17 @@ const Realtime = ({ data }) => {
             <div className='flex'>
               <button
                 onClick={handleSave}
-                class='bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-10 m-6 mt-16 rounded-lg shadow'
+                class='bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-10 m-6 mt-16 rounded-lg shadow-md shadow-teal-400'
               >
                 BUY
               </button>
-              <button onClick={cancelButton} class='bg-red-200 hover:bg-red-300 text-white font-bold py-3 px-8 m-6 mt-16 rounded-lg shadow'>
+              <button onClick={cancelButton} class='bg-red-200 hover:bg-red-300 text-white font-bold py-3 px-8 m-6 mt-16 rounded-lg shadow-md shadow-red-400'>
                 CANCEL
               </button>
             </div>
           </form>
         </div>}
-        <button onClick={addButton} class="self-center bg-teal-300 hover:bg-teal-200 text-white font-bold w-3 py-3 px-12 mt-12 mb-12 rounded-lg shadow flex justify-center align-middle  xl:hidden ">
+        <button onClick={addButton} class="self-center bg-teal-300 hover:bg-teal-200 text-white font-bold w-3 py-3 px-12 mt-12 mb-12 rounded-lg flex justify-center align-middle  xl:hidden shadow-md shadow-teal-400">
           ADD
         </button>
       </div>

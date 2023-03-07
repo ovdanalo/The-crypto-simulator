@@ -77,7 +77,7 @@ const Historic = (props) => {
                             <input name='endDate' type='date' value={endDate} onChange={evt => setEndDate(evt.target.value)} className='shadow p-1 rounded-lg m-2 my-2 bg-teal-50 '></input>
                         </div>
                     </div>
-                    <button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-lg shadow" onClick={(evt) => handleClick(evt)}>
+                    <button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-lg shadow-md shadow-teal-400" onClick={(evt) => handleClick(evt)}>
                         CALCULATE
                     </button>
                 </form>
