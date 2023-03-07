@@ -14,7 +14,7 @@ Chart.register(LineController, LineElement, PointElement, LinearScale, Title, Ca
             label: 'My First dataset',
             backgroundColor: 'rgba(255,99,132,0.2)',
             borderColor: props.color,
-            borderWidth: 2,
+            borderWidth: 1,
             hoverBackgroundColor: 'rgba(255,99,132,0.4)',
             hoverBorderColor: props.color,
             data: props.priceData
@@ -23,15 +23,6 @@ Chart.register(LineController, LineElement, PointElement, LinearScale, Title, Ca
       };
 
       const options = {
-        scales: {
-          yAxes: [
-            {
-              ticks: {
-                beginAtZero: false  
-              }
-            }
-          ]
-        },
         elements: {
           point: {
             radius: 0

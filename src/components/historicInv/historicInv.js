@@ -20,6 +20,7 @@ const Historic = (props) => {
         const end = Math.floor(new Date(Number(endDate.slice(0, 4)), Number(endDate.slice(5, 7)), Number(endDate.slice(8, 10))).getTime() / 1000);
         const response = await fetch(`https://api.coingecko.com/api/v3/coins/${endCurrency}/market_chart/range?vs_currency=${startCurrency}&from=${start}&to=${end}`);
         const data = await response.json();
+        console.log(startDate)
         let cryptoAmount;
         let endAmount;
         let percentage;
