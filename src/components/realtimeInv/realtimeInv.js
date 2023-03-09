@@ -166,23 +166,22 @@ const Realtime = ({ data }) => {
         </form>
       </div>
       {!!showSell && (
-
-        <div className='mt-10 p-10 self-center flex-col bg-black-200 w-65 rounded-lg z-10 border-solid border-2 border-teal-200 absolute'>
-          <label htmlFor='toSellCryptoAmount' className='text-white font-bold mb-2'>Enter amount to sell:</label>
-          <div className='flex items-center'>
-            <input id='toSellCryptoAmount' type='number' value={toSellCryptoAmount} onChange={saveToSellAmount} className='w-full rounded-md py-2 px-3 bg-gray-200 text-gray-800 font-medium focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent'></input>
-            <span className='text-teal-300 ml-2'>CRYPTO</span>
-          </div>
-          <div className='flex justify-center mt-8'>
-            <button onClick={handleSell} className='w-full max-w-xs bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-6 rounded-lg shadow-md'>
-              SELL
-            </button>
-            <button onClick={handleCancel} className='w-full max-w-xs bg-red-300 hover:bg-red-200 text-white font-bold py-3 px-6 rounded-lg shadow-md ml-4'>
-              CANCEL
-            </button>
-          </div>
-        </div>
-      )}
+  <div className='mt-10 p-10 self-center flex-col bg-black-200 w-65 rounded-lg z-10 border-solid border-2 border-teal-200 absolute'>
+    <label htmlFor='toSellCryptoAmount' className='text-white font-bold mb-2'>Enter amount to sell:</label>
+    <div className='flex flex-col items-center sm:flex-row sm:items-center'>
+      <input id='toSellCryptoAmount' type='number' value={toSellCryptoAmount} onChange={saveToSellAmount} className='w-full rounded-md py-2 px-3 bg-gray-200 text-gray-800 font-medium focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent'></input>
+      <span className='text-teal-300 mt-2 sm:mt-0 sm:ml-2'>CRYPTO</span>
+    </div>
+    <div className='flex flex-col sm:flex-row justify-center mt-8'>
+      <button onClick={handleSell} className='w-full max-w-xs bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-6 rounded-lg shadow-md mb-4 sm:mb-0 sm:mr-4'>
+        SELL
+      </button>
+      <button onClick={handleCancel} className='w-full max-w-xs bg-red-300 hover:bg-red-200 text-white font-bold py-3 px-6 rounded-lg shadow-md'>
+        CANCEL
+      </button>
+    </div>
+  </div>
+)}
       <div className='flex flex-col bg-black-100 w-full xl:w-2/3 m-6 rounded-lg'>
         {cryptoData && Object.keys(cryptoData).length > 0 && (
           <div>
