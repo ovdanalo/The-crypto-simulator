@@ -85,10 +85,10 @@ const Realtime = ({ data }) => {
       const selectedCryptoData = data.find((item) => item.id === toSellCrypto);
       let crAm =
         (updatedData[toSellCrypto]?.crAm) - toSellCryptoAmount;
-        const moAmEur = crAm * selectedCryptoData.current_price;
-        const tetherData = data.find((item) => item.id === "tether");
-        let moAmUsd = moAmEur * 1 / tetherData.current_price;
-        const priceChange = selectedCryptoData.price_change_percentage_7d_in_currency;
+      const moAmEur = crAm * selectedCryptoData.current_price;
+      const tetherData = data.find((item) => item.id === "tether");
+      let moAmUsd = moAmEur * 1 / tetherData.current_price;
+      const priceChange = selectedCryptoData.price_change_percentage_7d_in_currency;
 
       updatedData[toSellCrypto] = { moAmEur, moAmUsd, crAm, priceChange };
       localStorage.setItem("cryptoData", JSON.stringify(updatedData));
@@ -110,6 +110,9 @@ const Realtime = ({ data }) => {
   const cancelButton = () => {
     setShowAdd(false);
   }
+  const handleCancel = () => {
+    setShowSell(false);
+  };
 
   return (
     <div className='flex flex-row bg-black-200 w-full md:w-10/12 xl:w-8/12 h-def mx-auto my-6 justify-center rounded-lg'>
@@ -162,13 +165,24 @@ const Realtime = ({ data }) => {
           </button>
         </form>
       </div>
-      {!!showSell &&
+      {!!showSell && (
 
         <div className='mt-10 p-10 self-center flex-col bg-black-200 w-65 rounded-lg z-10 border-solid border-2 border-teal-200 absolute'>
-          <input type='number' value={toSellCryptoAmount} onChange={saveToSellAmount}></input>
-          <button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-lg shadow-md shadow-teal-400" onClick={handleSell}>SELL</button>
+          <label htmlFor='toSellCryptoAmount' className='text-white font-bold mb-2'>Enter amount to sell:</label>
+          <div className='flex items-center'>
+            <input id='toSellCryptoAmount' type='number' value={toSellCryptoAmount} onChange={saveToSellAmount} className='w-full rounded-md py-2 px-3 bg-gray-200 text-gray-800 font-medium focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent'></input>
+            <span className='text-teal-300 ml-2'>CRYPTO</span>
+          </div>
+          <div className='flex justify-center mt-8'>
+            <button onClick={handleSell} className='w-full max-w-xs bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-6 rounded-lg shadow-md'>
+              SELL
+            </button>
+            <button onClick={handleCancel} className='w-full max-w-xs bg-red-300 hover:bg-red-200 text-white font-bold py-3 px-6 rounded-lg shadow-md ml-4'>
+              CANCEL
+            </button>
+          </div>
         </div>
-      }
+      )}
       <div className='flex flex-col bg-black-100 w-full xl:w-2/3 m-6 rounded-lg'>
         {cryptoData && Object.keys(cryptoData).length > 0 && (
           <div>
