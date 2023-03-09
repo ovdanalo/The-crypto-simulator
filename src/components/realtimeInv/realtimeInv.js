@@ -7,7 +7,10 @@ const Realtime = ({ data }) => {
     euroValue: "",
     selectedCrypto: "bitcoin",
   });
-  const [showAdd, setShowAdd] = useState(false)
+  const [showAdd, setShowAdd] = useState(false);
+  const [showSell, setShowSell] = useState(false);
+  const [toSellCrypto, setToSellCrypto] = useState('');
+  const [toSellCryptoAmount, setToSellCryptoAmount] = useState(0);
 
   useEffect(() => {
     const storedData = localStorage.getItem("cryptoData");
@@ -67,8 +70,41 @@ const Realtime = ({ data }) => {
     setShowAdd(false)
   };
 
+  const saveToSellAmount = (e) => {
+    setToSellCryptoAmount(e.target.value);
+  }
+
+  const handleSell = (e) => {
+    e.preventDefault()
+    const storedData = localStorage.getItem("cryptoData");
+    let updatedData = {};
+    if (storedData) {
+      updatedData = JSON.parse(storedData);
+    }
+    if (updatedData[toSellCrypto]?.crAm - toSellCryptoAmount >= 0) {
+      const selectedCryptoData = data.find((item) => item.id === toSellCrypto);
+      let crAm =
+        (updatedData[toSellCrypto]?.crAm) - toSellCryptoAmount;
+        const moAmEur = crAm * selectedCryptoData.current_price;
+        const tetherData = data.find((item) => item.id === "tether");
+        let moAmUsd = moAmEur * 1 / tetherData.current_price;
+        const priceChange = selectedCryptoData.price_change_percentage_7d_in_currency;
+
+      updatedData[toSellCrypto] = { moAmEur, moAmUsd, crAm, priceChange };
+      localStorage.setItem("cryptoData", JSON.stringify(updatedData));
+      setCryptoData(updatedData);
+      setShowAdd(false)
+    } else alert("You don't have such amount!")
+
+  };
+
   const addButton = () => {
     setShowAdd(true)
+  }
+
+  const handleClickSell = (crypto) => {
+    setToSellCrypto(crypto);
+    setShowSell(true);
   }
 
   const cancelButton = () => {
@@ -126,123 +162,134 @@ const Realtime = ({ data }) => {
           </button>
         </form>
       </div>
+      {!!showSell &&
+
+        <div className='mt-10 p-10 self-center flex-col bg-black-200 w-65 rounded-lg z-10 border-solid border-2 border-teal-200 absolute'>
+          <input type='number' value={toSellCryptoAmount} onChange={saveToSellAmount}></input>
+          <button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-lg shadow-md shadow-teal-400" onClick={handleSell}>SELL</button>
+        </div>
+      }
       <div className='flex flex-col bg-black-100 w-full xl:w-2/3 m-6 rounded-lg'>
         {cryptoData && Object.keys(cryptoData).length > 0 && (
           <div>
             <div className='flex justify-end'>
-          <button
-            onClick={() => {
-              setCryptoData(null);
+              <button
+                onClick={() => {
+                  setCryptoData(null);
 
-              localStorage.clear();
-            }}
-            className='bg-red-300 hover:bg-red-200 text-white font-bold py-3 px-4  rounded-lg shadow-md shadow-red-400 mt-4 mr-4'>
-            RESET
-          </button>
-        </div>
-          <table className='mx-auto w-full'>
-            <thead>
-              <div className="h-3"></div>
-              <tr className='text-white border-b-2'>
-                <th className='p-2 py-6'>Cryptocurrency</th>
-                <th className="p-2">Amount</th>
-                <th className="p-2">Value (€)</th>
-                <th className="p-2">Value ($)</th>
-                <th className="p-2">Last 7 Days (%)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Object.keys(cryptoData).map((key) => (
-                <>
-                  <div className="h-3"></div>
-                  <tr className='text-white' key={key}>
-                    <td>{key}</td>
-                    {key === "bitcoin" && (
-                      <>
-                        <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                        <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                        <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                        <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
-                      </>
-                    )}
-                    {key === "ethereum" && (
-                      <>
-                        <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                        <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                        <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                        <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
-                      </>
-                    )}
-                    {key === "tether" && (
-                      <>
-                        <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                        <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                        <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                        <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
-                      </>
-                    )}
-                    {key === "binancecoin" && (
-                      <>
-                        <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                        <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                        <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                        <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
-                      </>
-                    )}
-                    {key === "usd-coin" && (
-                      <>
-                        <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                        <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                        <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                        <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
-                      </>
-                    )}
-                    {key === "ripple" && (
-                      <>
-                        <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                        <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                        <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                        <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
-                      </>
-                    )}
-                    {key === "okb" && (
-                      <>
-                        <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                        <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                        <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                        <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
-                      </>
-                    )}
-                    {key === "cardano" && (
-                      <>
-                        <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                        <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                        <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                        <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
-                      </>
-                    )}
-                    {key === "matic-network" && (
-                      <>
-                        <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                        <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                        <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                        <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
-                      </>
-                    )}
-                    {key === "dogecoin" && (
-                      <>
-                        <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                        <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                        <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                        <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
-                      </>
-                    )}
-                  </tr>
-                </>
+                  localStorage.clear();
+                }}
+                className='bg-red-300 hover:bg-red-200 text-white font-bold py-3 px-4  rounded-lg shadow-md shadow-red-400 mt-4 mr-4'>
+                RESET
+              </button>
+            </div>
+            <table className='mx-auto w-full'>
+              <thead>
+                <div className="h-3"></div>
+                <tr className='text-white border-b-2'>
+                  <th className='p-2 py-6'>Cryptocurrency</th>
+                  <th className="p-2">Amount</th>
+                  <th className="p-2">Value (€)</th>
+                  <th className="p-2">Value ($)</th>
+                  <th className="p-2">Last 7 Days (%)</th>
+                  <th className="p-2"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.keys(cryptoData).map((key) => (
+                  <>
+                    {console.log(key)}
+                    <div className="h-3"></div>
+                    <tr className='text-white' key={key}>
+                      <td>{key}</td>
+                      {key === "bitcoin" && (
+                        <>
+                          <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                          <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                          <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
+                          <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                          <td><button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4"
+                            onClick={() => handleClickSell(key)}>SELL</button></td>
+                        </>
+                      )}
+                      {key === "ethereum" && (
+                        <>
+                          <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                          <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                          <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
+                          <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                        </>
+                      )}
+                      {key === "tether" && (
+                        <>
+                          <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                          <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                          <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
+                          <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                        </>
+                      )}
+                      {key === "binancecoin" && (
+                        <>
+                          <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                          <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                          <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
+                          <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                        </>
+                      )}
+                      {key === "usd-coin" && (
+                        <>
+                          <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                          <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                          <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
+                          <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                        </>
+                      )}
+                      {key === "ripple" && (
+                        <>
+                          <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                          <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                          <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
+                          <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                        </>
+                      )}
+                      {key === "okb" && (
+                        <>
+                          <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                          <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                          <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
+                          <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                        </>
+                      )}
+                      {key === "cardano" && (
+                        <>
+                          <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                          <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                          <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
+                          <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                        </>
+                      )}
+                      {key === "matic-network" && (
+                        <>
+                          <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                          <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                          <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
+                          <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                        </>
+                      )}
+                      {key === "dogecoin" && (
+                        <>
+                          <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                          <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                          <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
+                          <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                        </>
+                      )}
+                    </tr>
+                  </>
 
-              ))}
-            </tbody>
-          </table>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
         {showAdd && <div className='mt-10 p-10 self-center flex-col bg-black-200 w-65 rounded-lg xl:hidden z-10 border-solid border-2 border-teal-200 absolute'>
