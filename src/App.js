@@ -10,6 +10,7 @@ import CryptoInfo from "./components/cryptoinfo/cryptoinfo";
 import About from "./components/about/about";
 import Footer from "./components/footer/footer";
 import ContactUs from "./components/contactus/contactus";
+import Overlay from "./components/overlay/overlay";
 
 function App() {
   const [cryptocurrencies, setCryptocurrencies] = useState([]);
@@ -31,6 +32,7 @@ function App() {
   return (
     <div className='App'>
       <Header />
+      <Overlay>
       <Navbar />
       <Routes>
         <Route
@@ -57,6 +59,7 @@ function App() {
         <Route path='/contactus' exact element={<ContactUs />} />
       </Routes>
       <Footer />
+      </Overlay>
     </div>
   );
 }
