@@ -63,6 +63,9 @@
     }
 }
 }
+.overlay-container {
+  position: relative;
+}
 
 .overlay {
   content: "";

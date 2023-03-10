@@ -1320,6 +1320,10 @@ video {
   }
 }
 
+.overlay-container {
+  position: relative;
+}
+
 .overlay {
   content: "";
   position: absolute;
