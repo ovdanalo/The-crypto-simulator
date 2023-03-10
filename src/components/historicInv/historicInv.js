@@ -16,11 +16,10 @@ const Historic = (props) => {
 
     const historicCalc = async (evt) => {
         evt.preventDefault();
-        const start = Math.floor(new Date(Number(startDate.slice(0, 4)), Number(startDate.slice(5, 7)), Number(startDate.slice(8, 10))).getTime() / 1000);
-        const end = Math.floor(new Date(Number(endDate.slice(0, 4)), Number(endDate.slice(5, 7)), Number(endDate.slice(8, 10))).getTime() / 1000);
+        const start = new Date(startDate).getTime() / 1000;
+        const end = new Date(endDate).getTime() / 1000;
         const response = await fetch(`https://api.coingecko.com/api/v3/coins/${endCurrency}/market_chart/range?vs_currency=${startCurrency}&from=${start}&to=${end}`);
         const data = await response.json();
-        console.log(startDate)
         let cryptoAmount;
         let endAmount;
         let percentage;
@@ -30,7 +29,6 @@ const Historic = (props) => {
         cryptoAmount = (amount / startPrice).toFixed(8);
         endAmount = (cryptoAmount * endPrice).toFixed(2);
         percentage = ((endAmount / amount * 100) - 100).toFixed(2);
-        console.log(data)
 
         endPrice - startPrice > 0 ? setColor('#4DAA57') : setColor('#D34E36')
 
@@ -72,6 +70,7 @@ const Historic = (props) => {
                             <label htmlFor='startDate' className='text-white'>in:</label>
                             <input name='startDate' type='date' value={startDate} onChange={evt => setStartDate(evt.target.value)} className='shadow p-1 rounded-lg m-2 my-2 bg-teal-50'></input>
                         </div>
+
                         <div className='flex flex-col'>
                             <label htmlFor='endDate' className='text-white'>at:</label>
                             <input name='endDate' type='date' value={endDate} onChange={evt => setEndDate(evt.target.value)} className='shadow p-1 rounded-lg m-2 my-2 bg-teal-50 '></input>

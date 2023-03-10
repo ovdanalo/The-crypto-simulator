@@ -187,11 +187,11 @@ const Realtime = ({ data }) => {
               <thead>
                 <div className="h-3"></div>
                 <tr className='text-white border-b-2'>
-                  <th className='p-2 py-6'>Cryptocurrency</th>
+                  <th className='p-2'>Crypto</th>
                   <th className="p-2">Amount</th>
                   <th className="p-2">Value (€)</th>
                   <th className="p-2">Value ($)</th>
-                  <th className="p-2">Last 7 Days (%)</th>
+                  <th className="p-2 hidden md:inline-block">Last 7 Days (%)</th>
                   <th className="p-2"></th>
                 </tr>
               </thead>
@@ -207,7 +207,7 @@ const Realtime = ({ data }) => {
                           <td>{cryptoData[key].crAm.toFixed(8)}</td>
                           <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                           <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                          <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                          <td className='hidden md:inline-block'>{cryptoData[key].priceChange.toFixed(2)}%</td>
                           <td><button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4"
                             onClick={() => handleClickSell(key)}>SELL</button></td>
                         </>
@@ -217,7 +217,7 @@ const Realtime = ({ data }) => {
                           <td>{cryptoData[key].crAm.toFixed(8)}</td>
                           <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                           <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                          <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                          <td className='hidden md:inline-block'>{cryptoData[key].priceChange.toFixed(2)}%</td>
                         </>
                       )}
                       {key === "tether" && (
@@ -225,7 +225,7 @@ const Realtime = ({ data }) => {
                           <td>{cryptoData[key].crAm.toFixed(8)}</td>
                           <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                           <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                          <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                          <td className='hidden md:inline-block'>{cryptoData[key].priceChange.toFixed(2)}%</td>
                         </>
                       )}
                       {key === "binancecoin" && (
@@ -233,7 +233,7 @@ const Realtime = ({ data }) => {
                           <td>{cryptoData[key].crAm.toFixed(8)}</td>
                           <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                           <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                          <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                          <td className='hidden md:inline-block'>{cryptoData[key].priceChange.toFixed(2)}%</td>
                         </>
                       )}
                       {key === "usd-coin" && (
@@ -241,7 +241,7 @@ const Realtime = ({ data }) => {
                           <td>{cryptoData[key].crAm.toFixed(8)}</td>
                           <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                           <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                          <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                          <td className='hidden md:inline-block'>{cryptoData[key].priceChange.toFixed(2)}%</td>
                         </>
                       )}
                       {key === "ripple" && (
@@ -249,7 +249,7 @@ const Realtime = ({ data }) => {
                           <td>{cryptoData[key].crAm.toFixed(8)}</td>
                           <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                           <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                          <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                          <td className='hidden md:inline-block'>{cryptoData[key].priceChange.toFixed(2)}%</td>
                         </>
                       )}
                       {key === "okb" && (
@@ -257,7 +257,7 @@ const Realtime = ({ data }) => {
                           <td>{cryptoData[key].crAm.toFixed(8)}</td>
                           <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                           <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                          <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                          <td className='hidden md:inline-block'>{cryptoData[key].priceChange.toFixed(2)}%</td>
                         </>
                       )}
                       {key === "cardano" && (
@@ -265,7 +265,7 @@ const Realtime = ({ data }) => {
                           <td>{cryptoData[key].crAm.toFixed(8)}</td>
                           <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                           <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                          <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                          <td className='hidden md:inline-block'>{cryptoData[key].priceChange.toFixed(2)}%</td>
                         </>
                       )}
                       {key === "matic-network" && (
@@ -273,7 +273,7 @@ const Realtime = ({ data }) => {
                           <td>{cryptoData[key].crAm.toFixed(8)}</td>
                           <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                           <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                          <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                          <td className='hidden md:inline-block'>{cryptoData[key].priceChange.toFixed(2)}%</td>
                         </>
                       )}
                       {key === "dogecoin" && (
@@ -281,7 +281,7 @@ const Realtime = ({ data }) => {
                           <td>{cryptoData[key].crAm.toFixed(8)}</td>
                           <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                           <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                          <td>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                          <td className='hidden md:inline-block'>{cryptoData[key].priceChange.toFixed(2)}%</td>
                         </>
                       )}
                     </tr>
