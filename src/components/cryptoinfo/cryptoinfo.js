@@ -12,6 +12,7 @@ import OKB from "./cryptoAssets/OKB";
 import ADA from "./cryptoAssets/ADA";
 import DOGE from "./cryptoAssets/DOGE";
 import MATIC from "./cryptoAssets/MATIC";
+import BUSD from "./cryptoAssets/BUSD";
 
 const CryptoInfo = (props) => {
 
@@ -102,6 +103,8 @@ const CryptoAsset = (props) => {
             return <DOGE values={selectedCrypto.name} asset={props.data} />;
         case "matic":
             return <MATIC values={selectedCrypto.name} asset={props.data} />;
+            case "busd":
+            return <BUSD values={selectedCrypto.name} asset={props.data} />;
         default:
             return <Navigate to="/" />;
     }
