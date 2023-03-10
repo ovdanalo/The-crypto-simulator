@@ -22,8 +22,11 @@
   .min-w-td-top10{
     min-width: 6rem;
   }
-  .shadow{
-    box-shadow: 0px 1px 6px rgba(209, 249, 252, 0.9);
+  .green-shadow{
+    text-shadow: 1px 1px 4px rgba(172, 255, 47, 0.472);
+  }
+  .red-shadow{
+    text-shadow: 1px 1px 4px rgba(242, 7, 7, 0.472);
   }
   .gradient-info {
     background: radial-gradient(circle, hsla(170, 94%, 42%, 1) 0%, hsla(0, 0%, 18%, 1) 60%);

@@ -83,21 +83,28 @@ const Historic = (props) => {
             </div>
             <div className='flex flex-col bg-black-100 w-11/12 xl:w-2/3 m-6 xl:mx-6 mx-auto rounded-lg'>
                 {hasData ? <div>
-                    <h3 className='text-teal-100 text-3xl text mt-10'>RESULT</h3>
+                    <h3 className='text-teal-100 text-3xl text mt-4 '>RESULT</h3>
                     <div id='graph-container' className='bg-black-200 h-3/6 w-4/5 mx-auto my-6 shadow'><Graph priceData={priceData} yearData={yearData} color={color} /></div>
-                    <div className='mt-6'>
-                        <div className='border-2 border-black-300 bg-black-200 pt-2 mx-24 rounded-lg mt-4 shadow'>
-                            <h3 className='text-white text-2xl mb-4'>Initial amount : <span className='text-teal-100'>{amount} €</span></h3>
+                    <div className='mt-8'>
+                        <div className='border-2 border-black-300 bg-black-200 pt-2 mx-auto rounded-lg mt-4 shadow w-4/5'>
+                            <h3 className='text-white text-2xl mb-4'>Initial amount : <span className='text-teal-100 m-4'>{amount} €</span></h3>
                         </div>
-                        <div className='border-2 border-black-300 bg-black-200 pt-2 mx-24 rounded-lg mt-4 shadow'>
-                            <h3 className='text-white text-2xl mb-4'>Crypto amount : {returnData.cryptoAmount} {endCurrency}</h3>
+                        <div className='border-2 border-black-300 bg-black-200 pt-2 mx-auto rounded-lg mt-4 shadow w-4/5'>
+                            <h3 className='text-white text-2xl mb-4'>Crypto amount : {returnData.percentage > 0
+                                    ? <span className='text-green-100 text-2xl m-4 green-shadow'>{returnData.cryptoAmount} {endCurrency}</span>
+                                    : <span className='text-red-300 text-2xl m-4 red-shadow'>{returnData.cryptoAmount} {endCurrency}</span>}</h3>
                         </div>
-                        <div className='flex flex-row justify-center items-center mx-24 pt-2 my-4'>
-                            <div className='mx-2 border-black-300 bg-black-200 pt-2 px-6 border-2 rounded-lg mb-10 shadow'>
-                                <h3 className='text-white text-2xl mb-4'>End amount: {returnData.endAmount} {startCurrency}</h3>
+                        <div className='flex flex-col justify-center items-center mx-auto'>
+                            <div className='mx-auto border-black-300 bg-black-200 pt-2 px-6 border-2 rounded-lg mt-4 shadow w-4/5'>
+                                <h3 className='text-white text-2xl mb-4'>End amount:
+                                {returnData.percentage > 0
+                                    ? <span className='text-green-100 text-2xl m-4 green-shadow'>{returnData.endAmount} {startCurrency}</span>
+                                    : <span className='text-red-300 text-2xl m-4 red-shadow'>{returnData.endAmount} {startCurrency}</span>}</h3>
                             </div>
-                            <div className='mx-2 border-black-300 bg-black-200 pt-2 px-6 border-2 rounded-lg mb-10 shadow'>
-                                <h3 className='text-white text-2xl mb-4'>Percentage difference: {returnData.percentage}%</h3>
+                            <div className='mx-auto border-black-300 bg-black-200 pt-2 px-6 border-2 rounded-lg shadow w-4/5 mt-4 mb-4'>
+                                <h3 className='text-white text-2xl mb-4'>Percentage difference: {returnData.percentage > 0
+                                    ? <span className='text-green-100 text-2xl m-4 green-shadow'>{returnData.percentage}%</span>
+                                    : <span className='text-red-300 text-2xl m-4 red-shadow'>{returnData.percentage}%</span>}</h3>
                             </div>
                         </div>
                     </div>
