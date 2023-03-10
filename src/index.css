@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Lato&family=Roboto&display=swap');
-
+*{
+  z-index: 1;
+}
 @layer utilities {
   .text-shadow {
     text-shadow: 0 0 6px #06d1af;

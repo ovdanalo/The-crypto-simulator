@@ -1320,6 +1320,10 @@ video {
   }
 }
 
+*{
+  z-index: 1;
+}
+
 .overlay-container {
   position: relative;
 }
