@@ -49,7 +49,7 @@ function App() {
           element={<Historic data={cryptocurrencies} />}
         />
         <Route
-          path='/cryptocurrencies-info'
+          path='/cryptocurrencies-info/*'
           exact
           element={<CryptoInfo data={cryptocurrencies} />}
         />
