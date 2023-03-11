@@ -94,7 +94,11 @@ const Realtime = ({ data }) => {
             localStorage.setItem("cryptoData", JSON.stringify(updatedData));
             setCryptoData(updatedData);
             setShowAdd(false)
-        } else alert("You don't have such amount!")
+            setShowSell(false)
+            setToSellCryptoAmount(0)
+        } else {
+            setShowSell(false)
+            alert("You don't have such amount!")}
 
     };
 
@@ -111,6 +115,9 @@ const Realtime = ({ data }) => {
         setShowAdd(false);
     }
 
+    const handleCancel = () => {
+        setShowSell(false)
+    }
     return (
         <div className='flex flex-row bg-black-200 w-full md:w-10/12 xl:w-8/12 h-def mx-auto my-6 justify-center rounded-lg'>
             <div className='xl:flex flex-col bg-black-100 w-1/3 m-6 mr-0 rounded-lg py-12 hidden'>
@@ -162,13 +169,6 @@ const Realtime = ({ data }) => {
                     </button>
                 </form>
             </div>
-            {!!showSell &&
-
-                <div className='mt-10 p-10 self-center flex-col bg-black-200 w-65 rounded-lg z-10 border-solid border-2 border-teal-200 absolute'>
-                    <input type='number' value={toSellCryptoAmount} onChange={saveToSellAmount}></input>
-                    <button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-lg shadow-md shadow-teal-400" onClick={handleSell}>SELL</button>
-                </div>
-            }
             <div className='flex flex-col bg-black-100 w-full xl:w-2/3 m-6 rounded-lg'>
                 {cryptoData && Object.keys(cryptoData).length > 0 && (
                     <div>
@@ -310,6 +310,7 @@ const Realtime = ({ data }) => {
                         </table>
                     </div>
                 )}
+
                 {showAdd && <div className='mt-10 p-10 self-center flex-col bg-black-200 w-65 rounded-lg xl:hidden z-10 border-solid border-2 border-teal-200 absolute'>
 
                     <form>
@@ -368,6 +369,22 @@ const Realtime = ({ data }) => {
                     ADD
                 </button>
             </div>
+            {!!showSell && (
+                    <div className='top-14 right-18 p-10 self-center flex-col bg-black-200 w-65 rounded-lg z-10 border-solid border-2 border-teal-200 absolute'>
+                        <label htmlFor='toSellCryptoAmount' className='text-white font-bold mb-4'>Enter amount to sell:</label>
+                        <div className='flex flex-col items-center sm:flex-row sm:items-center'>
+                            <input id='toSellCryptoAmount' type='number' value={toSellCryptoAmount} onChange={saveToSellAmount} className='w-full rounded-md py-2 px-3 bg-teal-100 m-4 text-gray-800 font-medium focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-transparent'></input>
+                        </div>
+                        <div className='flex flex-col sm:flex-row justify-center mt-8'>
+                            <button onClick={handleSell} className='w-full max-w-xs bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-6 rounded-lg shadow-md mb-4 sm:mb-0 sm:mr-4'>
+                                SELL
+                            </button>
+                            <button onClick={handleCancel} className='w-full max-w-xs bg-red-300 hover:bg-red-200 text-white font-bold py-3 px-6 rounded-lg shadow-md'>
+                                CANCEL
+                            </button>
+                        </div>
+                    </div>
+                )}
             <datalist id='cryptoList'>
                 {data.map((crypto) => (
                     <option>{crypto.id}</option>
