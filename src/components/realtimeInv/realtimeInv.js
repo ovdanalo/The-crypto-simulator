@@ -16,6 +16,7 @@ const Realtime = ({ data }) => {
   const [inputMoney, setInputMoney] = useState();
   const [totalEuro, setTotalEuro] = useState(0);
   const [totalUsd, setTotalUsd] = useState(0);
+  const [percentuageEur, setPercentuageEur] = useState(0);
 
   useEffect(() => {
     const storedData = localStorage.getItem("cryptoData");
@@ -25,6 +26,16 @@ const Realtime = ({ data }) => {
       setCryptoData({});
     }
   }, []);
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("percentuageEur");
+    if (storedData) {
+      setPercentuageEur(JSON.parse(storedData));
+    } else {
+      setPercentuageEur(0);
+    }
+  }, []);
+
   useEffect(() => {
     const storedData = localStorage.getItem("total");
     if (storedData) {
@@ -102,6 +113,19 @@ const Realtime = ({ data }) => {
       setTotalUsd(moAmUsdTotal);
     }
   }, [cryptoData]);
+
+  useEffect(() => {
+    const existInv = internalMemory.find("cryptoData");
+    if (existInv) {
+      const guadagnoPercentualeEur = (
+        (parseFloat(totalEuro) / parseFloat(totalInvested)) * 100 -
+        100
+      ).toFixed(3);
+      setPercentuageEur(guadagnoPercentualeEur);
+      internalMemory.save("percentuageEur", guadagnoPercentualeEur);
+      console.log(guadagnoPercentualeEur);
+    }
+  }, [totalEuro, totalInvested, percentuageEur]);
 
   const handleSave = (e) => {
     e.preventDefault();
@@ -268,7 +292,9 @@ const Realtime = ({ data }) => {
       )}
       <div className='flex flex-col bg-black-100 w-full xl:w-2/3 m-6 rounded-lg'>
         <div>
-          {totalInvested},{totalEuro},{totalUsd}
+          <div>{totalInvested}</div>
+          <div>{totalEuro}</div>
+          <div>{percentuageEur}%</div>
         </div>
         {cryptoData && Object.keys(cryptoData).length > 0 && (
           <div>
