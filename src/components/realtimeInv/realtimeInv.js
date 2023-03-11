@@ -20,35 +20,27 @@ const Realtime = ({ data }) => {
   const [sellObj, setSellObj] = useState(0);
 
   useEffect(() => {
+    const storedPercentage = localStorage.getItem("percentuageEur");
+    if (storedPercentage) {
+      setPercentuageEur(JSON.parse(storedPercentage));
+    } else {
+      setPercentuageEur(0);
+    }
     const storedData = localStorage.getItem("cryptoData");
     if (storedData) {
       setCryptoData(JSON.parse(storedData));
     } else {
       setCryptoData({});
     }
-  }, []);
-
-  useEffect(() => {
-    const storedData = localStorage.getItem("percentuageEur");
-    if (storedData) {
-      setPercentuageEur(JSON.parse(storedData));
-    } else {
-      setPercentuageEur(0);
-    }
-  }, []);
-
-  useEffect(() => {
-    const storedData = localStorage.getItem("total");
-    if (storedData) {
-      setTotalInvested(JSON.parse(storedData));
+    const storedTotal = localStorage.getItem("total");
+    if (storedTotal) {
+      setTotalInvested(JSON.parse(storedTotal));
     } else {
       setTotalInvested(0);
     }
-  }, []);
-  useEffect(() => {
-    const storedData = localStorage.getItem("totalEur");
-    if (storedData) {
-      setTotalEuro(JSON.parse(storedData));
+    const storedTotalEur = localStorage.getItem("totalEur");
+    if (storedTotalEur) {
+      setTotalEuro(JSON.parse(storedTotalEur));
     } else {
       setTotalEuro(0);
     }
@@ -95,12 +87,9 @@ const Realtime = ({ data }) => {
       internalMemory.save("totalEur", moAmEurTotal);
       setTotalEuro(moAmEurTotal);
     }
-  }, [cryptoData]);
-
-  useEffect(() => {
     const existUsdTotal = internalMemory.find("totalUsd");
-    const existInv = internalMemory.find("cryptoData");
-    if (!existUsdTotal && existInv) {
+    const existInvUsd = internalMemory.find("cryptoData");
+    if (!existUsdTotal && existInvUsd) {
       const data = internalMemory.find("cryptoData");
       const moAmUsdValues = Object.keys(data).map((key) => data[key].moAmUsd);
       const moAmUsdTotal =
