@@ -17,6 +17,7 @@ const Realtime = ({ data }) => {
   const [totalEuro, setTotalEuro] = useState(0);
   const [totalUsd, setTotalUsd] = useState(0);
   const [percentuageEur, setPercentuageEur] = useState(0);
+  const [earned, setEarned] = useState(0);
 
   useEffect(() => {
     const storedData = localStorage.getItem("cryptoData");
@@ -202,6 +203,18 @@ const Realtime = ({ data }) => {
 
       updatedData[toSellCrypto] = { moAmEur, moAmUsd, crAm, priceChange };
       localStorage.setItem("cryptoData", JSON.stringify(updatedData));
+
+      const earned = toSellCryptoAmount * selectedCryptoData.current_price;
+      const storedSell = internalMemory.find("crypto-sell");
+      let sellObj = {};
+      if (storedSell) {
+        sellObj = storedSell;
+      }
+
+      const sell = (sellObj[toSellCrypto]?.sell || 0) + earned;
+
+      sellObj[toSellCrypto] = { sell };
+      internalMemory.save(`crypto-sell`, sellObj);
       setCryptoData(updatedData);
       setShowAdd(false);
     } else alert("You don't have such amount!");
