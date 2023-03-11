@@ -91,7 +91,7 @@ const Realtime = ({ data }) => {
     if (existEurTotal) {
       const data = internalMemory.find("cryptoData");
       const moAmEurValues = Object.keys(data).map((key) => data[key].moAmEur);
-      const moAmEurTotal = moAmEurValues.reduce((a, b) => (a + b).toFixed(2));
+      const moAmEurTotal = moAmEurValues.reduce((a, b) => a + b).toFixed(2);
       internalMemory.save("totalEur", moAmEurTotal);
       setTotalEuro(moAmEurTotal);
     }
@@ -325,10 +325,10 @@ const Realtime = ({ data }) => {
         </div>
       )}
       <div className='flex flex-col bg-black-100 w-full xl:w-2/3 m-6 rounded-lg'>
-        <div>
-          <div>{totalInvested}</div>
-          <div>{totalEuro}</div>
-          <div>{percentuageEur}%</div>
+        <div className='flex flex-col items-start justify-end p-3 bg-red-100 w-max rounded-lg'>
+          <div>money Invested:{totalInvested}</div>
+          <div>actual money:{totalEuro}</div>
+          <div>profit:{percentuageEur}%</div>
         </div>
         {cryptoData && Object.keys(cryptoData).length > 0 && (
           <div>
