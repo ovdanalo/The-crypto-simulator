@@ -81,14 +81,16 @@ const Realtime = ({ data }) => {
       const data = internalMemory.find("cryptoData");
       const moAmEurValues = Object.keys(data).map((key) => data[key].moAmEur);
       const moAmEurTotal =
-        moAmEurValues.length > 0 ? moAmEurValues.reduce((a, b) => a + b) : 0;
+        moAmEurValues.length > 0
+          ? moAmEurValues.reduce((a, b) => (a + b).toFixed(2))
+          : 0;
       internalMemory.save("totalEur", moAmEurTotal);
       setTotalEuro(moAmEurTotal);
     }
     if (existEurTotal) {
       const data = internalMemory.find("cryptoData");
       const moAmEurValues = Object.keys(data).map((key) => data[key].moAmEur);
-      const moAmEurTotal = moAmEurValues.reduce((a, b) => a + b);
+      const moAmEurTotal = moAmEurValues.reduce((a, b) => (a + b).toFixed(2));
       internalMemory.save("totalEur", moAmEurTotal);
       setTotalEuro(moAmEurTotal);
     }
@@ -101,14 +103,16 @@ const Realtime = ({ data }) => {
       const data = internalMemory.find("cryptoData");
       const moAmUsdValues = Object.keys(data).map((key) => data[key].moAmUsd);
       const moAmUsdTotal =
-        moAmUsdValues.length > 0 ? moAmUsdValues.reduce((a, b) => a + b) : 0;
+        moAmUsdValues.length > 0
+          ? moAmUsdValues.reduce((a, b) => (a + b).toFixed(2))
+          : 0;
       internalMemory.save("totalUsd", moAmUsdTotal);
       setTotalUsd(moAmUsdTotal);
     }
     if (existUsdTotal) {
       const data = internalMemory.find("cryptoData");
       const moAmUsdValues = Object.keys(data).map((key) => data[key].moAmUsd);
-      const moAmUsdTotal = moAmUsdValues.reduce((a, b) => a + b);
+      const moAmUsdTotal = moAmUsdValues.reduce((a, b) => (a + b).toFixed(2));
       internalMemory.save("totalUsd", moAmUsdTotal);
       setTotalUsd(moAmUsdTotal);
     }
