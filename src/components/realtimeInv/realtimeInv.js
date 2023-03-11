@@ -17,7 +17,7 @@ const Realtime = ({ data }) => {
   const [totalEuro, setTotalEuro] = useState(0);
   const [totalUsd, setTotalUsd] = useState(0);
   const [percentuageEur, setPercentuageEur] = useState(0);
-  const [earned, setEarned] = useState(0);
+  const [sellObj, setSellObj] = useState(0);
 
   useEffect(() => {
     const storedData = localStorage.getItem("cryptoData");
@@ -121,7 +121,23 @@ const Realtime = ({ data }) => {
 
   useEffect(() => {
     const existInv = internalMemory.find("cryptoData");
-    if (existInv) {
+    const existSell = internalMemory.find("crypto-sell");
+    if (existInv && existSell) {
+      const earned = Object.keys(existSell)
+        .map((key) => existSell[key].sell)
+        .reduce((a, b) => a + b);
+      console.log(earned);
+      const guadagnoPercentualeEur = (
+        ((parseFloat(totalEuro) + parseFloat(earned)) /
+          parseFloat(totalInvested)) *
+          100 -
+        100
+      ).toFixed(3);
+      setPercentuageEur(guadagnoPercentualeEur);
+      internalMemory.save("percentuageEur", guadagnoPercentualeEur);
+      console.log(guadagnoPercentualeEur);
+    }
+    if (existInv && !existSell) {
       const guadagnoPercentualeEur = (
         (parseFloat(totalEuro) / parseFloat(totalInvested)) * 100 -
         100
@@ -215,6 +231,7 @@ const Realtime = ({ data }) => {
 
       sellObj[toSellCrypto] = { sell };
       internalMemory.save(`crypto-sell`, sellObj);
+      setSellObj(sellObj);
       setCryptoData(updatedData);
       setShowAdd(false);
     } else alert("You don't have such amount!");
