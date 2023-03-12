@@ -5,7 +5,7 @@ const Top10 = (props) => {
   const navigate = useNavigate();
 
   function handleChangePage(evt) {
-    navigate(`/${evt.target.attributes.symbol.value}`);
+    navigate(`/cryptocurrencies-info/${evt.target.attributes.symbol.value}`);
   }
   const nFormatter = (num) => {
     const lookup = [

@@ -6,7 +6,9 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div className="flex flex-col md:flex-row justify-center items-center h-16 bg-black-200 sticky top-0 pt-3">
+        <div className="flex flex-col md:flex-row justify-center items-center h-16 bg-black-200 sticky pt-3 z-10" style={{
+            top: -1,
+        } }>
             <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out">
                 <Link to="/top-10">Top 10</Link>
             </div>
