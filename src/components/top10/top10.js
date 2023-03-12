@@ -5,7 +5,9 @@ const Top10 = (props) => {
   const navigate = useNavigate();
 
   function handleChangePage(evt) {
-    navigate(`/cryptocurrencies-info/${evt.target.attributes.symbol.value}`);
+    const selectedValue = evt.target.attributes.symbol.value;
+    const selectedCrypto = props.data.find((crypto) => crypto.symbol === selectedValue);
+    navigate(`/cryptocurrencies-info/${selectedValue}`, { state: { selectedCrypto } });
   }
   const nFormatter = (num) => {
     const lookup = [

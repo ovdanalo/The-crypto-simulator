@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
+import { Route, Routes, Navigate, useNavigate, useParams } from "react-router-dom";
 
 // Importing all crypto assets
 import BTC from './cryptoAssets/BTC';
@@ -15,33 +15,22 @@ import MATIC from "./cryptoAssets/MATIC";
 import BUSD from "./cryptoAssets/BUSD";
 
 const CryptoInfo = (props) => {
-
     // Use the hook "useNavigate" to programmatically navigate to a different route
     const navigate = useNavigate();
-
-    // State hook to store the selected cryptocurrency
-    const [selectedCrypto, setSelectedCrypto] = useState(null);
 
     // Function to handle the select element's change event
     const handleChange = (event) => {
         const selectedValue = event.target.value;
-        // If no cryptocurrency is selected, set the selectedCrypto state to null
+        // If no cryptocurrency is selected, navigate to the homepage
         if (selectedValue === "") {
-            setSelectedCrypto(null);
+            navigate("/");
         } else {
             // Find the selected cryptocurrency data from the props data array
             const cryptoData = props.data.find((crypto) => crypto.symbol === selectedValue);
-            setSelectedCrypto(cryptoData);
+            // Programmatically navigate to the selected cryptocurrency's route
+            navigate(`/cryptocurrencies-info/${cryptoData.symbol}`);
         }
     };
-
-    // Effect hook that runs when the selectedCrypto state changes
-    useEffect(() => {
-        if (selectedCrypto) {
-            // Programmatically navigate to the selected cryptocurrency's route
-            navigate(`${selectedCrypto.symbol}`);
-        }
-    }, [selectedCrypto, navigate]);
 
     return (
         <div className='flex flex-col items-center h-def w-full bg-black-200 mx-auto my-12 rounded-lg lg:w-10/12 xl:w-8/12 flex-wrap'>
@@ -53,15 +42,11 @@ const CryptoInfo = (props) => {
                 ))}
             </select>
             <div className='bg-black-100 w-full mt-8 min-h-info rounded-lg sm:w-4/5'>
-                {/* If a cryptocurrency is selected, render the corresponding component */}
-                {selectedCrypto ? (
-                    <Routes>
-                        <Route path="/:id" element={<CryptoAsset data={props.data} selectedCrypto={selectedCrypto} />} />
-                    </Routes>
-                ) : (
-                    // If no cryptocurrency is selected, display a message
-                    <div className='text-white mt-16 text-xl'>Please select a cryptocurrency.</div>
-                )}
+                {/* Use the "Routes" component to render the selected cryptocurrency's information */}
+                <Routes>
+                    {/* Use the "useParams" hook inside the "Route" component to get the selected cryptocurrency */}
+                    <Route path="/:id" element={<CryptoAsset data={props.data} />} />
+                </Routes>
             </div>
         </div>
     );
@@ -69,17 +54,20 @@ const CryptoInfo = (props) => {
 
 // Component to render the selected cryptocurrency's information
 const CryptoAsset = (props) => {
+    // Use the "useParams" hook to get the selected cryptocurrency
+    const { id } = useParams();
+    const selectedCrypto = props.data.find((crypto) => crypto.symbol === id);
 
     // If data hasn't been loaded yet, display a loading message
     if (!props.data) {
         return <div>Loading...</div>;
     }
-    const { selectedCrypto } = props;
 
     // If no cryptocurrency is selected, navigate to the homepage
     if (!selectedCrypto) {
         return <Navigate to="/" />;
     }
+
 
     // Render the corresponding component based on the selected cryptocurrency
     switch (selectedCrypto.symbol) {
