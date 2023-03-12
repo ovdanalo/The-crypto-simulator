@@ -11,6 +11,7 @@ import About from "./components/about/about";
 import Footer from "./components/footer/footer";
 import ContactUs from "./components/contactus/contactus";
 import Overlay from "./components/overlay/overlay";
+import NotFound from "./components/notFound/notFound";
 
 function App() {
   const [cryptocurrencies, setCryptocurrencies] = useState([]);
@@ -57,6 +58,7 @@ function App() {
         />
         <Route path='/about' exact element={<About />} />
         <Route path='/contactus' exact element={<ContactUs />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
       <Footer />
       </Overlay>

@@ -61,8 +61,17 @@ const Top10 = (props) => {
                     onClick={handleChangePage}
                     id={crypto.id}
                     symbol={crypto.symbol}
-                  />{" "}
-                  {crypto.name} ({crypto.symbol.toUpperCase()})
+                  />
+                  <a
+                    href={`/cryptocurrencies-info/${crypto.symbol}`}
+                    onClick={(evt) => {
+                      evt.preventDefault(); // prevent default hyperlink navigation
+                      handleChangePage(evt);
+                    }}
+                    symbol={crypto.symbol}
+                  >
+                    {crypto.name} ({crypto.symbol.toUpperCase()})
+                  </a>
                 </td>
                 <td>{crypto.current_price.toFixed(2)}€</td>
                 <td>{nFormatter(crypto.market_cap)} €</td>
