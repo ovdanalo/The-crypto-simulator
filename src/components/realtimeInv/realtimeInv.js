@@ -302,6 +302,106 @@ const Realtime = ({ data }) => {
                                                         onClick={() => handleClickSell(key)}>SELL</button></td>
                                                 </>
                                             )}
+                                            {key === "staked-ether" && (
+                                                <>
+                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
+                                                    <td className='hidden md:inline-block'>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                                                    <td><button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4"
+                                                        onClick={() => handleClickSell(key)}>SELL</button></td>
+                                                </>
+                                            )}
+                                            {key === "solana" && (
+                                                <>
+                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
+                                                    <td className='hidden md:inline-block'>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                                                    <td><button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4"
+                                                        onClick={() => handleClickSell(key)}>SELL</button></td>
+                                                </>
+                                            )}
+                                            {key === "polkadot" && (
+                                                <>
+                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
+                                                    <td className='hidden md:inline-block'>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                                                    <td><button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4"
+                                                        onClick={() => handleClickSell(key)}>SELL</button></td>
+                                                </>
+                                            )}
+                                            {key === "dai" && (
+                                                <>
+                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
+                                                    <td className='hidden md:inline-block'>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                                                    <td><button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4"
+                                                        onClick={() => handleClickSell(key)}>SELL</button></td>
+                                                </>
+                                            )}
+                                            {key === "shiba-inu" && (
+                                                <>
+                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
+                                                    <td className='hidden md:inline-block'>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                                                    <td><button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4"
+                                                        onClick={() => handleClickSell(key)}>SELL</button></td>
+                                                </>
+                                            )}
+                                            {key === "tron" && (
+                                                <>
+                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
+                                                    <td className='hidden md:inline-block'>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                                                    <td><button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4"
+                                                        onClick={() => handleClickSell(key)}>SELL</button></td>
+                                                </>
+                                            )}
+                                            {key === "litecoin" && (
+                                                <>
+                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
+                                                    <td className='hidden md:inline-block'>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                                                    <td><button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4"
+                                                        onClick={() => handleClickSell(key)}>SELL</button></td>
+                                                </>
+                                            )}
+                                            {key === "avalanche-2" && (
+                                                <>
+                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
+                                                    <td className='hidden md:inline-block'>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                                                    <td><button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4"
+                                                        onClick={() => handleClickSell(key)}>SELL</button></td>
+                                                </>
+                                            )}
+                                            {key === "uniswap" && (
+                                                <>
+                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
+                                                    <td className='hidden md:inline-block'>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                                                    <td><button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4"
+                                                        onClick={() => handleClickSell(key)}>SELL</button></td>
+                                                </>
+                                            )}
+                                            {key === "the-open-network" && (
+                                                <>
+                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
+                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
+                                                    <td className='hidden md:inline-block'>{cryptoData[key].priceChange.toFixed(2)}%</td>
+                                                    <td><button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4"
+                                                        onClick={() => handleClickSell(key)}>SELL</button></td>
+                                                </>
+                                            )}
                                         </tr>
                                     </>
 
