@@ -19,8 +19,7 @@ const NotFound = () => {
                     fontSize: "1.2rem",
                     fontWeight: "bold",
                     marginBottom: "160px",
-                }}
-            >
+                }}>
                 Go back to homepage
             </Link>
         </div>

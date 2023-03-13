@@ -19,6 +19,7 @@ const Top10 = (props) => {
       { value: 1e15, symbol: " Tld" },
     ];
     const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+
     var item = lookup
       .slice()
       .reverse()

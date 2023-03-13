@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Route, Routes, Navigate, useNavigate, useParams } from "react-router-dom";
 
 // Importing all crypto assets
