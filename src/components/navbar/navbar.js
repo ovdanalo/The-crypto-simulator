@@ -9,19 +9,19 @@ const Navbar = () => {
 
     return (
         <div className={`flex flex-col md:flex-row justify-center items-center h-16 sticky top-0 pt-3 ${isDarkTheme ? 'bg-black-200' : 'bg-white-mode-200'}`}>
-            <div className={`font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out ${isDarkTheme ? 'text-gray-100 ' : 'text-black-200'}`}>
+            <div className={`font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out ${isDarkTheme ? 'text-gray-100 ' : 'text-black-200 hover:text-teal-200'}`}>
                 <Link to="/top-10">Top 10</Link>
             </div>
-            <div className={`font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out ${isDarkTheme ? 'text-gray-100 ' : 'text-black-200'}`}>
+            <div className={`font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out ${isDarkTheme ? 'text-gray-100 ' : 'text-black-200 hover:text-teal-200'}`}>
                 <Link to="/realtime-investment">Realtime Investment</Link>
             </div>
-            <div className={`font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out ${isDarkTheme ? 'text-gray-100 ' : 'text-black-200'}`}>
+            <div className={`font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out ${isDarkTheme ? 'text-gray-100 ' : 'text-black-200 hover:text-teal-200'}`}>
                 <Link to="/historic-investment">Historic Investment</Link>
             </div>
-            <div className={`font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out ${isDarkTheme ? 'text-gray-100 ' : 'text-black-200'}`}>
+            <div className={`font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out ${isDarkTheme ? 'text-gray-100 ' : 'text-black-200 hover:text-teal-200'}`}>
                 <Link to="/cryptocurrencies-info">Cryptocurrencies Info</Link>
             </div>
-            <div className={`font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out ${isDarkTheme ? 'text-gray-100 ' : 'text-black-200'}`}>
+            <div className={`font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out ${isDarkTheme ? 'text-gray-100 ' : 'text-black-200 hover:text-teal-200'}`}>
                 <Link to="/about">About</Link>
             </div>
             

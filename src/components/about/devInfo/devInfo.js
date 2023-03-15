@@ -1,12 +1,14 @@
 import React ,{useContext} from 'react';
 import Links from './links/links';
 import linkedin from '../../../assets/imgs/linkedin.png'
-import github from '../../../assets/imgs/githubLogo.png'
+import githubWhite from '../../../assets/imgs/githubLogo.png'
+import githubDark from '../../../assets/imgs/githubLogoDark.png'
 import ThemeContext from '../../ThemeContext';
 
 const DevInfo = (props) => {
     const {isDarkTheme} = useContext(ThemeContext);
 
+    const github = `${isDarkTheme ? githubWhite : githubDark}`
     
     return (
         <div className={`flex items-center justify-center md:w-8/12 min-h-dev  rounded-full my-4 overflow-hidden `+ props.position}>
