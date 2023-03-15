@@ -42,3 +42,41 @@ body {
     transform: rotate(360deg);
   }
 }
+#mode-label {
+  width:45px;
+  height:20px;
+  position: relative;
+  display: block;
+ 
+  background: #ffffff;
+  border-radius: 200px;
+  box-shadow: inset 0px 5px 15px rgba(0,0,0,0.4), inset 0px -5px 15px rgba(255,255,255,0.4);
+  cursor: pointer;
+}
+#mode-label:after {
+  content: "";
+  width:20px;
+  height: 20px;
+  position: absolute;
+  left:2px;
+  background:  url(./assets/imgs/moon.png);
+  border-radius: 180px;
+  box-shadow: 0px 5px 10px rgba(0,0,0,0.2);
+}
+#darkmode-toggle {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+#darkmode-toggle:checked + #mode-label {
+  background: #000000;
+}
+#darkmode-toggle:checked + #mode-label:after {
+  left:45px;
+  transform: translateX(-100%);
+  background: url(./assets/imgs/sun.png)
+  /* linear-gradient(180deg,#ffcc89,#d8860b); */
+}
+#mode-label, #mode-label:after {
+  transition: 0.3s
+}

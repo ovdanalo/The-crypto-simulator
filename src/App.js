@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext} from "react";
 import "./App.css";
 import Header from "./components/header/header";
 import Navbar from "./components/navbar/navbar";
@@ -10,6 +10,7 @@ import CryptoInfo from "./components/cryptoinfo/cryptoinfo";
 import About from "./components/about/about";
 import Footer from "./components/footer/footer";
 import ContactUs from "./components/contactus/contactus";
+import ThemeContext from "./components/ThemeContext";
 
 function App() {
   const [cryptocurrencies, setCryptocurrencies] = useState([]);
@@ -28,33 +29,35 @@ function App() {
     setInterval(fetchData, 30000);
   }, []);
 
+  const { isDarkTheme} = useContext(ThemeContext);
+
   return (
-    <div className='App'>
+      <div className={isDarkTheme ? 'bg-black-100' : 'bg-white-mode-100'}>
       <Header />
       <Navbar />
       <Routes>
         <Route
-          path='/top-10'
+          path="/top-10"
           exact
           element={<Top10 data={cryptocurrencies} />}
         />
         <Route
-          path='/realtime-investment'
+          path="/realtime-investment"
           exact
           element={<RealTime data={cryptocurrencies} />}
         />
         <Route
-          path='/historic-investment'
+          path="/historic-investment"
           exact
           element={<Historic data={cryptocurrencies} />}
         />
         <Route
-          path='/cryptocurrencies-info'
+          path="/cryptocurrencies-info"
           exact
           element={<CryptoInfo data={cryptocurrencies} />}
         />
-        <Route path='/about' exact element={<About />} />
-        <Route path='/contactus' exact element={<ContactUs />} />
+        <Route path="/about" exact element={<About />} />
+        <Route path="/contactus" exact element={<ContactUs />} />
       </Routes>
       <Footer />
     </div>
