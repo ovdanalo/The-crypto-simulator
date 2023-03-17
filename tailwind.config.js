@@ -15,11 +15,13 @@ module.exports = {
       'black': {
         100: '#1D1D1D',
         200: '#131313',
-        300: '#5F5F5F'},
+        300: '#5F5F5F',
+        400:'#2E2E2E'},
       'gray': {
         100: '#D6D6D6',
         200: '#C2C2C2',
-        300: 'ADADAD'
+        300: '#ADADAD',
+        400: '#F5F5F5'
       },
       'teal': {
         50: '#F1FFFD',
@@ -38,6 +40,12 @@ module.exports = {
       'green': {
         100: '#4DAA57',
         200: '#3F8D47'
+      },
+      'white-mode':{
+        100:'#FFFFFF',
+        200:'#F5F5F5',
+        300:'#EBEBEB',
+        400:'#E0E0E0',
       }
     },
     fontFamily: {

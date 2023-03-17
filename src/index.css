@@ -80,3 +80,14 @@
   background: transparent;
   box-shadow: inset 10px 10px 250px #000000, inset -10px -10px 250px #000000;
 }
+.dark {
+  /* Classi CSS per il tema scuro */
+  background-color: gray;
+  color: white;
+}
+
+.light {
+  /* Classi CSS per il tema chiaro */
+  background-color: white;
+  color: black;
+  }
