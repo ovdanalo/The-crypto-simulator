@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import React, { useState, useEffect, useContext} from "react";
 import "./App.css";
-import Header from "./components/header/Header";
+import Header from "./components/header/header";
 import Navbar from "./components/navbar/navbar";
 import Top10 from "./components/top10/top10";
 import RealTime from "./components/realtimeInv/realtimeInv";
