@@ -10,7 +10,7 @@ const Navbar = () => {
             top: -1,
         }}>
             <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out">
-                <Link to="/top-10">Top 10</Link>
+                <Link to="/">Top 10</Link>
             </div>
             <div className="text-gray-100 font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out">
                 <Link to="/realtime-investment">Realtime Investment</Link>
@@ -51,7 +51,7 @@ const Navbar = () => {
                         left: '25%',
                         boxShadow: '0px 4px 8px 2px rgba(0, 0, 0, 0.5)',
                     }}>
-                    <Link to="/top-10" className="px-4 py-2  hover:text-teal-100 duration-200 ease-in-out">
+                    <Link to="/" className="px-4 py-2  hover:text-teal-100 duration-200 ease-in-out">
                         Top 10
                     </Link>
                     <Link to="/realtime-investment" className="px-4 py-2  hover:text-teal-100 duration-200 ease-in-out">

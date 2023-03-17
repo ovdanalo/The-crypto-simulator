@@ -37,7 +37,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route
-          path='/top-10'
+          path='/'
           exact
           element={<Top10 data={cryptocurrencies} />}
         />
@@ -58,7 +58,8 @@ function App() {
         />
         <Route path='/about' exact element={<About />} />
         <Route path='/contactus' exact element={<ContactUs />} />
-        <Route path='*' element={<NotFound />} />
+        <Route path='*' element={<NotFound />}>
+        </Route>
       </Routes>
       <Footer />
       </Overlay>

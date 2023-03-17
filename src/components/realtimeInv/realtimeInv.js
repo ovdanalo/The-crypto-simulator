@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 const Realtime = ({ data }) => {
     const [cryptoData, setCryptoData] = useState(null);
@@ -130,12 +130,12 @@ const Realtime = ({ data }) => {
                             name='amount'
                             id='inputAmount'
                             type='number'
-                            className='rounded-tl-lg rounded-bl-lg text-center p-1 bg-teal-100 shadow'
+                            className='rounded-tl-lg rounded-bl-lg text-center p-1 bg-teal-100 shadow focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-transparent'
                             onChange={(e) =>
                                 setInputData({ ...inputData, euroValue: e.target.value })
                             }
                         ></input>
-                        <select id='money' onChange={(event) => setCurrency(event.target.value)} className='rounded-tr-lg rounded-br-lg p-1 bg-teal-100 shadow'>
+                        <select id='money' onChange={(event) => setCurrency(event.target.value)} className='rounded-tr-lg rounded-br-lg justify-center p-1 bg-teal-100 shadow'>
                             <option>EUR</option>
                             <option>USD</option>
                         </select>
@@ -154,7 +154,7 @@ const Realtime = ({ data }) => {
                             name='crypto'
                             size='27'
                             autocomplete='off'
-                            className='rounded-lg p-1 bg-teal-100 shadow'
+                            className='rounded-lg p-1 bg-teal-100 shadow text-center focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-transparent'
                             onChange={(e) =>
                                 setInputData({ ...inputData, selectedCrypto: e.target.value })
                             }
@@ -322,12 +322,12 @@ const Realtime = ({ data }) => {
                                 name='amount'
                                 id='inputAmount'
                                 type='number'
-                                className='rounded-tl-lg rounded-bl-lg text-center p-1 bg-teal-100 shadow'
+                                className='rounded-tl-lg rounded-bl-lg text-center p-1 bg-teal-100 shadow focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-transparent'
                                 onChange={(e) =>
                                     setInputData({ ...inputData, euroValue: e.target.value })
                                 }
                             ></input>
-                            <select id='money' onChange={(event) => setCurrency(event.target.value)} className='rounded-tr-lg rounded-br-lg p-1 bg-teal-100 shadow'>
+                            <select id='money' onChange={(event) => setCurrency(event.target.value)} className='rounded-tr-lg rounded-br-lg p-1 bg-teal-100 shadow focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-transparent'>
                                 <option>EUR</option>
                                 <option>USD</option>
                             </select>
@@ -346,7 +346,7 @@ const Realtime = ({ data }) => {
                                 name='crypto'
                                 size='27'
                                 autocomplete='off'
-                                className='rounded-lg p-1 bg-teal-100 shadow'
+                                className='rounded-lg p-1 bg-teal-100 shadow focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-transparent'
                                 onChange={(e) =>
                                     setInputData({ ...inputData, selectedCrypto: e.target.value })
                                 }
