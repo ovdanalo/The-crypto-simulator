@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Route, Routes, Navigate, useNavigate, useParams } from "react-router-dom";
 
 // Importing all crypto assets
@@ -13,10 +13,14 @@ import ADA from "./cryptoAssets/ADA";
 import DOGE from "./cryptoAssets/DOGE";
 import MATIC from "./cryptoAssets/MATIC";
 import BUSD from "./cryptoAssets/BUSD";
+import ThemeContext from "../ThemeContext";
+
 
 const CryptoInfo = (props) => {
     // Use the hook "useNavigate" to programmatically navigate to a different route
     const navigate = useNavigate();
+
+    const { isDarkTheme} = useContext(ThemeContext);
 
     // Function to handle the select element's change event
     const handleChange = (event) => {
@@ -33,15 +37,15 @@ const CryptoInfo = (props) => {
     };
 
     return (
-        <div className='flex flex-col items-center h-def w-full bg-black-200 mx-auto my-12 rounded-lg lg:w-10/12 xl:w-8/12 flex-wrap'>
-            <select id="selectCrypto" name="crypto" onChange={handleChange} className='rounded-lg p-1 mt-8 text-center'>
+        <div className={`flex flex-col items-center h-def w-full  mx-auto my-12 rounded-lg lg:w-10/12 xl:w-8/12 flex-wrap ${isDarkTheme ? "bg-black-200" : "bg-white-mode-200"}`}>
+            <select id="selectCrypto" name="crypto" onChange={handleChange} className='rounded-lg p-1 mt-8'>
                 <option value="">Select a cryptocurrency</option>
                 {/* Map over the data array to create options for the select element */}
                 {props.data.map((crypto) => (
                     <option key={crypto.symbol} value={crypto.symbol}>{crypto.name}</option>
                 ))}
             </select>
-            <div className='bg-black-100 w-full mt-8 min-h-info rounded-lg sm:w-4/5 text-center'>
+            <div className={` w-full mt-8 mb-8 min-h-info rounded-lg sm:w-4/5 ${isDarkTheme ? "bg-black-100" : "bg-white-mode-300"}`}>
                 {/* Use the "Routes" component to render the selected cryptocurrency's information */}
                 <Routes>
                     {/* Use the "useParams" hook inside the "Route" component to get the selected cryptocurrency */}
