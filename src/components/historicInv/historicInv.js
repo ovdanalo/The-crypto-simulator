@@ -54,16 +54,20 @@ const Historic = (props) => {
                 <form>
                     <div>
                         <label htmlFor='amount' className='flex text-white p-6 justify-center'>How much did you invest?</label>
-                        <input name='amount' type='number' value={amount} onChange={(evt) => setAmount(evt.target.value)} className='shadow rounded-tl-lg rounded-bl-lg text-center p-1 bg-teal-50'></input>
-                        <select className='shadow rounded-tr-lg rounded-br-lg p-1 bg-teal-50' value={startCurrency} onChange={evt => setStartCurrency(evt.target.value)}>
-                            <option value='EUR'>EUR</option>
-                            <option value='USD'>USD</option>
-                        </select>
+                        <div className='w-full flex mx-auto justify-center'>
+                            <input name='amount' type='number' value={amount} onChange={(evt) => setAmount(evt.target.value)} className='shadow rounded-tl-lg rounded-bl-lg text-center p-1 bg-teal-50'></input>
+                            <select className='shadow rounded-tr-lg rounded-br-lg p-1 bg-teal-50' value={startCurrency} onChange={evt => setStartCurrency(evt.target.value)}>
+                                <option value='EUR'>EUR</option>
+                                <option value='USD'>USD</option>
+                            </select>
+                        </div>
+
                     </div>
                     <div>
                         <label htmlFor='crypto' className='flex text-white pt-6 pb-6 justify-center '>In which cryptocurrency?</label>
-
-                        <input list="cryptoList" id="selectCrypto" name="crypto" value={endCurrency} onChange={evt => setEndCurrency(evt.target.value)} className='shadow rounded-lg p-1 text-center bg-teal-50' />
+                        <div className='flex justify-center'>
+                            <input list="cryptoList" id="selectCrypto" name="crypto" value={endCurrency} onChange={evt => setEndCurrency(evt.target.value)} className='shadow rounded-lg p-1 text-center bg-teal-50' />
+                        </div>
                     </div>
                     <div className='flex flex-row justify-center pt-6'>
                         <div className='flex flex-col'>
@@ -76,13 +80,17 @@ const Historic = (props) => {
                             <input name='endDate' type='date' value={endDate} onChange={evt => setEndDate(evt.target.value)} className='shadow p-1 rounded-lg m-2 my-2 bg-teal-50 '></input>
                         </div>
                     </div>
-                    <button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-lg shadow-md shadow-teal-400" onClick={(evt) => handleClick(evt)}>
-                        CALCULATE
-                    </button>
+                    <div className='flex justify-center'>
+                        <button className="bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-lg shadow-md shadow-teal-400" onClick={(evt) => handleClick(evt)}>
+                            CALCULATE
+                        </button>
+                    </div>
                 </form>
             </div>
-            <div className='flex flex-col bg-black-100 h-def w-11/12 xl:w-2/3 m-6 xl:mx-6 mx-auto rounded-lg'>
-                {hasData ? <div>
+
+                {hasData ?
+                <div className='flex flex-col bg-black-100 h-def w-11/12 xl:w-2/3 m-6 xl:mx-6 mx-auto rounded-lg'>
+                <div>
                     <h3 className='text-teal-100 text-3xl text mt-4 '>RESULT</h3>
                     <div id='graph-container' className='bg-black-200 h-3/6 w-4/5 mx-auto my-6 shadow'><Graph priceData={priceData} yearData={yearData} color={color} /></div>
                     <div className='p-4'>
@@ -91,15 +99,15 @@ const Historic = (props) => {
                         </div>
                         <div className='border-2 border-black-300 bg-black-200 pt-2 mx-auto rounded-lg shadow w-4/5'>
                             <h3 className='text-white text-2xl mb-2'>Crypto amount : {returnData.percentage > 0
-                                    ? <span className='text-green-100 text-2xl m-2 green-shadow'>{returnData.cryptoAmount} {endCurrency}</span>
-                                    : <span className='text-red-300 text-2xl m-2 red-shadow'>{returnData.cryptoAmount} {endCurrency}</span>}</h3>
+                                ? <span className='text-green-100 text-2xl m-2 green-shadow'>{returnData.cryptoAmount} {endCurrency}</span>
+                                : <span className='text-red-300 text-2xl m-2 red-shadow'>{returnData.cryptoAmount} {endCurrency}</span>}</h3>
                         </div>
                         <div className='flex flex-col justify-center items-center mx-auto'>
                             <div className='mx-auto border-black-300 bg-black-200 pt-2 px-6 border-2 rounded-lg shadow w-4/5'>
                                 <h3 className='text-white text-2xl mb-4'>End amount:
-                                {returnData.percentage > 0
-                                    ? <span className='text-green-100 text-2xl m-2 green-shadow'>{returnData.endAmount} {startCurrency}</span>
-                                    : <span className='text-red-300 text-2xl m-2 red-shadow'>{returnData.endAmount} {startCurrency}</span>}</h3>
+                                    {returnData.percentage > 0
+                                        ? <span className='text-green-100 text-2xl m-2 green-shadow'>{returnData.endAmount} {startCurrency}</span>
+                                        : <span className='text-red-300 text-2xl m-2 red-shadow'>{returnData.endAmount} {startCurrency}</span>}</h3>
                             </div>
                             <div className='mx-auto border-black-300 bg-black-200 pt-2 px-6 border-2 rounded-lg shadow w-4/5'>
                                 <h3 className='text-white text-2xl mb-4'>Percentage difference: {returnData.percentage > 0
@@ -109,8 +117,8 @@ const Historic = (props) => {
                         </div>
                     </div>
                 </div>
-                    : ''}
             </div>
+                    : ''}
             <datalist id="cryptoList">
                 {props.data.map((crypto) => (
                     <option>{crypto.id}</option>

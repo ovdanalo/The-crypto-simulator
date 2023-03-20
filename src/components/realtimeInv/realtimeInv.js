@@ -200,7 +200,7 @@ const Realtime = ({ data }) => {
                                     <>
                                         {console.log(key)}
                                         <div className="h-3"></div>
-                                        <tr className='text-white' key={key}>
+                                        <tr className='text-white text-center' key={key}>
                                             <td>{key}</td>
                                             {key === "bitcoin" && (
                                                 <>

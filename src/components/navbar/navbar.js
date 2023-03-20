@@ -64,7 +64,7 @@ const Navbar = () => {
                     </svg>
                 </button>
                 <div
-                    className={`${isDarkTheme ? 'bg-black-200 text-gray-100' : 'bg-white text-black-200'}  ${isOpen ? ' rounded-xl    font-lato py-2 mt-1 navbar-menu flex flex-col absolute justify-start w-1/2 ' : 'hidden'}`}
+                    className={`text-center ${isDarkTheme ? 'bg-black-200 text-gray-100' : 'bg-white text-black-200'}  ${isOpen ? ' rounded-xl    font-lato py-2 mt-1 navbar-menu flex flex-col absolute justify-start w-1/2 ' : 'hidden'}`}
                     style={{
                         top: '92%',
                         right: '25%',

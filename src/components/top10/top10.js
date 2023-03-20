@@ -50,7 +50,7 @@ const Top10 = (props) => {
               <th className='sm:max-md:hidden'>Change in 7d</th>
             </tr>
           </thead>
-          <tbody className='text-white'>
+          <tbody className='text-white text-center'>
             {props.data.map((crypto, index) => (
               <tr className='h-20 border-b border-b-white' key={crypto.id}>
                 <td>{index + 1}</td>

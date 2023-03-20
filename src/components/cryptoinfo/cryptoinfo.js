@@ -34,14 +34,14 @@ const CryptoInfo = (props) => {
 
     return (
         <div className='flex flex-col items-center h-def w-full bg-black-200 mx-auto my-12 rounded-lg lg:w-10/12 xl:w-8/12 flex-wrap'>
-            <select id="selectCrypto" name="crypto" onChange={handleChange} className='rounded-lg p-1 mt-8'>
+            <select id="selectCrypto" name="crypto" onChange={handleChange} className='rounded-lg p-1 mt-8 text-center'>
                 <option value="">Select a cryptocurrency</option>
                 {/* Map over the data array to create options for the select element */}
                 {props.data.map((crypto) => (
                     <option key={crypto.symbol} value={crypto.symbol}>{crypto.name}</option>
                 ))}
             </select>
-            <div className='bg-black-100 w-full mt-8 min-h-info rounded-lg sm:w-4/5'>
+            <div className='bg-black-100 w-full mt-8 min-h-info rounded-lg sm:w-4/5 text-center'>
                 {/* Use the "Routes" component to render the selected cryptocurrency's information */}
                 <Routes>
                     {/* Use the "useParams" hook inside the "Route" component to get the selected cryptocurrency */}
