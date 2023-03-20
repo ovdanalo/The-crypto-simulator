@@ -98,7 +98,8 @@ const Realtime = ({ data }) => {
             setToSellCryptoAmount(0)
         } else {
             setShowSell(false)
-            alert("You don't have such amount!")}
+            alert("You don't have such amount!")
+        }
 
     };
 
@@ -126,19 +127,21 @@ const Realtime = ({ data }) => {
                         <label for='amount' className='flex text-white py-6 justify-center'>
                             How much do you want to invest?
                         </label>
-                        <input
-                            name='amount'
-                            id='inputAmount'
-                            type='number'
-                            className='rounded-tl-lg rounded-bl-lg text-center p-1 bg-teal-100 shadow focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-transparent'
-                            onChange={(e) =>
-                                setInputData({ ...inputData, euroValue: e.target.value })
-                            }
-                        ></input>
-                        <select id='money' onChange={(event) => setCurrency(event.target.value)} className='rounded-tr-lg rounded-br-lg justify-center p-1 bg-teal-100 shadow'>
-                            <option>EUR</option>
-                            <option>USD</option>
-                        </select>
+                        <div className="flex justify-center">
+                            <input
+                                name='amount'
+                                id='inputAmount'
+                                type='number'
+                                className='rounded-tl-lg rounded-bl-lg text-center p-1 bg-teal-100 shadow focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-transparent'
+                                onChange={(e) =>
+                                    setInputData({ ...inputData, euroValue: e.target.value })
+                                }
+                            ></input>
+                            <select id='money' onChange={(event) => setCurrency(event.target.value)} className='rounded-tr-lg rounded-br-lg justify-center p-1 bg-teal-100 shadow'>
+                                <option>EUR</option>
+                                <option>USD</option>
+                            </select>
+                        </div>
                     </div>
                     <div>
                         <label
@@ -147,26 +150,28 @@ const Realtime = ({ data }) => {
                         >
                             In which cryptocurrency?
                         </label>
-
-                        <input
-                            list='cryptoList'
-                            id='selectCrypto'
-                            name='crypto'
-                            size='27'
-                            autocomplete='off'
-                            className='rounded-lg p-1 bg-teal-100 shadow text-center focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-transparent'
-                            onChange={(e) =>
-                                setInputData({ ...inputData, selectedCrypto: e.target.value })
-                            }
-                        />
+                        <div className="flex justify-center">
+                            <input
+                                list='cryptoList'
+                                id='selectCrypto'
+                                name='crypto'
+                                size='27'
+                                autocomplete='off'
+                                className='rounded-lg p-1 bg-teal-100 shadow text-center focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-transparent'
+                                onChange={(e) =>
+                                    setInputData({ ...inputData, selectedCrypto: e.target.value })
+                                }
+                            />
+                        </div>
                     </div>
-
-                    <button
-                        onClick={handleSave}
-                        class='bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-lg shadow-md shadow-teal-400'
-                    >
-                        BUY
-                    </button>
+                    <div className="flex justify-center">
+                        <button
+                            onClick={handleSave}
+                            class='bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-lg shadow-md shadow-teal-400'
+                        >
+                            BUY
+                        </button>
+                    </div>
                 </form>
             </div>
             <div className='flex flex-col bg-black-100 w-full xl:w-2/3 m-6 rounded-lg'>
@@ -470,21 +475,21 @@ const Realtime = ({ data }) => {
                 </button>
             </div>
             {!!showSell && (
-                    <div className='top-14 right-18 p-10 self-center flex-col bg-black-200 w-65 rounded-lg z-10 border-solid border-2 border-teal-200 absolute'>
-                        <label htmlFor='toSellCryptoAmount' className='text-white font-bold mb-4'>Enter amount to sell:</label>
-                        <div className='flex flex-col items-center sm:flex-row sm:items-center'>
-                            <input id='toSellCryptoAmount' type='number' value={toSellCryptoAmount} onChange={saveToSellAmount} className='w-full rounded-md py-2 px-3 bg-teal-100 m-4 text-gray-800 font-medium focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-transparent'></input>
-                        </div>
-                        <div className='flex flex-col sm:flex-row justify-center mt-8'>
-                            <button onClick={handleSell} className='w-full max-w-xs bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-6 rounded-lg shadow-md mb-4 sm:mb-0 sm:mr-4'>
-                                SELL
-                            </button>
-                            <button onClick={handleCancel} className='w-full max-w-xs bg-red-300 hover:bg-red-200 text-white font-bold py-3 px-6 rounded-lg shadow-md'>
-                                CANCEL
-                            </button>
-                        </div>
+                <div className='top-14 right-18 p-10 self-center flex-col bg-black-200 w-65 rounded-lg z-10 border-solid border-2 border-teal-200 absolute'>
+                    <label htmlFor='toSellCryptoAmount' className='text-white font-bold mb-4'>Enter amount to sell:</label>
+                    <div className='flex flex-col items-center sm:flex-row sm:items-center'>
+                        <input id='toSellCryptoAmount' type='number' value={toSellCryptoAmount} onChange={saveToSellAmount} className='w-full rounded-md py-2 px-3 bg-teal-100 m-4 text-gray-800 font-medium focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-transparent'></input>
                     </div>
-                )}
+                    <div className='flex flex-col sm:flex-row justify-center mt-8'>
+                        <button onClick={handleSell} className='w-full max-w-xs bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-6 rounded-lg shadow-md mb-4 sm:mb-0 sm:mr-4'>
+                            SELL
+                        </button>
+                        <button onClick={handleCancel} className='w-full max-w-xs bg-red-300 hover:bg-red-200 text-white font-bold py-3 px-6 rounded-lg shadow-md'>
+                            CANCEL
+                        </button>
+                    </div>
+                </div>
+            )}
             <datalist id='cryptoList'>
                 {data.map((crypto) => (
                     <option>{crypto.id}</option>
