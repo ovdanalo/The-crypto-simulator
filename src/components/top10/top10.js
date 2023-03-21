@@ -1,8 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
 import { useNavigate } from "react-router-dom";
+import ThemeContext from "../ThemeContext";
+
 
 const Top10 = (props) => {
   const navigate = useNavigate();
+
+  const { isDarkTheme} = useContext(ThemeContext);
 
   function handleChangePage(evt) {
     const selectedValue = evt.target.attributes.symbol.value;
@@ -33,14 +37,12 @@ const Top10 = (props) => {
 
   return (
     <div
-      className={
-        "flex flex-col mx-auto bg-black-200 w-full lg:max-w-4xl xl:max-w-5xl my-8 lg:rounded-2xl sm:max-md:text-xs "
-      }
+      className={`flex flex-col mx-auto w-full lg:max-w-4xl xl:max-w-5xl my-8 lg:rounded-2xl sm:max-md:text-xs ${isDarkTheme ? "bg-black-200" : "bg-white-mode-300"} `}
     >
-      <div className='bg-black-100 w-full lg:w-11/12 mx-auto lg:rounded-lg my-4 p-2 '>
+      <div className={` w-full lg:w-11/12 mx-auto lg:rounded-lg my-4 p-2 ${isDarkTheme ? "bg-black-100" : "bg-white-mode-200"}`}>
         <table className='w-11/12 mx-auto my-6 lg:w-10/12'>
-          <thead className='text-teal-100'>
-            <tr className='h-20 border-b border-b-teal-100'>
+          <thead className={` ${isDarkTheme ? "text-teal-100" : "text-black-100"}`}>
+            <tr className={`h-20 border-b  ${isDarkTheme ? "border-b-teal-100" : "border-black-100"}`}>
               <th>#</th>
               <th className='min-w-td-top10'>Name</th>
               <th className='min-w-td-top10 '>Price</th>
@@ -50,9 +52,9 @@ const Top10 = (props) => {
               <th className='sm:max-md:hidden'>Change in 7d</th>
             </tr>
           </thead>
-          <tbody className='text-white text-center'>
+          <tbody className={`${isDarkTheme ? "text-white" : "text-black-100"}`}>
             {props.data.map((crypto, index) => (
-              <tr className='h-20 border-b border-b-white' key={crypto.id}>
+              <tr className={`h-20 border-b ${isDarkTheme ? "border-b-white" : "border-black-100"}`} key={crypto.id}>
                 <td>{index + 1}</td>
                 <td className='flex items-center mt-5'>
                   <img

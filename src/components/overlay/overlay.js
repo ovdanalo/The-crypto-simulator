@@ -5,7 +5,7 @@ const Overlay = ({ children }) => {
     return (
         <div className="overlay-container">
             {children}
-            <div className="overlay"></div>
+            <div className=""></div>
         </div>
     );
 };

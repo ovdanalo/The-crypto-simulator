@@ -12,7 +12,7 @@ const Footer = () => {
         <div className={`flex justify-center w-full min-h-foot ${isDarkTheme ? 'bg-black-200' : 'bg-white-mode-200'}`}>
             
             <div className='w-1/3 pt-6'>
-                <h1 className={` font-lato ${isDarkTheme ? 'text-gray-100' : 'text-black-200'}`}><a href="contactus">Contact us</a></h1>
+                <h1 className={`flex justify-center font-lato ${isDarkTheme ? 'text-gray-100' : 'text-black-200'}`}><a href="contactus">Contact us</a></h1>
             </div>
 
             <div className='flex w-1/3 justify-center space-x-3 pt-3'> 

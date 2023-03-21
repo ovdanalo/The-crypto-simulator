@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import ThemeContext from "../ThemeContext";
 
 const Realtime = ({ data }) => {
     const [cryptoData, setCryptoData] = useState(null);
@@ -119,62 +120,66 @@ const Realtime = ({ data }) => {
     const handleCancel = () => {
         setShowSell(false)
     }
+
+    const { isDarkTheme} = useContext(ThemeContext);
+
     return (
-        <div className='flex flex-row bg-black-200 w-full md:w-10/12 xl:w-8/12 h-def mx-auto my-6 justify-center rounded-lg'>
-            <div className='xl:flex flex-col bg-black-100 w-1/3 m-6 mr-0 rounded-lg py-12 hidden'>
+        <div className={`flex flex-row  w-full md:w-10/12 xl:w-8/12 h-def mx-auto my-6 justify-center rounded-lg ${isDarkTheme ? "bg-black-200" : "bg-white-mode-300"}`}>
+            <div className={`xl:flex flex-col bg-black-100 w-1/3 m-6 mr-0 rounded-lg py-12 hidden ${isDarkTheme ? "bg-black-100" : "bg-white-mode-200"}`}>
                 <form>
                     <div>
-                        <label for='amount' className='flex text-white py-6 justify-center'>
+                        <label for='amount' className={`flex py-6 justify-center ${isDarkTheme ? "text-white" : "text-black-100"}`}>
                             How much do you want to invest?
                         </label>
                         <div className="flex justify-center">
-                            <input
-                                name='amount'
-                                id='inputAmount'
-                                type='number'
-                                className='rounded-tl-lg rounded-bl-lg text-center p-1 bg-teal-100 shadow focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-transparent'
-                                onChange={(e) =>
-                                    setInputData({ ...inputData, euroValue: e.target.value })
-                                }
-                            ></input>
-                            <select id='money' onChange={(event) => setCurrency(event.target.value)} className='rounded-tr-lg rounded-br-lg justify-center p-1 bg-teal-100 shadow'>
-                                <option>EUR</option>
-                                <option>USD</option>
-                            </select>
+                        <input
+                            name='amount'
+                            id='inputAmount'
+                            type='number'
+                            className={`rounded-tl-lg rounded-bl-lg text-center p-1  shadow focus:outline-none focus:ring-2  focus:border-transparent ${isDarkTheme ? "focus:ring-teal-300 bg-teal-100" : "focus:ring-black-100 bg-white-mode-100" }`}
+                            onChange={(e) =>
+                                setInputData({ ...inputData, euroValue: e.target.value })
+                            }
+                        ></input>
+                        <select id='money' onChange={(event) => setCurrency(event.target.value)} className={`rounded-tr-lg rounded-br-lg justify-center p-1  shadow ${isDarkTheme ? "bg-teal-100" : "bg-white-mode-100"}`}>
+                            <option>EUR</option>
+                            <option>USD</option>
+                        </select>
                         </div>
                     </div>
                     <div>
                         <label
                             for='crypto'
-                            className='flex text-white pt-12 pb-6 justify-center '
+                            className={`flex pt-12 pb-6 justify-center ${isDarkTheme ? "text-white" : "text-black-100"}`}
                         >
                             In which cryptocurrency?
                         </label>
                         <div className="flex justify-center">
-                            <input
-                                list='cryptoList'
-                                id='selectCrypto'
-                                name='crypto'
-                                size='27'
-                                autocomplete='off'
-                                className='rounded-lg p-1 bg-teal-100 shadow text-center focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-transparent'
-                                onChange={(e) =>
-                                    setInputData({ ...inputData, selectedCrypto: e.target.value })
-                                }
-                            />
+                        <input
+                            list='cryptoList'
+                            id='selectCrypto'
+                            name='crypto'
+                            size='27'
+                            autocomplete='off'
+                            className={` rounded-lg p-1  shadow text-center focus:outline-none focus:ring-2  focus:border-transparent ${isDarkTheme ? "focus:ring-teal-300 bg-teal-100" : "focus:ring-black-100 bg-white-mode-100" } `}
+                            onChange={(e) =>
+                                setInputData({ ...inputData, selectedCrypto: e.target.value })
+                            }
+                        />
                         </div>
                     </div>
                     <div className="flex justify-center">
-                        <button
-                            onClick={handleSave}
-                            class='bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-lg shadow-md shadow-teal-400'
-                        >
-                            BUY
-                        </button>
+
+                    <button
+                        onClick={handleSave}
+                        class='bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-lg shadow-md shadow-teal-400'
+                    >
+                        BUY
+                    </button>
                     </div>
                 </form>
             </div>
-            <div className='flex flex-col bg-black-100 w-full xl:w-2/3 m-6 rounded-lg'>
+            <div className={`flex flex-col w-full xl:w-2/3 m-6 rounded-lg ${isDarkTheme ? "bg-black-100" : "bg-white-mode-200"}`}>
                 {cryptoData && Object.keys(cryptoData).length > 0 && (
                     <div>
                         <div className='flex justify-end'>
@@ -191,7 +196,7 @@ const Realtime = ({ data }) => {
                         <table className='mx-auto w-full'>
                             <thead>
                                 <div className="h-3"></div>
-                                <tr className='text-white border-b-2'>
+                                <tr className={`text-center border-b-2 ${isDarkTheme ? "text-white" : "text-black-100"}`}>
                                     <th className='p-2'>Crypto</th>
                                     <th className="p-2">Amount</th>
                                     <th className="p-2">Value (€)</th>
@@ -205,7 +210,7 @@ const Realtime = ({ data }) => {
                                     <>
                                         {console.log(key)}
                                         <div className="h-3"></div>
-                                        <tr className='text-white text-center' key={key}>
+                                        <tr className={`text-center ${isDarkTheme ? "text-white" : "text-black-100"}`} key={key}>
                                             <td>{key}</td>
                                             {key === "bitcoin" && (
                                                 <>
@@ -416,23 +421,23 @@ const Realtime = ({ data }) => {
                     </div>
                 )}
 
-                {showAdd && <div className='mt-10 p-10 self-center flex-col bg-black-200 w-65 rounded-lg xl:hidden z-10 border-solid border-2 border-teal-200 absolute'>
+                {showAdd && <div className={`mt-10 p-10 self-center flex-col  w-65 rounded-lg xl:hidden z-10 border-solid border-2  absolute ${isDarkTheme ? "bg-black-100 border-teal-200" : "bg-white-mode-300 border-black-400"}`}>
 
                     <form>
                         <div>
-                            <label for='amount' className='flex text-white py-6 justify-center'>
+                            <label for='amount' className={`flex py-6 justify-center ${isDarkTheme ? "text-white" : "text-black-100"}`}>
                                 How much do you want to invest?
                             </label>
                             <input
                                 name='amount'
                                 id='inputAmount'
                                 type='number'
-                                className='rounded-tl-lg rounded-bl-lg text-center p-1 bg-teal-100 shadow focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-transparent'
+                                className={`rounded-tl-lg rounded-bl-lg text-center p-1  shadow focus:outline-none focus:ring-2 focus:border-transparent ${isDarkTheme ? "focus:ring-teal-300 bg-teal-100" : "focus:ring-black-100 bg-white-mode-100" }`}
                                 onChange={(e) =>
                                     setInputData({ ...inputData, euroValue: e.target.value })
                                 }
                             ></input>
-                            <select id='money' onChange={(event) => setCurrency(event.target.value)} className='rounded-tr-lg rounded-br-lg p-1 bg-teal-100 shadow focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-transparent'>
+                            <select id='money' onChange={(event) => setCurrency(event.target.value)} className={`rounded-tr-lg rounded-br-lg p-1  shadow focus:outline-none focus:ring-2 focus:border-transparent ${isDarkTheme ? "bg-teal-100 focus:ring-teal-300 ": "" }`}>
                                 <option>EUR</option>
                                 <option>USD</option>
                             </select>
@@ -440,7 +445,7 @@ const Realtime = ({ data }) => {
                         <div>
                             <label
                                 for='crypto'
-                                className='flex text-white pt-12 pb-6 justify-center '
+                                className={`flex  pt-12 pb-6 justify-center ${isDarkTheme ? "text-white" : "text-black-100"}`}
                             >
                                 In which cryptocurrency?
                             </label>
@@ -451,7 +456,7 @@ const Realtime = ({ data }) => {
                                 name='crypto'
                                 size='27'
                                 autocomplete='off'
-                                className='rounded-lg p-1 bg-teal-100 shadow focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-transparent'
+                                className={`rounded-lg p-1  shadow focus:outline-none focus:ring-2  focus:border-transparent ${isDarkTheme ? "bg-teal-100 focus:ring-teal-300" : "bg-white-mode-100 focus:ring-black-100"}`}
                                 onChange={(e) =>
                                     setInputData({ ...inputData, selectedCrypto: e.target.value })
                                 }
@@ -475,10 +480,20 @@ const Realtime = ({ data }) => {
                 </button>
             </div>
             {!!showSell && (
-                <div className='top-14 right-18 p-10 self-center flex-col bg-black-200 w-65 rounded-lg z-10 border-solid border-2 border-teal-200 absolute'>
-                    <label htmlFor='toSellCryptoAmount' className='text-white font-bold mb-4'>Enter amount to sell:</label>
-                    <div className='flex flex-col items-center sm:flex-row sm:items-center'>
-                        <input id='toSellCryptoAmount' type='number' value={toSellCryptoAmount} onChange={saveToSellAmount} className='w-full rounded-md py-2 px-3 bg-teal-100 m-4 text-gray-800 font-medium focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-transparent'></input>
+                <div>
+                    <div className={`top-14 right-18 p-10 self-center flex-col  w-65 rounded-lg z-10 border-solid border-2  absolute ${isDarkTheme ? "bg-black-200 border-teal-200" : "bg-white-mode-300 border-black-400"}`}>
+                        <label htmlFor='toSellCryptoAmount' className={` font-bold mb-4 ${isDarkTheme ? "text-white" : "text-black-100"}`}>Enter amount to sell:</label>
+                        <div className='flex flex-col items-center sm:flex-row sm:items-center'>
+                            <input id='toSellCryptoAmount' type='number' value={toSellCryptoAmount} onChange={saveToSellAmount} className={`w-full rounded-md py-2 px-3  m-4 text-gray-800 font-medium focus:outline-none focus:ring-2 focus:border-transparent ${isDarkTheme ? "bg-teal-100 focus:ring-teal-300" : "bg-white-mode-100 focus:ring-black-100"}`}></input>
+                        </div>
+                        <div className='flex flex-col sm:flex-row justify-center mt-8'>
+                            <button onClick={handleSell} className='w-full max-w-xs bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-6 rounded-lg shadow-md mb-4 sm:mb-0 sm:mr-4'>
+                                SELL
+                            </button>
+                            <button onClick={handleCancel} className='w-full max-w-xs bg-red-300 hover:bg-red-200 text-white font-bold py-3 px-6 rounded-lg shadow-md'>
+                                CANCEL
+                            </button>
+                        </div>
                     </div>
                     <div className='flex flex-col sm:flex-row justify-center mt-8'>
                         <button onClick={handleSell} className='w-full max-w-xs bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-6 rounded-lg shadow-md mb-4 sm:mb-0 sm:mr-4'>
