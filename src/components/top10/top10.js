@@ -34,10 +34,10 @@ const Top10 = (props) => {
   return (
     <div
       className={
-        "flex flex-col mx-auto bg-black-200 w-full lg:max-w-4xl xl:max-w-5xl my-8 lg:rounded-2xl sm:max-md:text-xs "
+        "flex flex-col mx-auto bg-black-200 w-full lg:max-w-4xl xl:w-7/12 my-6 lg:rounded-lg sm:max-md:text-xs "
       }
     >
-      <div className='bg-black-100 w-full lg:w-11/12 mx-auto lg:rounded-lg my-4 p-2 '>
+      <div className='bg-black-100 lg:w-11/12 mx-auto lg:rounded-lg my-6 '>
         <table className='w-11/12 mx-auto my-6 lg:w-10/12'>
           <thead className='text-teal-100'>
             <tr className='h-20 border-b border-b-teal-100'>

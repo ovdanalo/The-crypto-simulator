@@ -120,7 +120,7 @@ const Realtime = ({ data }) => {
         setShowSell(false)
     }
     return (
-        <div className='flex flex-row bg-black-200 w-full md:w-10/12 xl:w-8/12 h-def mx-auto my-6 justify-center rounded-lg'>
+        <div className='flex flex-row bg-black-200 w-full md:w-10/12 xl:w-7/12 h-def mx-auto my-6 justify-center rounded-lg'>
             <div className='xl:flex flex-col bg-black-100 w-1/3 m-6 mr-0 rounded-lg py-12 hidden'>
                 <form>
                     <div>

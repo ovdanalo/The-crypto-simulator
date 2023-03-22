@@ -49,7 +49,7 @@ const Historic = (props) => {
     }
 
     return (
-        <div className='flex flex-col xl:flex-row bg-black-200 lg:w-10/12 xl:w-8/12 h-def mx-auto my-6 justify-center rounded-lg'>
+        <div className='flex flex-col xl:flex-row bg-black-200 lg:w-10/12 xl:w-7/12 h-def mx-auto my-6 justify-center rounded-lg'>
             <div className='flex flex-col bg-black-100 h-def mx-auto w-11/12 xl:w-1/3 xl:m-6 xl:mr-0 rounded-lg mt-12 py-12'>
                 <form>
                     <div>
