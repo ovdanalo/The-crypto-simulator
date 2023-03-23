@@ -144,6 +144,7 @@ const Realtime = ({ data }) => {
     if (storedData) {
       updatedData = JSON.parse(storedData);
     }
+
     const { selectedCrypto, euroValue } = inputData;
     const selectedCryptoData = data.find((item) => item.id === selectedCrypto);
     let crAm =
@@ -314,14 +315,28 @@ const Realtime = ({ data }) => {
         </div>
       )}
       <div className='flex flex-col bg-black-100 w-full xl:w-2/3 m-6 rounded-lg'>
-        <div className='flex flex-col items-start justify-end p-3 bg-red-100 w-max rounded-lg'>
-          <div>money Invested:{totalInvested}</div>
-          <div>actual money:{totalEuro}</div>
-          <div>profit:{percentuageEur}%</div>
-        </div>
         {cryptoData && Object.keys(cryptoData).length > 0 && (
           <div>
-            <div className='flex justify-end'>
+            <div className='flex justify-between'>
+              <div className='flex flex-col items-start justify-end p-3 w-max rounded-lg text-teal-50'>
+                <div>money Invested:{totalInvested}</div>
+                <div
+                  className={`${
+                    totalEuro > totalInvested
+                      ? "text-green-100"
+                      : "text-red-400"
+                  }`}
+                >
+                  actual money:{totalEuro}
+                </div>
+                <div
+                  className={`${
+                    percentuageEur > 0 ? "text-green-100" : "text-red-400"
+                  }`}
+                >
+                  profit:{percentuageEur}%
+                </div>
+              </div>
               <button
                 onClick={() => {
                   setCryptoData(null);
