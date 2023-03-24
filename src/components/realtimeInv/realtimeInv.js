@@ -511,14 +511,6 @@ const Realtime = ({ data }) => {
                             </button>
                         </div>
                     </div>
-                    <div className='flex flex-col sm:flex-row justify-center mt-8'>
-                        <button onClick={handleSell} className='w-full max-w-xs bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-6 rounded-lg shadow-md mb-4 sm:mb-0 sm:mr-4'>
-                            SELL
-                        </button>
-                        <button onClick={handleCancel} className='w-full max-w-xs bg-red-300 hover:bg-red-200 text-white font-bold py-3 px-6 rounded-lg shadow-md'>
-                            CANCEL
-                        </button>
-                    </div>
                 </div>
             )}
             <datalist id='cryptoList'>
