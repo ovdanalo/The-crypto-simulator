@@ -325,21 +325,20 @@ const Realtime = ({ data }) => {
               In which cryptocurrency?
             </label>
             <div className='flex justify-center'>
-              <input
-                list='cryptoList'
+              <select
                 id='selectCrypto'
                 name='crypto'
-                size='27'
-                autocomplete='off'
-                className={` rounded-lg p-1  shadow text-center focus:outline-none focus:ring-2  focus:border-transparent ${
-                  isDarkTheme
-                    ? "focus:ring-teal-300 bg-teal-100"
-                    : "focus:ring-black-100 bg-white-mode-100"
-                } `}
                 onChange={(e) =>
                   setInputData({ ...inputData, selectedCrypto: e.target.value })
                 }
-              />
+                className='text-center rounded-lg p-1 mt-8'
+              >
+                <option value=''>Select a cryptocurrency</option>
+                {/* Map over the data array to create options for the select element */}
+                {data.map((crypto) => (
+                  <option>{crypto.id}</option>
+                ))}
+              </select>
             </div>
           </div>
           <div className='flex justify-center'>
