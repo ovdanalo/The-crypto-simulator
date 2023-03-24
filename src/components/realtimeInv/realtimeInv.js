@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import ThemeContext from "../ThemeContext";
+
+
 
 const Realtime = ({ data }) => {
     const [cryptoData, setCryptoData] = useState(null);
@@ -12,6 +14,7 @@ const Realtime = ({ data }) => {
     const [showSell, setShowSell] = useState(false);
     const [toSellCrypto, setToSellCrypto] = useState('');
     const [toSellCryptoAmount, setToSellCryptoAmount] = useState(0);
+    const sellRef = useRef(null)
 
     useEffect(() => {
         const storedData = localStorage.getItem("cryptoData");
@@ -121,8 +124,21 @@ const Realtime = ({ data }) => {
         setShowSell(false)
     }
 
-    const { isDarkTheme } = useContext(ThemeContext);
+    const { isDarkTheme} = useContext(ThemeContext);
 
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            if (sellRef.current && !sellRef.current.contains(event.target)) {
+                setShowSell(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleOutsideClick);
+
+        return () => {
+            document.removeEventListener("mousedown", handleOutsideClick);
+        };
+    }, [sellRef]);
     return (
         <div className={`flex flex-row  w-full md:w-10/12 xl:w-8/12 h-def mx-auto my-6 justify-center rounded-lg ${isDarkTheme ? "bg-black-200" : "bg-white-mode-300"}`}>
             <div className={`xl:flex flex-col bg-black-100 w-1/3 m-6 mr-0 rounded-lg py-12 hidden ${isDarkTheme ? "bg-black-100" : "bg-white-mode-200"}`}>
@@ -484,7 +500,7 @@ const Realtime = ({ data }) => {
             </div>
             {!!showSell && (
                 <div>
-                    <div className={`top-14 right-18 p-10 self-center flex-col  w-65 rounded-lg z-10 border-solid border-2  absolute ${isDarkTheme ? "bg-black-200 border-teal-200" : "bg-white-mode-300 border-black-400"}`}>
+                    <div ref={sellRef} style={{position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}} className={`top-14 right-18 p-10 self-center flex-col  w-65 rounded-lg z-10 border-solid border-2  absolute ${isDarkTheme ? "bg-black-200 border-teal-200" : "bg-white-mode-300 border-black-400"}`}>
                         <label htmlFor='toSellCryptoAmount' className={` font-bold mb-4 ${isDarkTheme ? "text-white" : "text-black-100"}`}>Enter amount to sell:</label>
                         <div className='flex flex-col items-center sm:flex-row sm:items-center'>
                             <input id='toSellCryptoAmount' type='number' value={toSellCryptoAmount} onChange={saveToSellAmount} className={`w-full rounded-md py-2 px-3  m-4 text-gray-800 font-medium focus:outline-none focus:ring-2 focus:border-transparent ${isDarkTheme ? "bg-teal-100 focus:ring-teal-300" : "bg-white-mode-100 focus:ring-black-100"}`}></input>
@@ -497,14 +513,6 @@ const Realtime = ({ data }) => {
                                 CANCEL
                             </button>
                         </div>
-                    </div>
-                    <div className='flex flex-col sm:flex-row justify-center mt-8'>
-                        <button onClick={handleSell} className='w-full max-w-xs bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-6 rounded-lg shadow-md mb-4 sm:mb-0 sm:mr-4'>
-                            SELL
-                        </button>
-                        <button onClick={handleCancel} className='w-full max-w-xs bg-red-300 hover:bg-red-200 text-white font-bold py-3 px-6 rounded-lg shadow-md'>
-                            CANCEL
-                        </button>
                     </div>
                 </div>
             )}
