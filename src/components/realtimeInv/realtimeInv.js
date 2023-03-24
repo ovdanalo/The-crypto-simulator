@@ -497,7 +497,7 @@ const Realtime = ({ data }) => {
             </div>
             {!!showSell && (
                 <div>
-                    <div ref={sellRef} className={`top-14 right-18 p-10 self-center flex-col  w-65 rounded-lg z-10 border-solid border-2  absolute ${isDarkTheme ? "bg-black-200 border-teal-200" : "bg-white-mode-300 border-black-400"}`}>
+                    <div ref={sellRef} style={{position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}} className={`top-14 right-18 p-10 self-center flex-col  w-65 rounded-lg z-10 border-solid border-2  absolute ${isDarkTheme ? "bg-black-200 border-teal-200" : "bg-white-mode-300 border-black-400"}`}>
                         <label htmlFor='toSellCryptoAmount' className={` font-bold mb-4 ${isDarkTheme ? "text-white" : "text-black-100"}`}>Enter amount to sell:</label>
                         <div className='flex flex-col items-center sm:flex-row sm:items-center'>
                             <input id='toSellCryptoAmount' type='number' value={toSellCryptoAmount} onChange={saveToSellAmount} className={`w-full rounded-md py-2 px-3  m-4 text-gray-800 font-medium focus:outline-none focus:ring-2 focus:border-transparent ${isDarkTheme ? "bg-teal-100 focus:ring-teal-300" : "bg-white-mode-100 focus:ring-black-100"}`}></input>
