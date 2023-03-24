@@ -361,7 +361,9 @@ const Realtime = ({ data }) => {
           <div>
             <div className='flex justify-between'>
               <div className='flex flex-col items-start justify-end p-3 w-max rounded-lg text-teal-50'>
-                <div>
+                <div
+                  className={`${isDarkTheme ? "text-white" : "text-black-100"}`}
+                >
                   Total Invested:
                   {totalInvested}£/{parseFloat(totalInvestedUsd).toFixed(2)}$
                 </div>
