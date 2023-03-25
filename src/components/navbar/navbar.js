@@ -42,7 +42,7 @@ const Navbar = () => {
                 <Link to="/about">About</Link>
             </div>
 
-            <div className="mb-6 sm:absolute sm:right-1/4 lg:static " >
+            <div className="mb-6 absolute right-1/4 lg:static " >
                 <input type="checkbox" id="darkmode-toggle" onClick={toggleTheme}/>
                 <label for="darkmode-toggle" id="mode-label"></label>
             </div>

@@ -100,7 +100,7 @@ const Historic = (props) => {
                     <div className='flex justify-center'>
                         <h3 className={`text-3xl text mt-4 ${isDarkTheme ? "text-teal-100" : "text-black-100"}`}>RESULT</h3>
                     </div>
-                    <div id='graph-container' className={` h-3/6 w-4/5 mx-auto my-6 shadow ${isDarkTheme ? "bg-black-200" : "bg-white-mode-400 shadow-none"}`}><Graph priceData={priceData} yearData={yearData} color={color} /></div>
+                    <div id='graph-container' className={` h-3/6 w-11/12 mx-auto my-6 shadow ${isDarkTheme ? "bg-black-200" : "bg-white-mode-400 shadow-none"}`}><Graph priceData={priceData} yearData={yearData} color={color} /></div>
                     <div className='p-4'>
                         <div className={`border-2 mb-2 pt-2 mx-auto rounded-lg shadow w-4/5 ${isDarkTheme ? "bg-black-200 border-black-300" : "bg-white-mode-300 border-gray-300"}`}>
                             <h3 className={`text-center text-2xl mb-1 ${isDarkTheme ? "text-white" : "text-black-100"}`}>Initial amount : <span className={` m-4 ${isDarkTheme ? "text-green-100 green-shadow" : "text-green-100 "}`}>{amount} €</span></h3>

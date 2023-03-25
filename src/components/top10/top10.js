@@ -48,8 +48,8 @@ const Top10 = (props) => {
               <th className='min-w-td-top10 '>Price</th>
               <th className='min-w-td-top10'>MarketCap</th>
               <th className='min-w-td-top10'>Volume (24h)</th>
-              <th className='sm:max-md:hidden'>Circulating Supply</th>
-              <th className='sm:max-md:hidden'>Change in 7d</th>
+              <th className='hidden md:inline-block'>Circulating Supply</th>
+              <th className='hidden md:inline-block'>Change in 7d</th>
             </tr>
           </thead>
           <tbody className={`${isDarkTheme ? "text-white" : "text-black-100"}`}>
@@ -79,11 +79,11 @@ const Top10 = (props) => {
                 <td>{crypto.current_price.toFixed(2)}€</td>
                 <td>{nFormatter(crypto.market_cap)} €</td>
                 <td>{nFormatter(crypto.total_volume)} €</td>
-                <td className='sm:max-md:hidden'>
+                <td className='hidden md:inline-block'>
                   {nFormatter(crypto.circulating_supply)}{" "}
                   {crypto.symbol.toUpperCase()}
                 </td>
-                <td className='sm:max-md:hidden'>
+                <td className='hidden md:inline-block'>
                   {crypto.price_change_percentage_7d_in_currency.toFixed(2)} %
                 </td>
               </tr>
