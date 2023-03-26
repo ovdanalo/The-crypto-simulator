@@ -24,11 +24,13 @@ const Historic = (props) => {
         const end = new Date(endDate).getTime() / 1000;
         const response = await fetch(`https://api.coingecko.com/api/v3/coins/${endCurrency}/market_chart/range?vs_currency=${startCurrency}&from=${start}&to=${end}`);
         const data = await response.json();
+        let initialAmount;
         let cryptoAmount;
         let endAmount;
         let percentage;
         const startPrice = data.prices[0][1];
         const endPrice = data.prices[data.prices.length - 1][1];
+        initialAmount = amount;
         cryptoAmount = (amount / startPrice).toFixed(8);
         endAmount = (cryptoAmount * endPrice).toFixed(2);
         percentage = ((endAmount / amount * 100) - 100).toFixed(2);
@@ -41,6 +43,7 @@ const Historic = (props) => {
         return {
             startPrice: startPrice,
             endPrice: endPrice,
+            initialAmount: initialAmount,
             cryptoAmount: cryptoAmount,
             endAmount: endAmount,
             percentage: percentage
@@ -103,7 +106,7 @@ const Historic = (props) => {
                     <div id='graph-container' className={` h-3/6 w-11/12 mx-auto my-6 shadow ${isDarkTheme ? "bg-black-200" : "bg-white-mode-400 shadow-none"}`}><Graph priceData={priceData} yearData={yearData} color={color} /></div>
                     <div className='p-4'>
                         <div className={`border-2 mb-2 pt-2 mx-auto rounded-lg shadow w-4/5 ${isDarkTheme ? "bg-black-200 border-black-300" : "bg-white-mode-300 border-gray-300"}`}>
-                            <h3 className={`text-center text-2xl mb-1 ${isDarkTheme ? "text-white" : "text-black-100"}`}>Initial amount : <span className={` m-4 ${isDarkTheme ? "text-green-100 green-shadow" : "text-green-100 "}`}>{amount} €</span></h3>
+                            <h3 className={`text-center text-2xl mb-1 ${isDarkTheme ? "text-white" : "text-black-100"}`}>Initial amount : <span className={` m-4 ${isDarkTheme ? "text-green-100 green-shadow" : "text-green-100 "}`}>{returnData.initialAmount} €</span></h3>
                         </div>
                         <div className={`border-2 mb-1 pt-2 mx-auto rounded-lg shadow w-4/5 ${isDarkTheme ? "bg-black-200 border-black-300" : "bg-white-mode-300 border-gray-300"}`}>
                             <h3 className={`text-center text-2xl mb-2 ${isDarkTheme ? "text-white" : "text-black-100"}`}>Crypto amount : {returnData.percentage > 0

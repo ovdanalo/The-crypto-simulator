@@ -48,13 +48,13 @@ const Top10 = (props) => {
               <th className='min-w-td-top10 '>Price</th>
               <th className='min-w-td-top10'>MarketCap</th>
               <th className='min-w-td-top10'>Volume (24h)</th>
-              <th className='hidden md:inline-block'>Circulating Supply</th>
-              <th className='hidden md:inline-block'>Change in 7d</th>
+              <th className='hidden md:table-cell'>Circulating Supply</th>
+              <th className='hidden md:table-cell'>Change in 7d</th>
             </tr>
           </thead>
           <tbody className={`${isDarkTheme ? "text-white" : "text-black-100"}`}>
             {props.data.map((crypto, index) => (
-              <tr className={`h-20 border-b ${isDarkTheme ? "border-b-white" : "border-black-100"}`} key={crypto.id}>
+              <tr className={`text-center h-20 border-b ${isDarkTheme ? "border-b-white" : "border-black-100"}`} key={crypto.id}>
                 <td>{index + 1}</td>
                 <td className='flex items-center mt-5'>
                   <img
@@ -66,6 +66,7 @@ const Top10 = (props) => {
                     symbol={crypto.symbol}
                   />
                   <a
+                    className="text-left"
                     href={`/cryptocurrencies-info/${crypto.symbol}`}
                     onClick={(evt) => {
                       evt.preventDefault(); // prevent default hyperlink navigation
@@ -79,11 +80,11 @@ const Top10 = (props) => {
                 <td>{crypto.current_price.toFixed(2)}€</td>
                 <td>{nFormatter(crypto.market_cap)} €</td>
                 <td>{nFormatter(crypto.total_volume)} €</td>
-                <td className='hidden md:inline-block'>
+                <td className='hidden md:table-cell'>
                   {nFormatter(crypto.circulating_supply)}{" "}
                   {crypto.symbol.toUpperCase()}
                 </td>
-                <td className='hidden md:inline-block'>
+                <td className='hidden md:table-cell'>
                   {crypto.price_change_percentage_7d_in_currency.toFixed(2)} %
                 </td>
               </tr>
