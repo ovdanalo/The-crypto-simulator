@@ -42,20 +42,20 @@ const Top10 = (props) => {
       <div className={` w-full lg:w-11/12 mx-auto lg:rounded-lg my-4 p-2 ${isDarkTheme ? "bg-black-100" : "bg-white-mode-200"}`}>
         <table className='w-11/12 mx-auto my-6 lg:w-10/12'>
           <thead className={` ${isDarkTheme ? "text-teal-100" : "text-black-100"}`}>
-            <tr className={`h-20 border-b  ${isDarkTheme ? "border-b-teal-100" : "border-black-100"}`}>
+            <tr className={`text-sm md:text-md h-20 border-b  ${isDarkTheme ? "border-b-teal-100" : "border-black-100"}`}>
               <th>#</th>
               <th className='min-w-td-top10'>Name</th>
               <th className='min-w-td-top10 '>Price</th>
               <th className='min-w-td-top10'>MarketCap</th>
-              <th className='min-w-td-top10'>Volume (24h)</th>
+              <th className='hidden md:table-cell'>Volume (24h)</th>
               <th className='hidden md:table-cell'>Circulating Supply</th>
               <th className='hidden md:table-cell'>Change in 7d</th>
             </tr>
           </thead>
           <tbody className={`${isDarkTheme ? "text-white" : "text-black-100"}`}>
             {props.data.map((crypto, index) => (
-              <tr className={`text-center h-20 border-b ${isDarkTheme ? "border-b-white" : "border-black-100"}`} key={crypto.id}>
-                <td>{index + 1}</td>
+              <tr className={`text-sm md:text-md text-center h-20 border-b ${isDarkTheme ? "border-b-white" : "border-black-100"}`} key={crypto.id}>
+                <td className="">{index + 1}</td>
                 <td className='flex items-center mt-5'>
                   <img
                     src={crypto.image}
@@ -79,7 +79,7 @@ const Top10 = (props) => {
                 </td>
                 <td>{crypto.current_price.toFixed(2)}€</td>
                 <td>{nFormatter(crypto.market_cap)} €</td>
-                <td>{nFormatter(crypto.total_volume)} €</td>
+                <td className="hidden md:table-cell">{nFormatter(crypto.total_volume)} €</td>
                 <td className='hidden md:table-cell'>
                   {nFormatter(crypto.circulating_supply)}{" "}
                   {crypto.symbol.toUpperCase()}
