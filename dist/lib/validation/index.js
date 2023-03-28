@@ -37,5 +37,5 @@ const validationErrorMiddleware = (err, req, res, next) => {
     }
 };
 exports.validationErrorMiddleware = validationErrorMiddleware;
-__exportStar(require("./planet"), exports);
+__exportStar(require("./user"), exports);
 //# sourceMappingURL=index.js.map

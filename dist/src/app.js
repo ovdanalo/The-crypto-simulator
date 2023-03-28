@@ -5,37 +5,59 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 require("express-async-errors");
+const axios_1 = __importDefault(require("axios"));
 const client_1 = __importDefault(require("../lib/prisma/client"));
 const validation_1 = require("../lib/validation");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-app.get('/planets', async (req, res) => {
-    const planets = await client_1.default.planet.findMany();
-    res.json(planets);
-});
-app.get('/planets/:id(\\d+)', async (req, res, next) => {
-    const planetId = Number(req.params.id);
-    const planet = await client_1.default.planet.findUnique({
-        where: { id: planetId }
-    });
-    if (!planet) {
-        res.status(404);
-        return next(`Cannot GET /planets/${planetId}`);
+app.get('/', async (req, res) => {
+    try {
+        const response = await axios_1.default.get('https://example.com/api/data');
+        res.json(response.data);
     }
-    res.json(planet);
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Something went wrong' });
+    }
 });
-app.post('/planets', (0, validation_1.validate)({ body: validation_1.planetSchema }), async (req, res) => {
-    const planetData = req.body;
-    const planet = await client_1.default.planet.create({
-        data: planetData
-    });
-    res.status(201).json(planet);
+app.post('/historic-investment', async (req, res) => {
+    const { fiatCurrency, cryptoCurrency, start, end } = req.body;
+    try {
+        const response = await axios_1.default.get(`https://api.coingecko.com/api/v3/coins/${cryptoCurrency}/market_chart/range?vs_currency=${fiatCurrency}&from=${start}&to=${end}`);
+        res.json(response.data);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Something went wrong' });
+    }
 });
-app.put('/planets/:id(\\d+)', (0, validation_1.validate)({ body: validation_1.planetSchema }), async (req, res, next) => {
+app.put('/users/:id', async (req, res) => {
+    const userId = Number(req.params.id);
+    const { cryptoSell, total, totalEur, percentuageEur, cryptoData, totalUsd } = req.body;
+    try {
+        const updatedUser = await client_1.default.user.update({
+            where: { id: userId },
+            data: {
+                cryptoSell,
+                total,
+                totalEur,
+                percentuageEur,
+                cryptoData,
+                totalUsd,
+            },
+        });
+        res.json(updatedUser);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send('An error occurred while updating the user.');
+    }
+});
+app.put('/planets/:id(\\d+)', (0, validation_1.validate)({ body: validation_1.userSchema }), async (req, res, next) => {
     const planetData = req.body;
     const planetId = Number(req.params.id);
     try {
-        const planet = await client_1.default.planet.update({
+        const planet = await client_1.default.user.update({
             where: { id: planetId },
             data: planetData
         });
@@ -50,7 +72,7 @@ app.delete('/planets/:id(\\d+)', async (req, res, next) => {
     ;
     const planetId = Number(req.params.id);
     try {
-        const planet = await client_1.default.planet.delete({
+        const planet = await client_1.default.user.delete({
             where: { id: planetId }
         });
         res.status(204).end();

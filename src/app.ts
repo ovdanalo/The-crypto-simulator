@@ -25,11 +25,11 @@ app.get('/', async (req, res) => {
     }
   });
 
-app.get('/historic-investment', async (req, res) => {
+app.post('/historic-investment', async (req, res) => {
     const { fiatCurrency, cryptoCurrency, start, end } = req.body;
 
     try {
-        const response = await axios.get('https://example.com/api/data');
+        const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${cryptoCurrency}/market_chart/range?vs_currency=${fiatCurrency}&from=${start}&to=${end}`);
         res.json(response.data);
       } catch (error) {
         console.error(error);
