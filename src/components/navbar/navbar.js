@@ -10,7 +10,9 @@ const Navbar = () => {
     useEffect(() => {
         const handleOutsideClick = (event) => {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
-                setIsOpen(false);
+                if (!event.target.closest('.navbar-menu-button')) {
+                    setIsOpen(false);
+                }
             }
         };
         document.addEventListener("mousedown", handleOutsideClick);
@@ -49,7 +51,7 @@ const Navbar = () => {
             <div className="flex lg:hidden right-0 justify-start">
                 <button
                     onClick={() => setIsOpen(!isOpen)}
-                    className={`flex p-2 border  rounded-full  duration-200 ease-in-out hover:shadow-lg ${isDarkTheme ? 'hover:bg-black-100 border-white' : 'hover:bg-white border-black-100'}`}
+                    className={`navbar-menu-button flex p-2 border  rounded-full  duration-200 ease-in-out hover:shadow-lg ${isDarkTheme ? 'hover:bg-black-100 border-white' : 'hover:bg-white border-black-100'}`}
                 >
                     <svg
                         className={`w-8 h-8 duration-200 ease-in-out ${isDarkTheme ? 'fill-teal-100' : 'fill-black-100' }`}
