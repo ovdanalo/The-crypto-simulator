@@ -289,6 +289,33 @@ const Realtime = ({ data }) => {
             document.removeEventListener("mousedown", handleOutsideClick);
         };
     }, [sellRef]);
+
+    const nFormatter = (num) => {
+        const lookup = [
+            { value: 1e-6, symbol: " micro"},
+            { value: 1e-3, symbol: " milli"},
+            { value: 1, symbol: " " },
+            { value: 1e3, symbol: " k" },
+            { value: 1e6, symbol: " Mln" },
+            { value: 1e9, symbol: " Bln" },
+            { value: 1e12, symbol: " Tln" },
+            { value: 1e15, symbol: " Tld" },
+        ];
+        const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+
+        var item = lookup
+            .slice()
+            .reverse()
+            .find(function (item) {
+                return num >= item.value;
+            });
+        return item
+            ? (num / item.value).toFixed(2).replace(rx, "$1") + item.symbol
+            : "0";
+    };
+
+
+
     return (
         <div
             className={`flex flex-row  w-full md:w-10/12 xl:w-8/12 h-def mx-auto my-6 justify-center rounded-lg ${isDarkTheme ? "bg-black-200" : "bg-white-mode-300"
@@ -439,7 +466,7 @@ const Realtime = ({ data }) => {
                                             <td>{key}</td>
                                             {key === "bitcoin" && (
                                                 <>
-                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
                                                     <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                                                     <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                                                     <td className='hidden md:inline-block'>
@@ -457,7 +484,7 @@ const Realtime = ({ data }) => {
                                             )}
                                             {key === "ethereum" && (
                                                 <>
-                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
                                                     <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                                                     <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                                                     <td className='hidden md:inline-block'>
@@ -475,7 +502,7 @@ const Realtime = ({ data }) => {
                                             )}
                                             {key === "tether" && (
                                                 <>
-                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
                                                     <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                                                     <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                                                     <td className='hidden md:inline-block'>
@@ -493,7 +520,7 @@ const Realtime = ({ data }) => {
                                             )}
                                             {key === "binancecoin" && (
                                                 <>
-                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
                                                     <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                                                     <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                                                     <td className='hidden md:inline-block'>
@@ -511,7 +538,7 @@ const Realtime = ({ data }) => {
                                             )}
                                             {key === "usd-coin" && (
                                                 <>
-                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
                                                     <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                                                     <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                                                     <td className='hidden md:inline-block'>
@@ -529,7 +556,7 @@ const Realtime = ({ data }) => {
                                             )}
                                             {key === "ripple" && (
                                                 <>
-                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
                                                     <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                                                     <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                                                     <td className='hidden md:inline-block'>
@@ -547,7 +574,7 @@ const Realtime = ({ data }) => {
                                             )}
                                             {key === "okb" && (
                                                 <>
-                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
                                                     <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                                                     <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                                                     <td className='hidden md:inline-block'>
@@ -565,7 +592,7 @@ const Realtime = ({ data }) => {
                                             )}
                                             {key === "cardano" && (
                                                 <>
-                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
                                                     <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                                                     <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                                                     <td className='hidden md:inline-block'>
@@ -583,7 +610,7 @@ const Realtime = ({ data }) => {
                                             )}
                                             {key === "matic-network" && (
                                                 <>
-                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
                                                     <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                                                     <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                                                     <td className='hidden md:inline-block'>
@@ -601,7 +628,7 @@ const Realtime = ({ data }) => {
                                             )}
                                             {key === "dogecoin" && (
                                                 <>
-                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
                                                     <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                                                     <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                                                     <td className='hidden md:inline-block'>
@@ -619,7 +646,7 @@ const Realtime = ({ data }) => {
                                             )}
                                             {key === "staked-ether" && (
                                                 <>
-                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
                                                     <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                                                     <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                                                     <td className='hidden md:inline-block'>
@@ -637,7 +664,7 @@ const Realtime = ({ data }) => {
                                             )}
                                             {key === "solana" && (
                                                 <>
-                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
                                                     <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                                                     <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                                                     <td className='hidden md:inline-block'>
@@ -655,7 +682,7 @@ const Realtime = ({ data }) => {
                                             )}
                                             {key === "polkadot" && (
                                                 <>
-                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
                                                     <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                                                     <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                                                     <td className='hidden md:inline-block'>
@@ -673,7 +700,7 @@ const Realtime = ({ data }) => {
                                             )}
                                             {key === "dai" && (
                                                 <>
-                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
                                                     <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                                                     <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                                                     <td className='hidden md:inline-block'>
@@ -691,7 +718,7 @@ const Realtime = ({ data }) => {
                                             )}
                                             {key === "shiba-inu" && (
                                                 <>
-                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
                                                     <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                                                     <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                                                     <td className='hidden md:inline-block'>
@@ -709,7 +736,7 @@ const Realtime = ({ data }) => {
                                             )}
                                             {key === "tron" && (
                                                 <>
-                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
                                                     <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                                                     <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                                                     <td className='hidden md:inline-block'>
@@ -727,7 +754,7 @@ const Realtime = ({ data }) => {
                                             )}
                                             {key === "litecoin" && (
                                                 <>
-                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
                                                     <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                                                     <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                                                     <td className='hidden md:inline-block'>
@@ -745,7 +772,7 @@ const Realtime = ({ data }) => {
                                             )}
                                             {key === "avalanche-2" && (
                                                 <>
-                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
+                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
                                                     <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
                                                     <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
                                                     <td className='hidden md:inline-block'>
