@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import ThemeContext from "../ThemeContext";
 import { internalMemory } from "../../utilities/memory";
 import Swal from "sweetalert2";
-
+import withAuth from "./protectedRoute";
 
 
 const Realtime = ({ data }) => {
@@ -24,6 +24,16 @@ const Realtime = ({ data }) => {
     const [percentuageEur, setPercentuageEur] = useState(0);
 
     const sellRef = useRef(null)
+
+    useEffect(() => {
+        async function jwt() {
+            if (document.cookie) {
+                console.log(document.cookie)
+                return;
+            }
+        }
+        jwt();
+    }, [])
 
     useEffect(() => {
         const storedPercentage = localStorage.getItem("percentuageEur");
@@ -65,7 +75,7 @@ const Realtime = ({ data }) => {
                     const crAm = updatedData[crypto].crAm;
                     const moAmEur = crAm * cryptoDataItem.current_price;
                     const priceChange =
-                        cryptoDataItem.price_change_percentage_7d_in_currency;
+                        cryptoDataItem.price_change_percentage_24h;
                     const tetherData = data.find((item) => item.id === "tether");
                     const moAmUsd = (moAmEur * 1) / tetherData.current_price;
                     updatedData[crypto] = { moAmEur, moAmUsd, crAm, priceChange };
@@ -163,7 +173,7 @@ const Realtime = ({ data }) => {
         const tetherData = data.find((item) => item.id === "tether");
         let moAmUsd = (moAmEur * 1) / tetherData.current_price;
         const priceChange =
-            selectedCryptoData.price_change_percentage_7d_in_currency;
+            selectedCryptoData.price_change_24h;
         if (currency === "USD") {
             crAm =
                 (updatedData[selectedCrypto]?.crAm || 0) +
@@ -215,7 +225,7 @@ const Realtime = ({ data }) => {
             const tetherData = data.find((item) => item.id === "tether");
             let moAmUsd = (moAmEur * 1) / tetherData.current_price;
             const priceChange =
-                selectedCryptoData.price_change_percentage_7d_in_currency;
+                selectedCryptoData.price_change_24h;
 
             updatedData[toSellCrypto] = { moAmEur, moAmUsd, crAm, priceChange };
             localStorage.setItem("cryptoData", JSON.stringify(updatedData));
@@ -328,7 +338,7 @@ const Realtime = ({ data }) => {
                 <form>
                     <div>
                         <label
-                            for='amount'
+                            htmlFor='amount'
                             className={`flex py-6 justify-center ${isDarkTheme ? "text-white" : "text-black-100"
                                 }`}
                         >
@@ -362,7 +372,7 @@ const Realtime = ({ data }) => {
                     </div>
                     <div>
                         <label
-                            for='crypto'
+                            htmlFor='crypto'
                             className={`flex pt-12 pb-6 justify-center ${isDarkTheme ? "text-white" : "text-black-100"
                                 }`}
                         >
@@ -391,7 +401,7 @@ const Realtime = ({ data }) => {
                     <div className='flex justify-center'>
                         <button
                             onClick={handleSave}
-                            class='bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-lg shadow-md shadow-teal-400'
+                            className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-16 mt-16 rounded-lg shadow-md shadow-teal-400'
                         >
                             BUY
                         </button>
@@ -456,7 +466,6 @@ const Realtime = ({ data }) => {
                             <tbody>
                                 {Object.keys(cryptoData).map((key) => (
                                     <>
-                                        {console.log(key)}
                                         <div className='h-3'></div>
                                         <tr
                                             className={`text-center ${isDarkTheme ? "text-white" : "text-black-100"
@@ -842,7 +851,7 @@ const Realtime = ({ data }) => {
                         <form>
                             <div>
                                 <label
-                                    for='amount'
+                                    htmlFor='amount'
                                     className={`flex py-6 justify-center ${isDarkTheme ? "text-white" : "text-black-100"
                                         }`}
                                 >
@@ -876,7 +885,7 @@ const Realtime = ({ data }) => {
                             </div>
                             <div>
                                 <label
-                                    for='crypto'
+                                    htmlFor='crypto'
                                     className={`flex pt-12 pb-6 justify-center ${isDarkTheme ? "text-white" : "text-black-100"
                                         }`}
                                 >
@@ -905,13 +914,13 @@ const Realtime = ({ data }) => {
                             <div className='flex justify-center'>
                                 <button
                                     onClick={handleSave}
-                                    class='bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-12 mx-2 mt-16 rounded-lg shadow-md shadow-teal-400'
+                                    className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-12 mx-2 mt-16 rounded-lg shadow-md shadow-teal-400'
                                 >
                                     BUY
                                 </button>
                                 <button
                                     onClick={cancelButton}
-                                    class='bg-red-200 hover:bg-red-300 text-white font-bold py-3 px-8 mx-2 mt-16 rounded-lg shadow-md shadow-red-400'
+                                    className='bg-red-200 hover:bg-red-300 text-white font-bold py-3 px-8 mx-2 mt-16 rounded-lg shadow-md shadow-red-400'
                                 >
                                     CANCEL
                                 </button>
@@ -923,7 +932,7 @@ const Realtime = ({ data }) => {
                 )}
                 <button
                     onClick={addButton}
-                    class='self-center bg-teal-300 hover:bg-teal-200 text-white font-bold w-3 py-3 px-12 mt-12 mb-12 rounded-lg flex justify-center align-middle  xl:hidden shadow-md shadow-teal-400'
+                    className='self-center bg-teal-300 hover:bg-teal-200 text-white font-bold w-3 py-3 px-12 mt-12 mb-12 rounded-lg flex justify-center align-middle  xl:hidden shadow-md shadow-teal-400'
                 >
                     ADD
                 </button>
@@ -970,4 +979,4 @@ const Realtime = ({ data }) => {
     );
 };
 
-export default Realtime;
+export default withAuth(Realtime);

@@ -18,7 +18,7 @@ const Footer = () => {
             <div className='flex w-1/3 justify-center space-x-3 pt-3'>
                 <a href="https://www.coingecko.com">
                     <div className='flex justify-center w-auto'>
-                        <h1 className={`font-lato xl:text-base sm:text-sm mt-1 ${isDarkTheme ? 'text-gray-100' : 'text-black-100'}`}>Powered by <h1 className="md:block ">CoinGecko</h1></h1>
+                        <h1 className={`font-lato xl:text-base sm:text-sm mt-1 ${isDarkTheme ? 'text-gray-100' : 'text-black-100'}`}>Powered by <span className="md:block ">CoinGecko</span></h1>
                         <img className='w-7 h-7 my-auto ml-2' src={CoinGecko} alt='coinGecko logo'></img>
                     </div>
                 </a>

@@ -29,7 +29,7 @@ function App() {
     };
 
     fetchData();
-    setInterval(fetchData, 30000);
+    setInterval(fetchData, 120000);
   }, []);
 
   const { isDarkTheme} = useContext(ThemeContext);

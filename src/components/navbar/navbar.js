@@ -27,12 +27,13 @@ const Navbar = () => {
         <div className={`flex flex-col md:flex-row justify-center items-center h-16 sticky top-0 pt-3 z-10 ${isDarkTheme ? 'bg-black-200' : 'bg-white-mode-200'}`} style={{
             top: -1,
         }}>
+            <div className={`font-lato mx-8 mb-4 md:mb-0 hidden cursor-pointer lg:block hover:text-teal-100 duration-200 ease-in-out ${isDarkTheme ? 'text-gray-100 ' : 'text-black-200 hover:text-teal-200'}`} href='http://localhost:8080/auth/login?redirectTo=http://localhost:3000/realtime-investment'>Login</div>
             <div className={`font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out ${isDarkTheme ? 'text-gray-100 ' : 'text-black-200 hover:text-teal-200'}`}>
                 <Link to="/">Top 10</Link>
 
             </div>
             <div className={`font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out ${isDarkTheme ? 'text-gray-100 ' : 'text-black-200 hover:text-teal-200'}`}>
-                <Link to="/realtime-investment">Realtime Investment</Link>
+                <a href="http://localhost:3000/auth/login?redirectTo=http://localhost:8080/realtime-investment">Realtime Investment</a>
             </div>
             <div className={`font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out ${isDarkTheme ? 'text-gray-100 ' : 'text-black-200 hover:text-teal-200'}`}>
                 <Link to="/historic-investment">Historic Investment</Link>
@@ -43,10 +44,11 @@ const Navbar = () => {
             <div className={`font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out ${isDarkTheme ? 'text-gray-100 ' : 'text-black-200 hover:text-teal-200'}`}>
                 <Link to="/about">About</Link>
             </div>
+            <div className={`font-lato mx-8 md:mb-0 absolute left-1/4 cursor-pointer lg:hidden hover:text-teal-100 duration-200 ease-in-out ${isDarkTheme ? 'text-gray-100 ' : 'text-black-200 hover:text-teal-200'}`} href='http://localhost:8080/auth/login?redirectTo=http://localhost:3000/realtime-investment'>Login</div>
 
             <div className="mb-6 absolute right-1/4 lg:static " >
                 <input type="checkbox" id="darkmode-toggle" onClick={toggleTheme}/>
-                <label for="darkmode-toggle" id="mode-label"></label>
+                <label htmlFor="darkmode-toggle" id="mode-label"></label>
             </div>
             <div className="flex lg:hidden right-0 justify-start">
                 <button
