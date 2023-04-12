@@ -3,9 +3,32 @@ import ThemeContext from "../ThemeContext";
 import { internalMemory } from "../../utilities/memory";
 import Swal from "sweetalert2";
 import withAuth from "./protectedRoute";
+import { Navigate, useNavigate } from "react-router-dom";
+import axios from "axios";
 
+function parseJwt (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+}
 
 const Realtime = ({ data }) => {
+    
+    const navigate = useNavigate()
+    let token = localStorage.getItem('token');
+    let decoded
+
+    
+    if (!token) {
+        navigate('/login')
+    } else {
+        decoded = parseJwt(token)
+    }
+    
     const [cryptoData, setCryptoData] = useState(null);
     const [currency, setCurrency] = useState("EUR");
     const [inputData, setInputData] = useState({
@@ -22,17 +45,34 @@ const Realtime = ({ data }) => {
     const [totalEuro, setTotalEuro] = useState(0);
     const [totalUsd, setTotalUsd] = useState(0);
     const [percentuageEur, setPercentuageEur] = useState(0);
-
+    const [walletData, setWalletData] = useState()
+    
     const sellRef = useRef(null)
+    const toEur = (amount, crypto) => {
+        console.log('TOEURO', amount, crypto, data)
+        const actual_crypto = data.find(d => d.id === crypto)
+        return actual_crypto.current_price * amount
+    }
+
+    const toUSD = (amount, crypto) => {
+        const eur = toEur(amount, crypto)
+        const tether = data.find(d => d.id === 'tether')
+        return eur / tether.current_price
+    }
 
     useEffect(() => {
-        async function jwt() {
-            if (document.cookie) {
-                console.log(document.cookie)
-                return;
-            }
+        async function fetchData() {
+            let wallet = await axios.get('http://localhost:3000/wallet', {
+                headers: {
+                  'authorization': token
+                }
+            })
+
+            setWalletData(wallet.data)
         }
-        jwt();
+
+        fetchData()
+
     }, [])
 
     useEffect(() => {
@@ -157,14 +197,41 @@ const Realtime = ({ data }) => {
         }
     }, [totalEuro, totalInvested, percentuageEur]);
 
-    const handleSave = (e) => {
+    const handleSave = async (e) => {
         e.preventDefault();
+        const { selectedCrypto, euroValue } = inputData;
+        const actual_crypto = data.find(d => d.id === selectedCrypto)
+        let amount
+        console.log('SAVESAVE', currency)
+        if (currency === 'USD') {
+            const tether = data.find(d => d.id === 'tether')
+            amount = parseInt((parseFloat(euroValue * tether.current_price) / actual_crypto.current_price) * 100000)
+        } else {
+            amount = parseInt((euroValue / actual_crypto.current_price) * 100000)
+        }
+        
+        await axios.post('http://localhost:3000/wallet', {
+            name: selectedCrypto,
+            amount
+        }, {
+            headers: {
+                'authorization': token
+            }
+        })
+        let wallet = await axios.get('http://localhost:3000/wallet', {
+                headers: {
+                  'authorization': token
+                }
+            })
+
+        setWalletData(wallet.data)
+        setShowAdd(false);
+        return
         const storedData = localStorage.getItem("cryptoData");
         let updatedData = {};
         if (storedData) {
             updatedData = JSON.parse(storedData);
         }
-        const { selectedCrypto, euroValue } = inputData;
         const selectedCryptoData = data.find((item) => item.id === selectedCrypto);
         let crAm =
             (updatedData[selectedCrypto]?.crAm || 0) +
@@ -211,8 +278,59 @@ const Realtime = ({ data }) => {
         setToSellCryptoAmount(e.target.value);
     };
 
-    const handleSell = (e) => {
+    const handleSellAll = async (e) => {
         e.preventDefault();
+        const actual_amount = parseFloat(walletData.find(d => d.id === toSellCrypto).amount)
+        await axios.post('http://localhost:3000/wallet/' + toSellCrypto, {
+            amount: actual_amount
+        }, {
+            headers: {
+                'authorization': token
+            }
+        })
+        let wallet = await axios.get('http://localhost:3000/wallet', {
+                headers: {
+                  'authorization': token
+                }
+            })
+
+        setWalletData(wallet.data)
+        setShowAdd(false);
+        setShowSell(false);
+        setToSellCryptoAmount(0);
+    }
+
+    const handleSell = async (e) => {
+        e.preventDefault();
+        const actual_amount = parseFloat(walletData.find(d => d.id === toSellCrypto).amount)
+        if (actual_amount < parseInt(parseFloat(toSellCryptoAmount) * 100000)) {
+            setShowSell(false);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: "You don't have such amount",
+                confirmButtonColor: "#06d1af",
+            })
+            return
+        }
+        await axios.post('http://localhost:3000/wallet/' + toSellCrypto, {
+            amount: parseInt(parseFloat(toSellCryptoAmount) * 100000)
+        }, {
+            headers: {
+                'authorization': token
+            }
+        })
+        let wallet = await axios.get('http://localhost:3000/wallet', {
+                headers: {
+                  'authorization': token
+                }
+            })
+
+        setWalletData(wallet.data)
+        setShowAdd(false);
+        setShowSell(false);
+        setToSellCryptoAmount(0);
+        return
         const storedData = localStorage.getItem("cryptoData");
         let updatedData = {};
         if (storedData) {
@@ -271,8 +389,8 @@ const Realtime = ({ data }) => {
         setShowAdd(true);
     };
 
-    const handleClickSell = (crypto) => {
-        setToSellCrypto(crypto);
+    const handleClickSell = (id) => {
+        setToSellCrypto(id);
         setShowSell(true);
     };
 
@@ -412,7 +530,7 @@ const Realtime = ({ data }) => {
                 className={`flex flex-col w-full xl:w-2/3 m-6 rounded-lg ${isDarkTheme ? "bg-black-100" : "bg-white-mode-200"
                     }`}
             >
-                {cryptoData && Object.keys(cryptoData).length > 0 && (
+                {!!decoded && (
                     <div>
                         <div className='flex justify-between'>
                             <div className='flex flex-col items-start justify-end p-3 w-max rounded-lg text-teal-50'>
@@ -435,14 +553,33 @@ const Realtime = ({ data }) => {
                             </div>
                             <div>
                                 <button
-                                    onClick={() => {
-                                        setCryptoData(null);
+                                    onClick={async () => {
+                                        await axios.delete('http://localhost:3000/wallet', {
+                                            headers: {
+                                                'authorization': token
+                                            }
+                                        })
+                                        let wallet = await axios.get('http://localhost:3000/wallet', {
+                                                headers: {
+                                                'authorization': token
+                                                }
+                                            })
 
-                                        localStorage.clear();
+                                        setWalletData(wallet.data)
                                     }}
                                     className='bg-red-300 hover:bg-red-200 text-white font-bold py-3 px-4  rounded-lg shadow-md shadow-red-400 mt-4 mr-4'
                                 >
                                     RESET
+                                </button>
+                                <div>{decoded.username}</div>
+                                <button
+                                    onClick={() => {
+                                        localStorage.removeItem('token');
+                                        navigate('/')
+                                    }}
+                                    className='bg-red-300 hover:bg-red-200 text-white font-bold py-3 px-4  rounded-lg shadow-md shadow-red-400 mt-4 mr-4'
+                                >
+                                    LOGOUT
                                 </button>
                             </div>
                         </div>
@@ -455,6 +592,7 @@ const Realtime = ({ data }) => {
                                 >
                                     <th className='p-2'>Crypto</th>
                                     <th className='p-2'>Amount</th>
+                                    <th className='p-2'>Total Invested</th>
                                     <th className='p-2'>Value (€)</th>
                                     <th className='p-2'>Value ($)</th>
                                     <th className='p-2 hidden md:inline-block'>
@@ -464,378 +602,54 @@ const Realtime = ({ data }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {Object.keys(cryptoData).map((key) => (
+                                {!!data && data.length > 0 && !!walletData && walletData.length > 0 && walletData.map((w) => (
                                     <>
                                         <div className='h-3'></div>
                                         <tr
                                             className={`text-center ${isDarkTheme ? "text-white" : "text-black-100"
                                                 }`}
-                                            key={key}
+                                            key={w.id}
                                         >
-                                            <td>{key}</td>
-                                            {key === "bitcoin" && (
-                                                <>
-                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
-                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                                                    <td className='hidden md:inline-block'>
-                                                        {cryptoData[key].priceChange.toFixed(2)}%
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
-                                                            onClick={() => handleClickSell(key)}
-                                                        >
-                                                            SELL
-                                                        </button>
-                                                    </td>
-                                                </>
-                                            )}
-                                            {key === "ethereum" && (
-                                                <>
-                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
-                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                                                    <td className='hidden md:inline-block'>
-                                                        {cryptoData[key].priceChange.toFixed(2)}%
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
-                                                            onClick={() => handleClickSell(key)}
-                                                        >
-                                                            SELL
-                                                        </button>
-                                                    </td>
-                                                </>
-                                            )}
-                                            {key === "tether" && (
-                                                <>
-                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
-                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                                                    <td className='hidden md:inline-block'>
-                                                        {cryptoData[key].priceChange.toFixed(2)}%
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
-                                                            onClick={() => handleClickSell(key)}
-                                                        >
-                                                            SELL
-                                                        </button>
-                                                    </td>
-                                                </>
-                                            )}
-                                            {key === "binancecoin" && (
-                                                <>
-                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
-                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                                                    <td className='hidden md:inline-block'>
-                                                        {cryptoData[key].priceChange.toFixed(2)}%
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
-                                                            onClick={() => handleClickSell(key)}
-                                                        >
-                                                            SELL
-                                                        </button>
-                                                    </td>
-                                                </>
-                                            )}
-                                            {key === "usd-coin" && (
-                                                <>
-                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
-                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                                                    <td className='hidden md:inline-block'>
-                                                        {cryptoData[key].priceChange.toFixed(2)}%
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
-                                                            onClick={() => handleClickSell(key)}
-                                                        >
-                                                            SELL
-                                                        </button>
-                                                    </td>
-                                                </>
-                                            )}
-                                            {key === "ripple" && (
-                                                <>
-                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
-                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                                                    <td className='hidden md:inline-block'>
-                                                        {cryptoData[key].priceChange.toFixed(2)}%
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
-                                                            onClick={() => handleClickSell(key)}
-                                                        >
-                                                            SELL
-                                                        </button>
-                                                    </td>
-                                                </>
-                                            )}
-                                            {key === "okb" && (
-                                                <>
-                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
-                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                                                    <td className='hidden md:inline-block'>
-                                                        {cryptoData[key].priceChange.toFixed(2)}%
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
-                                                            onClick={() => handleClickSell(key)}
-                                                        >
-                                                            SELL
-                                                        </button>
-                                                    </td>
-                                                </>
-                                            )}
-                                            {key === "cardano" && (
-                                                <>
-                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
-                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                                                    <td className='hidden md:inline-block'>
-                                                        {cryptoData[key].priceChange.toFixed(2)}%
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
-                                                            onClick={() => handleClickSell(key)}
-                                                        >
-                                                            SELL
-                                                        </button>
-                                                    </td>
-                                                </>
-                                            )}
-                                            {key === "matic-network" && (
-                                                <>
-                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
-                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                                                    <td className='hidden md:inline-block'>
-                                                        {cryptoData[key].priceChange.toFixed(2)}%
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
-                                                            onClick={() => handleClickSell(key)}
-                                                        >
-                                                            SELL
-                                                        </button>
-                                                    </td>
-                                                </>
-                                            )}
-                                            {key === "dogecoin" && (
-                                                <>
-                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
-                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                                                    <td className='hidden md:inline-block'>
-                                                        {cryptoData[key].priceChange.toFixed(2)}%
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
-                                                            onClick={() => handleClickSell(key)}
-                                                        >
-                                                            SELL
-                                                        </button>
-                                                    </td>
-                                                </>
-                                            )}
-                                            {key === "staked-ether" && (
-                                                <>
-                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
-                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                                                    <td className='hidden md:inline-block'>
-                                                        {cryptoData[key].priceChange.toFixed(2)}%
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
-                                                            onClick={() => handleClickSell(key)}
-                                                        >
-                                                            SELL
-                                                        </button>
-                                                    </td>
-                                                </>
-                                            )}
-                                            {key === "solana" && (
-                                                <>
-                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
-                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                                                    <td className='hidden md:inline-block'>
-                                                        {cryptoData[key].priceChange.toFixed(2)}%
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
-                                                            onClick={() => handleClickSell(key)}
-                                                        >
-                                                            SELL
-                                                        </button>
-                                                    </td>
-                                                </>
-                                            )}
-                                            {key === "polkadot" && (
-                                                <>
-                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
-                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                                                    <td className='hidden md:inline-block'>
-                                                        {cryptoData[key].priceChange.toFixed(2)}%
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
-                                                            onClick={() => handleClickSell(key)}
-                                                        >
-                                                            SELL
-                                                        </button>
-                                                    </td>
-                                                </>
-                                            )}
-                                            {key === "dai" && (
-                                                <>
-                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
-                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                                                    <td className='hidden md:inline-block'>
-                                                        {cryptoData[key].priceChange.toFixed(2)}%
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
-                                                            onClick={() => handleClickSell(key)}
-                                                        >
-                                                            SELL
-                                                        </button>
-                                                    </td>
-                                                </>
-                                            )}
-                                            {key === "shiba-inu" && (
-                                                <>
-                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
-                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                                                    <td className='hidden md:inline-block'>
-                                                        {cryptoData[key].priceChange.toFixed(2)}%
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
-                                                            onClick={() => handleClickSell(key)}
-                                                        >
-                                                            SELL
-                                                        </button>
-                                                    </td>
-                                                </>
-                                            )}
-                                            {key === "tron" && (
-                                                <>
-                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
-                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                                                    <td className='hidden md:inline-block'>
-                                                        {cryptoData[key].priceChange.toFixed(2)}%
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
-                                                            onClick={() => handleClickSell(key)}
-                                                        >
-                                                            SELL
-                                                        </button>
-                                                    </td>
-                                                </>
-                                            )}
-                                            {key === "litecoin" && (
-                                                <>
-                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
-                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                                                    <td className='hidden md:inline-block'>
-                                                        {cryptoData[key].priceChange.toFixed(2)}%
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
-                                                            onClick={() => handleClickSell(key)}
-                                                        >
-                                                            SELL
-                                                        </button>
-                                                    </td>
-                                                </>
-                                            )}
-                                            {key === "avalanche-2" && (
-                                                <>
-                                                    <td>{nFormatter(cryptoData[key].crAm)}</td>
-                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                                                    <td className='hidden md:inline-block'>
-                                                        {cryptoData[key].priceChange.toFixed(2)}%
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
-                                                            onClick={() => handleClickSell(key)}
-                                                        >
-                                                            SELL
-                                                        </button>
-                                                    </td>
-                                                </>
-                                            )}
-                                            {key === "uniswap" && (
-                                                <>
-                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                                                    <td className='hidden md:inline-block'>
-                                                        {cryptoData[key].priceChange.toFixed(2)}%
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
-                                                            onClick={() => handleClickSell(key)}
-                                                        >
-                                                            SELL
-                                                        </button>
-                                                    </td>
-                                                </>
-                                            )}
-                                            {key === "the-open-network" && (
-                                                <>
-                                                    <td>{cryptoData[key].crAm.toFixed(8)}</td>
-                                                    <td>{cryptoData[key].moAmEur.toFixed(2)}</td>
-                                                    <td>{cryptoData[key].moAmUsd.toFixed(2)}</td>
-                                                    <td className='hidden md:inline-block'>
-                                                        {cryptoData[key].priceChange.toFixed(2)}%
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
-                                                            onClick={() => handleClickSell(key)}
-                                                        >
-                                                            SELL
-                                                        </button>
-                                                    </td>
-                                                </>
-                                            )}
+                                            <td>{w.name}</td>
+                                            <td>{w.amount / 100000}</td>
+                                            <td>{w.total / 100000}</td>
+                                            <td>{toEur(w.amount / 100000, w.name).toFixed(2)}</td>
+                                            <td>{toUSD(w.amount / 100000, w.name).toFixed(2)}</td>
+                                            <td className='hidden md:inline-block'>
+                                                {data.find(d => d.id === w.name).price_change_percentage_7d_in_currency.toFixed(2)}%
+                                            </td>
+                                            <td>
+                                                <button
+                                                    className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
+                                                    onClick={() => handleClickSell(w.id)}
+                                                >
+                                                    SELL
+                                                </button>
+                                            </td>
                                         </tr>
                                     </>
                                 ))}
+                                {!!data && data.length > 0 && !!walletData && walletData.length > 0 && <>
+                                    <div className='h-3'></div>
+                                        <tr
+                                            className={`text-center ${isDarkTheme ? "text-white" : "text-black-100"
+                                                }`}
+                                            key="total"
+                                        >
+                                            <td>Totals:</td>
+                                            <td>-</td>
+                                            <td>{(walletData.map(w => toEur(w.total / 100000, w.name)).reduce((a, b) => a + b, 0)).toFixed(2)}€ /  
+                                                {(walletData.map(w => toUSD(w.total / 100000, w.name)).reduce((a, b) => a + b, 0)).toFixed(2)}$</td>
+                                            <td>{(walletData.map(w => toEur(w.amount / 100000, w.name)).reduce((a, b) => a + b, 0)).toFixed(2)}</td>
+                                            <td>{(walletData.map(w => toUSD(w.amount / 100000, w.name)).reduce((a, b) => a + b, 0)).toFixed(2)}</td>
+                                            <td className='hidden md:inline-block'>
+                                                {((walletData.map(w => data.find(d => d.id === w.name).price_change_percentage_7d_in_currency).reduce((a, b) => a + b, 0)) / walletData.length).toFixed(2)}%
+                                            </td>
+                                            <td>
+                                                
+                                            </td>
+                                        </tr>
+                                </>}
                             </tbody>
                         </table>
                     </div>

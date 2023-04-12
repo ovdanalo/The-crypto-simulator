@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import React, { useState, useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./App.css";
 import Header from "./components/header/header";
 import Navbar from "./components/navbar/navbar";
@@ -7,12 +7,14 @@ import Top10 from "./components/top10/top10";
 import RealTime from "./components/realtimeInv/realtimeInv";
 import Historic from "./components/historicInv/historicInv";
 import CryptoInfo from "./components/cryptoinfo/cryptoinfo";
+import TokenRedirect from "./components/tokenRedirect/tokenRedirect";
 import About from "./components/about/about";
 import Footer from "./components/footer/footer";
 import ContactUs from "./components/contactus/contactus";
 import Overlay from "./components/overlay/overlay";
 import NotFound from "./components/notFound/notFound";
 import ThemeContext from "./components/ThemeContext";
+import Login from "./components/login/login";
 
 
 function App() {
@@ -32,40 +34,42 @@ function App() {
     setInterval(fetchData, 120000);
   }, []);
 
-  const { isDarkTheme} = useContext(ThemeContext);
+  const { isDarkTheme } = useContext(ThemeContext);
 
   return (
-      <div className={isDarkTheme ? 'bg-black-100' : 'bg-white-mode-100'}>
+    <div className={isDarkTheme ? 'bg-black-100' : 'bg-white-mode-100'}>
       <Header />
       <Overlay>
-      <Navbar />
-      <Routes>
+        <Navbar />
+        <Routes>
+          <Route path='/token-redirect' element={<TokenRedirect />} />
+          <Route path='/login' exact element={<Login />} />
         <Route
-          path='/'
-          exact
-          element={<Top10 data={cryptocurrencies} />}
-        />
-        <Route
-          path="/realtime-investment"
-          exact
-          element={<RealTime data={cryptocurrencies} />}
-        />
-        <Route
-          path="/historic-investment"
-          exact
-          element={<Historic data={cryptocurrencies} />}
-        />
-        <Route
-          path='/cryptocurrencies-info/*'
-          exact
-          element={<CryptoInfo data={cryptocurrencies} />}
-        />
-        <Route path='/about' exact element={<About />} />
-        <Route path='/contactus' exact element={<ContactUs />} />
-        <Route path='*' element={<NotFound />}>
-        </Route>
-      </Routes>
-      <Footer />
+            path='/'
+            exact
+            element={<Top10 data={cryptocurrencies} />}
+          />
+          <Route
+            path="/realtime-investment"
+            exact
+            element={<RealTime data={cryptocurrencies} />}
+          />
+          <Route
+            path="/historic-investment"
+            exact
+            element={<Historic data={cryptocurrencies} />}
+          />
+          <Route
+            path='/cryptocurrencies-info/*'
+            exact
+            element={<CryptoInfo data={cryptocurrencies} />}
+          />
+          <Route path='/about' exact element={<About />} />
+          <Route path='/contactus' exact element={<ContactUs />} />
+          <Route path='*' element={<NotFound />}>
+          </Route>
+        </Routes>
+        <Footer />
       </Overlay>
     </div>
   );
