@@ -6,10 +6,10 @@ import withAuth from "./protectedRoute";
 import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function parseJwt (token) {
+function parseJwt(token) {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
 
@@ -17,18 +17,18 @@ function parseJwt (token) {
 }
 
 const Realtime = ({ data }) => {
-    
+
     const navigate = useNavigate()
     let token = localStorage.getItem('token');
     let decoded
 
-    
+
     if (!token) {
         navigate('/login')
     } else {
         decoded = parseJwt(token)
     }
-    
+
     const [cryptoData, setCryptoData] = useState(null);
     const [currency, setCurrency] = useState("EUR");
     const [inputData, setInputData] = useState({
@@ -46,7 +46,7 @@ const Realtime = ({ data }) => {
     const [totalUsd, setTotalUsd] = useState(0);
     const [percentuageEur, setPercentuageEur] = useState(0);
     const [walletData, setWalletData] = useState()
-    
+
     const sellRef = useRef(null)
     const toEur = (amount, crypto) => {
         console.log('TOEURO', amount, crypto, data)
@@ -64,7 +64,7 @@ const Realtime = ({ data }) => {
         async function fetchData() {
             let wallet = await axios.get('http://localhost:3000/wallet', {
                 headers: {
-                  'authorization': token
+                    'authorization': token
                 }
             })
 
@@ -209,7 +209,7 @@ const Realtime = ({ data }) => {
         } else {
             amount = parseInt((euroValue / actual_crypto.current_price) * 100000)
         }
-        
+
         await axios.post('http://localhost:3000/wallet', {
             name: selectedCrypto,
             amount
@@ -219,59 +219,13 @@ const Realtime = ({ data }) => {
             }
         })
         let wallet = await axios.get('http://localhost:3000/wallet', {
-                headers: {
-                  'authorization': token
-                }
-            })
+            headers: {
+                'authorization': token
+            }
+        })
 
         setWalletData(wallet.data)
         setShowAdd(false);
-        return
-        const storedData = localStorage.getItem("cryptoData");
-        let updatedData = {};
-        if (storedData) {
-            updatedData = JSON.parse(storedData);
-        }
-        const selectedCryptoData = data.find((item) => item.id === selectedCrypto);
-        let crAm =
-            (updatedData[selectedCrypto]?.crAm || 0) +
-            parseFloat(euroValue) / selectedCryptoData.current_price;
-        const moAmEur = crAm * selectedCryptoData.current_price;
-        const tetherData = data.find((item) => item.id === "tether");
-        let moAmUsd = (moAmEur * 1) / tetherData.current_price;
-        const priceChange =
-            selectedCryptoData.price_change_24h;
-        if (currency === "USD") {
-            crAm =
-                (updatedData[selectedCrypto]?.crAm || 0) +
-                (parseFloat(euroValue) * tetherData.current_price) /
-                selectedCryptoData.current_price;
-            moAmUsd =
-                crAm *
-                selectedCryptoData.current_price *
-                (1 / tetherData.current_price);
-        }
-
-        updatedData[selectedCrypto] = { moAmEur, moAmUsd, crAm, priceChange };
-        localStorage.setItem("cryptoData", JSON.stringify(updatedData));
-        setCryptoData(updatedData);
-        setShowAdd(false);
-        const existTotal = internalMemory.find("total");
-        if (existTotal) {
-            const newTotal = parseFloat(inputMoney) + parseFloat(existTotal);
-            internalMemory.save("total", newTotal);
-            const newTotalUsd = (
-                (parseFloat(inputMoney) + parseFloat(existTotal)) /
-                tetherData.current_price
-            ).toFixed(2);
-            setTotalInvested(newTotal);
-            setTotalInvestedUsd(newTotalUsd);
-        } else {
-            internalMemory.save("total", inputMoney);
-            const inputUsd = (inputMoney / tetherData.current_price).toFixed(2);
-            setTotalInvested(inputMoney);
-            setTotalInvestedUsd(inputUsd);
-        }
     };
 
     const saveToSellAmount = (e) => {
@@ -289,10 +243,10 @@ const Realtime = ({ data }) => {
             }
         })
         let wallet = await axios.get('http://localhost:3000/wallet', {
-                headers: {
-                  'authorization': token
-                }
-            })
+            headers: {
+                'authorization': token
+            }
+        })
 
         setWalletData(wallet.data)
         setShowAdd(false);
@@ -321,68 +275,16 @@ const Realtime = ({ data }) => {
             }
         })
         let wallet = await axios.get('http://localhost:3000/wallet', {
-                headers: {
-                  'authorization': token
-                }
-            })
+            headers: {
+                'authorization': token
+            }
+        })
 
         setWalletData(wallet.data)
         setShowAdd(false);
         setShowSell(false);
         setToSellCryptoAmount(0);
-        return
-        const storedData = localStorage.getItem("cryptoData");
-        let updatedData = {};
-        if (storedData) {
-            updatedData = JSON.parse(storedData);
-        }
-        if (updatedData[toSellCrypto]?.crAm - toSellCryptoAmount >= 0) {
-            const selectedCryptoData = data.find((item) => item.id === toSellCrypto);
-            let crAm = updatedData[toSellCrypto]?.crAm - toSellCryptoAmount;
-            const moAmEur = crAm * selectedCryptoData.current_price;
-            const tetherData = data.find((item) => item.id === "tether");
-            let moAmUsd = (moAmEur * 1) / tetherData.current_price;
-            const priceChange =
-                selectedCryptoData.price_change_24h;
 
-            updatedData[toSellCrypto] = { moAmEur, moAmUsd, crAm, priceChange };
-            localStorage.setItem("cryptoData", JSON.stringify(updatedData));
-
-            const selled = toSellCryptoAmount * selectedCryptoData.current_price;
-            const newTotal = (totalInvested - selled).toFixed(2);
-            const newTotalUsd = (totalInvestedUsd - selled).toFixed(2);
-            setTotalInvestedUsd(newTotalUsd);
-            setTotalInvested(newTotal);
-            internalMemory.save("total", newTotal);
-            internalMemory.save("totalUsd", newTotalUsd);
-
-            const earned = toSellCryptoAmount * selectedCryptoData.current_price;
-            const storedSell = internalMemory.find("crypto-sell");
-            let sellObj = {};
-            if (storedSell) {
-                sellObj = storedSell;
-            }
-
-            const sell = (sellObj[toSellCrypto]?.sell || 0) + earned;
-
-            sellObj[toSellCrypto] = { sell };
-            internalMemory.save(`crypto-sell`, sellObj);
-
-            console.log(sellObj);
-
-            setCryptoData(updatedData);
-            setShowAdd(false);
-            setShowSell(false);
-            setToSellCryptoAmount(0);
-        } else {
-            setShowSell(false);
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: "You don't have such amount",
-                confirmButtonColor: "#06d1af",
-            })
-        }
     };
 
     const addButton = () => {
@@ -417,30 +319,6 @@ const Realtime = ({ data }) => {
             document.removeEventListener("mousedown", handleOutsideClick);
         };
     }, [sellRef]);
-
-    const nFormatter = (num) => {
-        const lookup = [
-            { value: 1e-6, symbol: " micro"},
-            { value: 1e-3, symbol: " milli"},
-            { value: 1, symbol: " " },
-            { value: 1e3, symbol: " k" },
-            { value: 1e6, symbol: " Mln" },
-            { value: 1e9, symbol: " Bln" },
-            { value: 1e12, symbol: " Tln" },
-            { value: 1e15, symbol: " Tld" },
-        ];
-        const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-
-        var item = lookup
-            .slice()
-            .reverse()
-            .find(function (item) {
-                return num >= item.value;
-            });
-        return item
-            ? (num / item.value).toFixed(2).replace(rx, "$1") + item.symbol
-            : "0";
-    };
 
 
 
@@ -533,24 +411,6 @@ const Realtime = ({ data }) => {
                 {!!decoded && (
                     <div>
                         <div className='flex justify-between'>
-                            <div className='flex flex-col items-start justify-end p-3 w-max rounded-lg text-teal-50'>
-                                <div
-                                    className={`${isDarkTheme ? "text-white" : "text-black-100"} text-sm sm:text-md md:text-lg`}
-                                >
-                                    Total Invested:
-                                    {totalInvested}€ / {parseFloat(totalInvestedUsd).toFixed(2)}$
-                                </div>
-                                <div className={`${isDarkTheme ? "text-white" : "text-black-100"} text-sm sm:text-md md:text-lg`}>
-                                    You Now Have: <span className={`${totalEuro >= totalInvested
-                                        ? "text-green-100"
-                                        : "text-red-400"
-                                        }`}>{totalEuro}€ / {parseFloat(totalUsd).toFixed(2)}$</span>
-                                </div>
-                                <div className={`${isDarkTheme ? "text-white" : "text-black-100"} text-sm sm:text-md md:text-lg`}>
-                                    Difference: <span className={`${percentuageEur >= 0 ? "text-green-100" : "text-red-400"
-                                        }`}>{percentuageEur}%</span>
-                                </div>
-                            </div>
                             <div>
                                 <button
                                     onClick={async () => {
@@ -560,18 +420,19 @@ const Realtime = ({ data }) => {
                                             }
                                         })
                                         let wallet = await axios.get('http://localhost:3000/wallet', {
-                                                headers: {
+                                            headers: {
                                                 'authorization': token
-                                                }
-                                            })
+                                            }
+                                        })
 
                                         setWalletData(wallet.data)
                                     }}
-                                    className='bg-red-300 hover:bg-red-200 text-white font-bold py-3 px-4  rounded-lg shadow-md shadow-red-400 mt-4 mr-4'
+                                    className='bg-red-300 hover:bg-red-200 text-white font-bold py-3 px-4  rounded-lg shadow-md shadow-red-400 mt-4 ml-4'
                                 >
                                     RESET
                                 </button>
-                                <div>{decoded.username}</div>
+                            </div>
+                            <div>
                                 <button
                                     onClick={() => {
                                         localStorage.removeItem('token');
@@ -581,6 +442,8 @@ const Realtime = ({ data }) => {
                                 >
                                     LOGOUT
                                 </button>
+                                <div className={`text-center mt-2 mr-2 ${isDarkTheme ? "text-teal-100" : "text-black-100"
+                    }`}>{decoded.username}</div>
                             </div>
                         </div>
                         <table className='mx-auto w-full'>
@@ -631,24 +494,24 @@ const Realtime = ({ data }) => {
                                 ))}
                                 {!!data && data.length > 0 && !!walletData && walletData.length > 0 && <>
                                     <div className='h-3'></div>
-                                        <tr
-                                            className={`text-center ${isDarkTheme ? "text-white" : "text-black-100"
-                                                }`}
-                                            key="total"
-                                        >
-                                            <td>Totals:</td>
-                                            <td>-</td>
-                                            <td>{(walletData.map(w => toEur(w.total / 100000, w.name)).reduce((a, b) => a + b, 0)).toFixed(2)}€ /  
-                                                {(walletData.map(w => toUSD(w.total / 100000, w.name)).reduce((a, b) => a + b, 0)).toFixed(2)}$</td>
-                                            <td>{(walletData.map(w => toEur(w.amount / 100000, w.name)).reduce((a, b) => a + b, 0)).toFixed(2)}</td>
-                                            <td>{(walletData.map(w => toUSD(w.amount / 100000, w.name)).reduce((a, b) => a + b, 0)).toFixed(2)}</td>
-                                            <td className='hidden md:inline-block'>
-                                                {((walletData.map(w => data.find(d => d.id === w.name).price_change_percentage_7d_in_currency).reduce((a, b) => a + b, 0)) / walletData.length).toFixed(2)}%
-                                            </td>
-                                            <td>
-                                                
-                                            </td>
-                                        </tr>
+                                    <tr
+                                        className={`text-center ${isDarkTheme ? "text-white" : "text-black-100"
+                                            }`}
+                                        key="total"
+                                    >
+                                        <td>Totals:</td>
+                                        <td>-</td>
+                                        <td>{(walletData.map(w => toEur(w.total / 100000, w.name)).reduce((a, b) => a + b, 0)).toFixed(2)}€<br></br>
+                                            {(walletData.map(w => toUSD(w.total / 100000, w.name)).reduce((a, b) => a + b, 0)).toFixed(2)}$</td>
+                                        <td>{(walletData.map(w => toEur(w.amount / 100000, w.name)).reduce((a, b) => a + b, 0)).toFixed(2)}</td>
+                                        <td>{(walletData.map(w => toUSD(w.amount / 100000, w.name)).reduce((a, b) => a + b, 0)).toFixed(2)}</td>
+                                        <td className='hidden md:inline-block'>
+                                            {((walletData.map(w => data.find(d => d.id === w.name).price_change_percentage_7d_in_currency).reduce((a, b) => a + b, 0)) / walletData.length).toFixed(2)}%
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                    </tr>
                                 </>}
                             </tbody>
                         </table>

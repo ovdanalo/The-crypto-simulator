@@ -80,6 +80,11 @@
   background: transparent;
   box-shadow: inset 10px 10px 250px #000000, inset -10px -10px 250px #000000;
 }
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
 .dark {
   /* Classi CSS per il tema scuro */
   background-color: gray;
