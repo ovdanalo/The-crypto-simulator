@@ -5,6 +5,7 @@ import ThemeContext from "../ThemeContext";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
     const menuRef = useRef(null);
 
     useEffect(() => {
@@ -23,6 +24,9 @@ const Navbar = () => {
 
     const { isDarkTheme, toggleTheme } = useContext(ThemeContext);
 
+    useEffect(() => {
+        isDarkTheme ? setIsChecked(true) : setIsChecked(false);
+    }, [isDarkTheme])
     return (
         <div className={`flex flex-col md:flex-row justify-center items-center h-16 sticky top-0 pt-3 z-10 ${isDarkTheme ? 'bg-black-200' : 'bg-white-mode-200'}`} style={{
             top: -1,
@@ -46,7 +50,7 @@ const Navbar = () => {
             <div className={`font-lato mx-8 md:mb-0 absolute left-1/4 cursor-pointer lg:hidden hover:text-teal-100 duration-200 ease-in-out ${isDarkTheme ? 'text-gray-100 ' : 'text-black-200 hover:text-teal-200'}`} href='http://localhost:8080/auth/login?redirectTo=http://localhost:3000/realtime-investment'>Login</div>
 
             <div className="mb-6 absolute right-1/4 lg:static " >
-                <input type="checkbox" id="darkmode-toggle" onClick={toggleTheme}/>
+                <input checked={isChecked} type="checkbox" id="darkmode-toggle" onClick={toggleTheme}/>
                 <label htmlFor="darkmode-toggle" id="mode-label"></label>
             </div>
             <div className="flex lg:hidden right-0 justify-start">
