@@ -47,8 +47,6 @@ const Navbar = () => {
             <div className={`font-lato mx-8 mb-4 md:mb-0 hidden lg:block hover:text-teal-100 duration-200 ease-in-out ${isDarkTheme ? 'text-gray-100 ' : 'text-black-200 hover:text-teal-200'}`}>
                 <Link to="/about">About</Link>
             </div>
-            <div className={`font-lato mx-8 md:mb-0 absolute left-1/4 cursor-pointer lg:hidden hover:text-teal-100 duration-200 ease-in-out ${isDarkTheme ? 'text-gray-100 ' : 'text-black-200 hover:text-teal-200'}`} href='http://localhost:8080/auth/login?redirectTo=http://localhost:3000/realtime-investment'>Login</div>
-
             <div className="mb-6 absolute right-1/4 lg:static " >
                 <input checked={isChecked} type="checkbox" id="darkmode-toggle" onClick={toggleTheme}/>
                 <label htmlFor="darkmode-toggle" id="mode-label"></label>

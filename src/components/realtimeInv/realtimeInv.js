@@ -3,7 +3,7 @@ import ThemeContext from "../ThemeContext";
 import { internalMemory } from "../../utilities/memory";
 import Swal from "sweetalert2";
 import withAuth from "./protectedRoute";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function parseJwt(token) {
@@ -226,6 +226,7 @@ const Realtime = ({ data }) => {
 
         setWalletData(wallet.data)
         setShowAdd(false);
+        setShowSell(false);
     };
 
     const saveToSellAmount = (e) => {
@@ -453,11 +454,11 @@ const Realtime = ({ data }) => {
                                     className={`text-center border-b-2 ${isDarkTheme ? "text-white" : "text-black-100"
                                         }`}
                                 >
-                                    <th className='p-2'>Crypto</th>
-                                    <th className='p-2'>Amount</th>
-                                    <th className='p-2'>Total Invested</th>
-                                    <th className='p-2'>Value (€)</th>
-                                    <th className='p-2'>Value ($)</th>
+                                    <th className='p-2 text-xs md:text-base'>Crypto</th>
+                                    <th className='p-2 text-xs md:text-base'>Amount</th>
+                                    <th className='p-2 text-xs md:text-base'>Total Invested</th>
+                                    <th className='p-2 text-xs md:text-base'>Value (€)</th>
+                                    <th className='p-2 hidden md:inline-block'>Value ($)</th>
                                     <th className='p-2 hidden md:inline-block'>
                                         Last 7 Days (%)
                                     </th>
@@ -473,17 +474,17 @@ const Realtime = ({ data }) => {
                                                 }`}
                                             key={w.id}
                                         >
-                                            <td>{w.name}</td>
-                                            <td>{w.amount / 100000}</td>
-                                            <td>{w.total / 100000}</td>
-                                            <td>{toEur(w.amount / 100000, w.name).toFixed(2)}</td>
-                                            <td>{toUSD(w.amount / 100000, w.name).toFixed(2)}</td>
+                                            <td className="text-xs md:text-base">{w.name}</td>
+                                            <td className="text-xs md:text-base">{w.amount / 100000}</td>
+                                            <td className="text-xs md:text-base">{w.total / 100000}</td>
+                                            <td className="text-xs md:text-base">{toEur(w.amount / 100000, w.name).toFixed(2)}</td>
+                                            <td className="hidden md:inline-block">{toUSD(w.amount / 100000, w.name).toFixed(2)}</td>
                                             <td className='hidden md:inline-block'>
                                                 {data.find(d => d.id === w.name).price_change_percentage_7d_in_currency.toFixed(2)}%
                                             </td>
                                             <td>
                                                 <button
-                                                    className='bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-4'
+                                                    className='text-xs md:text-base bg-teal-300 hover:bg-teal-200 text-white font-bold py-1 px-2  rounded-lg shadow-md shadow-teal-400 mr-1 md:mr-4'
                                                     onClick={() => handleClickSell(w.id)}
                                                 >
                                                     SELL
@@ -499,12 +500,12 @@ const Realtime = ({ data }) => {
                                             }`}
                                         key="total"
                                     >
-                                        <td>Totals:</td>
-                                        <td>-</td>
-                                        <td>{(walletData.map(w => toEur(w.total / 100000, w.name)).reduce((a, b) => a + b, 0)).toFixed(2)}€<br></br>
+                                        <td className="text-xs md:text-base">Totals:</td>
+                                        <td className="text-xs md:text-base">-</td>
+                                        <td className="text-xs md:text-base">{(walletData.map(w => toEur(w.total / 100000, w.name)).reduce((a, b) => a + b, 0)).toFixed(2)}€<br></br>
                                             {(walletData.map(w => toUSD(w.total / 100000, w.name)).reduce((a, b) => a + b, 0)).toFixed(2)}$</td>
-                                        <td>{(walletData.map(w => toEur(w.amount / 100000, w.name)).reduce((a, b) => a + b, 0)).toFixed(2)}</td>
-                                        <td>{(walletData.map(w => toUSD(w.amount / 100000, w.name)).reduce((a, b) => a + b, 0)).toFixed(2)}</td>
+                                        <td className="text-xs md:text-base">{(walletData.map(w => toEur(w.amount / 100000, w.name)).reduce((a, b) => a + b, 0)).toFixed(2)}</td>
+                                        <td className="hidden md:inline-block">{(walletData.map(w => toUSD(w.amount / 100000, w.name)).reduce((a, b) => a + b, 0)).toFixed(2)}</td>
                                         <td className='hidden md:inline-block'>
                                             {((walletData.map(w => data.find(d => d.id === w.name).price_change_percentage_7d_in_currency).reduce((a, b) => a + b, 0)) / walletData.length).toFixed(2)}%
                                         </td>
@@ -630,12 +631,18 @@ const Realtime = ({ data }) => {
                                     }`}
                             ></input>
                         </div>
-                        <div className='flex flex-col sm:flex-row justify-center mt-8'>
+                        <div className='flex flex-col sm:flex-row w-52 justify-center mt-8'>
                             <button
                                 onClick={handleSell}
                                 className='w-full max-w-xs bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-6 rounded-lg shadow-md mb-4 sm:mb-0 sm:mr-4'
                             >
                                 SELL
+                            </button>
+                            <button
+                                onClick={handleSellAll}
+                                className='w-full max-w-xs bg-teal-300 hover:bg-teal-200 text-white font-bold py-3 px-6 rounded-lg shadow-md mb-4 sm:mb-0 sm:mr-4'
+                            >
+                                SELL ALL
                             </button>
                             <button
                                 onClick={handleCancel}
