@@ -38,7 +38,7 @@ const CryptoInfo = (props) => {
 
     return (
         <div className={`flex flex-col items-center h-def w-full  mx-auto my-12 rounded-lg lg:w-10/12 xl:w-8/12 flex-wrap ${isDarkTheme ? "bg-black-200" : "bg-white-mode-300"}`}>
-            <select id="selectCrypto" name="crypto" onChange={handleChange} className='text-center rounded-lg p-1 mt-8'>
+            <select id="selectCrypto" name="crypto" onChange={handleChange} className='text-center rounded-lg p-1 mt-8 bg-teal-100'>
                 <option value="">Select a cryptocurrency</option>
                 {/* Map over the data array to create options for the select element */}
                 {props.data.map((crypto) => (

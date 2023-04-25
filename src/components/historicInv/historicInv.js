@@ -61,8 +61,8 @@ const Historic = (props) => {
                     <div>
                         <label htmlFor='amount' className={`flex  p-6 justify-center ${isDarkTheme ? "text-white" : "text-black-100"}`}>How much did you invest?</label>
                         <div className='w-full flex mx-auto justify-center'>
-                            <input name='amount' type='number' value={amount} onChange={(evt) => setAmount(evt.target.value)} className={`shadow rounded-tl-lg rounded-bl-lg text-center p-1 ${isDarkTheme ? "bg-teal-50" : "bg-white-mode-100"}`}></input>
-                            <select className={`shadow rounded-tr-lg rounded-br-lg p-1 ${isDarkTheme ? "bg-teal-50" : "bg-white-mode-100"}`} value={startCurrency} onChange={evt => setStartCurrency(evt.target.value)}>
+                            <input name='amount' type='number' value={amount} onChange={(evt) => setAmount(evt.target.value)} className={`shadow rounded-tl-lg rounded-bl-lg text-center p-1 ${isDarkTheme ? "bg-teal-100" : "bg-white-mode-100"}`}></input>
+                            <select className={`shadow rounded-tr-lg rounded-br-lg p-1 ${isDarkTheme ? "bg-teal-100" : "bg-white-mode-100"}`} value={startCurrency} onChange={evt => setStartCurrency(evt.target.value)}>
                                 <option value='EUR'>EUR</option>
                                 <option value='USD'>USD</option>
                             </select>
@@ -72,7 +72,7 @@ const Historic = (props) => {
                     <div>
                         <label htmlFor='crypto' className={`flex pt-6 pb-6 justify-center ${isDarkTheme ? "text-white" : "text-black-100"}`}>In which cryptocurrency?</label>
                         <div className='flex justify-center'>
-                            <select id="selectCrypto" name="crypto" onChange={evt => setEndCurrency(evt.target.value)} className={`shadow rounded-lg p-1 text-center  ${isDarkTheme ? "bg-teal-50" : "bg-white-mode-100"}`}>
+                            <select id="selectCrypto" name="crypto" onChange={evt => setEndCurrency(evt.target.value)} className={`shadow rounded-lg p-1 text-center  ${isDarkTheme ? "bg-teal-100" : "bg-white-mode-100"}`}>
                                 <option value="">Select a cryptocurrency</option>
                                 {props.data.map((crypto) => (
                                     <option key={crypto.symbol} value={crypto.id}>{crypto.name}</option>
@@ -83,12 +83,12 @@ const Historic = (props) => {
                     <div className='flex flex-row justify-center pt-6'>
                         <div className='flex flex-col'>
                             <label htmlFor='startDate' className={`ml-16 ${isDarkTheme ? "text-white" : "text-black-100"}`}>in:</label>
-                            <input name='startDate' type='date' value={startDate} onChange={evt => setStartDate(evt.target.value)} className={`shadow p-1 rounded-lg m-2 my-2 ${isDarkTheme ? "bg-teal-50" : "bg-white-mode-100"}`}></input>
+                            <input name='startDate' type='date' value={startDate} onChange={evt => setStartDate(evt.target.value)} className={`shadow p-1 rounded-lg m-2 my-2 ${isDarkTheme ? "bg-teal-100" : "bg-white-mode-100"}`}></input>
                         </div>
 
                         <div className='flex flex-col '>
                             <label htmlFor='endDate' className={`ml-16 ${isDarkTheme ? "text-white" : "text-black-100"}`}>at:</label>
-                            <input name='endDate' type='date' value={endDate} onChange={evt => setEndDate(evt.target.value)} className={`shadow p-1 rounded-lg m-2 my-2 ${isDarkTheme ? "bg-teal-50" : "bg-white-mode-100"}`}></input>
+                            <input name='endDate' type='date' value={endDate} onChange={evt => setEndDate(evt.target.value)} className={`shadow p-1 rounded-lg m-2 my-2 ${isDarkTheme ? "bg-teal-100" : "bg-white-mode-100"}`}></input>
                         </div>
                     </div>
                     <div className='flex justify-center'>
